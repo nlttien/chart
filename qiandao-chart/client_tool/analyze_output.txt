@@ -1,0 +1,63 @@
+﻿JS file size: 746207 chars
+
+=== 'X-Request-Sign' found 6 times ===
+
+--- At position 250331 ---
+0],s=e[i];return s?r=s:(r=nv.VlCAXl(r),e[i]=r),r},nv(e,t)}function ov(){var e=["odG4mdC4uM1OqwLj","sMXz","twPr","mZuXmZm4ouzPvNnLwG","n3bLB3rLua","odm5ote1yNPsshLj","zNHA","veeY","tLDs","odq4mtb0wePVt2u","t1rz","ngn0q1DTCa","D1Hx","uND3","AvLx","mvKY","Dwvp","wvrf","ELeX","DMfS","ndq4mdmWDg5dtMHc","sM1A","BfLT","D00Y","m05u","v00X","vfKY","mtbhrfHIwuS","nZmWnfDwuvvXDW","odK1ntG0vefxqvzf","mJG1m1jRDgPotq"];return(ov=function(){return e})()}function rv({signVersion:e,signType:t}){var n=nv;return{"X-Request-Sign":n(200)+"yNj"+n(227)+n(197)+n(198)+n(204)+"I4ZDkwMzA"+n(214)+n(222)+n(215)+"N2Y"+n(205)+"VjYWZh"+n(223)+n(213)+"ZhY"+n(208)+"NTB"+n(212)+n(211)+n(216)+n(207)+n(202)+n(203)+"wwwww==","X-Request-Timestamp":(new Date)[n(209)+n(206)+"f"]()+"","X-Request-Package-Sign-Version":e,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":t}}function iv(e,t){var n=sv();return iv=function(t,o){var r=n[t-=432];if(void 0===iv.DXBaPw){iv.fySifu=function(e){for(var t,n,o="",r="",i=0,s=0;n=e.charAt(s+
+---
+
+--- At position 250621 ---
+g5dtMHc","sM1A","BfLT","D00Y","m05u","v00X","vfKY","mtbhrfHIwuS","nZmWnfDwuvvXDW","odK1ntG0vefxqvzf","mJG1m1jRDgPotq"];return(ov=function(){return e})()}function rv({signVersion:e,signType:t}){var n=nv;return{"X-Request-Sign":n(200)+"yNj"+n(227)+n(197)+n(198)+n(204)+"I4ZDkwMzA"+n(214)+n(222)+n(215)+"N2Y"+n(205)+"VjYWZh"+n(223)+n(213)+"ZhY"+n(208)+"NTB"+n(212)+n(211)+n(216)+n(207)+n(202)+n(203)+"wwwww==","X-Request-Timestamp":(new Date)[n(209)+n(206)+"f"]()+"","X-Request-Package-Sign-Version":e,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":t}}function iv(e,t){var n=sv();return iv=function(t,o){var r=n[t-=432];if(void 0===iv.DXBaPw){iv.fySifu=function(e){for(var t,n,o="",r="",i=0,s=0;n=e.charAt(s++);~n&&(t=i%4?64*t+n:n,i++%4)?o+=String.fromCharCode(255&t>>(-2*i&6)):0)n="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=".indexOf(n);for(var a=0,l=o.length;a<l;a++)r+="%"+("00"+o.charCodeAt(a).toString(16)).slice(-2);return decodeURIComponent(r)},e=arguments,iv.DXBaPw=!
+---
+
+--- At position 250651 ---
+"m05u","v00X","vfKY","mtbhrfHIwuS","nZmWnfDwuvvXDW","odK1ntG0vefxqvzf","mJG1m1jRDgPotq"];return(ov=function(){return e})()}function rv({signVersion:e,signType:t}){var n=nv;return{"X-Request-Sign":n(200)+"yNj"+n(227)+n(197)+n(198)+n(204)+"I4ZDkwMzA"+n(214)+n(222)+n(215)+"N2Y"+n(205)+"VjYWZh"+n(223)+n(213)+"ZhY"+n(208)+"NTB"+n(212)+n(211)+n(216)+n(207)+n(202)+n(203)+"wwwww==","X-Request-Timestamp":(new Date)[n(209)+n(206)+"f"]()+"","X-Request-Package-Sign-Version":e,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":t}}function iv(e,t){var n=sv();return iv=function(t,o){var r=n[t-=432];if(void 0===iv.DXBaPw){iv.fySifu=function(e){for(var t,n,o="",r="",i=0,s=0;n=e.charAt(s++);~n&&(t=i%4?64*t+n:n,i++%4)?o+=String.fromCharCode(255&t>>(-2*i&6)):0)n="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=".indexOf(n);for(var a=0,l=o.length;a<l;a++)r+="%"+("00"+o.charCodeAt(a).toString(16)).slice(-2);return decodeURIComponent(r)},e=arguments,iv.DXBaPw=!0}var i=t+n[0],s=e[i];return s
+---
+
+=== 'HMAC' found 1 times ===
+
+--- At position 258502 ---
+p(468)+"s"](y)[p(494)+p(484)]((e,t)=>{const n=p;let o=y[t];return Array["isA"+n(487)+"y"](o)&&(o=o.sort(cv)),e[t]=o,e},{}),{arrayFormat:p(489)+"cket",strict:!1,sort:cv}),w=a||"",_=v[p(488)+"h"]+v[p(459)+"e"]+i[p(473)+"Kk"](u,b)+w+h;return{"X-Request-Sign":Bg(Ug(g,_)),"X-Request-Timestamp":h,"X-Request-Package-Sign-Version":n,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":o}})}}})({fetchSkey:function(){return ue(this,null,function*(){return hv})},platform:"web",signVersion:"0.0.1",signType:"HMAC_SHA256"});const bv=Ag(()=>ue(null,null,function*(){try{const e=yield function(e){return ue(this,null,function*(){return yield(yield fetch(e)).json()})}(gv),{data:t}=e,{timestamp:n}=t,o=1e3*n-(new Date).getTime();Math.abs(o)>6e4&&yv(o)}catch(_v){console.error(_v)}}),{immediate:!1}),wv=(e,t)=>ue(null,null,function*(){return e=function(e){const t=pv,n={YjGLI:t(148)+t(131)+t(142),lskBF:t(145)+"p:"};if(!/[a-zA-Z]+:/[t(151)+"t"](e)){const o=typeof window!==n[t(154)+"LI"]?window[t(144)+t(146)+"on"
+---
+
+=== 'SHA256' found 1 times ===
+
+--- At position 258507 ---
+)+"s"](y)[p(494)+p(484)]((e,t)=>{const n=p;let o=y[t];return Array["isA"+n(487)+"y"](o)&&(o=o.sort(cv)),e[t]=o,e},{}),{arrayFormat:p(489)+"cket",strict:!1,sort:cv}),w=a||"",_=v[p(488)+"h"]+v[p(459)+"e"]+i[p(473)+"Kk"](u,b)+w+h;return{"X-Request-Sign":Bg(Ug(g,_)),"X-Request-Timestamp":h,"X-Request-Package-Sign-Version":n,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":o}})}}})({fetchSkey:function(){return ue(this,null,function*(){return hv})},platform:"web",signVersion:"0.0.1",signType:"HMAC_SHA256"});const bv=Ag(()=>ue(null,null,function*(){try{const e=yield function(e){return ue(this,null,function*(){return yield(yield fetch(e)).json()})}(gv),{data:t}=e,{timestamp:n}=t,o=1e3*n-(new Date).getTime();Math.abs(o)>6e4&&yv(o)}catch(_v){console.error(_v)}}),{immediate:!1}),wv=(e,t)=>ue(null,null,function*(){return e=function(e){const t=pv,n={YjGLI:t(148)+t(131)+t(142),lskBF:t(145)+"p:"};if(!/[a-zA-Z]+:/[t(151)+"t"](e)){const o=typeof window!==n[t(154)+"LI"]?window[t(144)+t(146)+"on"]["pr
+---
+
+=== 'Ug(' found 1 times ===
+
+--- At position 258261 ---
+"][p(493)+p(462)+"e"](/^\?/,""),{parseNumbers:!1,arrayFormat:i[p(477)+"pH"]})),Pg[p(486)+"se"](Pg[p(495)+p(460)+p(465)](i.QTBHj(f,{}),{strict:!1,arrayFormat:p(489)+p(478)+"t"}),{arrayFormat:i[p(477)+"pH"]})),b=Pg[p(495)+p(460)+"ify"](Object[p(468)+"s"](y)[p(494)+p(484)]((e,t)=>{const n=p;let o=y[t];return Array["isA"+n(487)+"y"](o)&&(o=o.sort(cv)),e[t]=o,e},{}),{arrayFormat:p(489)+"cket",strict:!1,sort:cv}),w=a||"",_=v[p(488)+"h"]+v[p(459)+"e"]+i[p(473)+"Kk"](u,b)+w+h;return{"X-Request-Sign":Bg(Ug(g,_)),"X-Request-Timestamp":h,"X-Request-Package-Sign-Version":n,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":o}})}}})({fetchSkey:function(){return ue(this,null,function*(){return hv})},platform:"web",signVersion:"0.0.1",signType:"HMAC_SHA256"});const bv=Ag(()=>ue(null,null,function*(){try{const e=yield function(e){return ue(this,null,function*(){return yield(yield fetch(e)).json()})}(gv),{data:t}=e,{timestamp:n}=t,o=1e3*n-(new Date).getTime();Math.abs(o)>6e4&&yv(o)}catch(_v){console.e
+---
+
+=== 'Bg(' found 1 times ===
+
+--- At position 258258 ---
+"ry"][p(493)+p(462)+"e"](/^\?/,""),{parseNumbers:!1,arrayFormat:i[p(477)+"pH"]})),Pg[p(486)+"se"](Pg[p(495)+p(460)+p(465)](i.QTBHj(f,{}),{strict:!1,arrayFormat:p(489)+p(478)+"t"}),{arrayFormat:i[p(477)+"pH"]})),b=Pg[p(495)+p(460)+"ify"](Object[p(468)+"s"](y)[p(494)+p(484)]((e,t)=>{const n=p;let o=y[t];return Array["isA"+n(487)+"y"](o)&&(o=o.sort(cv)),e[t]=o,e},{}),{arrayFormat:p(489)+"cket",strict:!1,sort:cv}),w=a||"",_=v[p(488)+"h"]+v[p(459)+"e"]+i[p(473)+"Kk"](u,b)+w+h;return{"X-Request-Sign":Bg(Ug(g,_)),"X-Request-Timestamp":h,"X-Request-Package-Sign-Version":n,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":o}})}}})({fetchSkey:function(){return ue(this,null,function*(){return hv})},platform:"web",signVersion:"0.0.1",signType:"HMAC_SHA256"});const bv=Ag(()=>ue(null,null,function*(){try{const e=yield function(e){return ue(this,null,function*(){return yield(yield fetch(e)).json()})}(gv),{data:t}=e,{timestamp:n}=t,o=1e3*n-(new Date).getTime();Math.abs(o)>6e4&&yv(o)}catch(_v){consol
+---
+
+=== 'fetchSkey' found 2 times ===
+
+--- At position 255940 ---
+))}catch(n){t.push(t.shift())}}(),function(){const e=pv,t=fv();for(;;)try{if(parseInt(e(141))/1*(-parseInt(e(136))/2)+parseInt(e(149))/3+-parseInt(e(150))/4+parseInt(e(135))/5+parseInt(e(143))/6+-parseInt(e(155))/7*(-parseInt(e(137))/8)+parseInt(e(139))/9==604516)break;t.push(t.shift())}catch(n){t.push(t.shift())}}();const hv={production:"2TJhRTpCpUIgnWl3qwIaoMMt3KhL2nkC",development:"67svK1GJqP0GMW31TfGI9YAOcyvLUX0q"};let mv=!1,gv="https://api.qiandao.cn/now";const{sign:vv,setTimeOffset:yv}=(({fetchSkey:e,platform:t,signVersion:n,signType:o})=>{const r=av,i={ivtme:r(485)+r(480)+"ey fai"+r(491),eemKk:function(e,t){return e(t)},ReSAB:function(e){return e()},izDpH:r(489)+r(478)+"t",QTBHj:function(e,t){return e||t}};let s=0,a="0";const l=Ag(()=>ue(null,null,function*(){const t=r;try{const n=yield e();if(!n)throw new Error(i[t(496)+"me"]);return n}catch(n){throw a=Number(a)+1+"",n}}),{withKey:!0});function c(){return ue(this,null,function*(){return yield l(a)})}const u=function(e){const t=
+---
+
+--- At position 258391 ---
+{}),{strict:!1,arrayFormat:p(489)+p(478)+"t"}),{arrayFormat:i[p(477)+"pH"]})),b=Pg[p(495)+p(460)+"ify"](Object[p(468)+"s"](y)[p(494)+p(484)]((e,t)=>{const n=p;let o=y[t];return Array["isA"+n(487)+"y"](o)&&(o=o.sort(cv)),e[t]=o,e},{}),{arrayFormat:p(489)+"cket",strict:!1,sort:cv}),w=a||"",_=v[p(488)+"h"]+v[p(459)+"e"]+i[p(473)+"Kk"](u,b)+w+h;return{"X-Request-Sign":Bg(Ug(g,_)),"X-Request-Timestamp":h,"X-Request-Package-Sign-Version":n,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":o}})}}})({fetchSkey:function(){return ue(this,null,function*(){return hv})},platform:"web",signVersion:"0.0.1",signType:"HMAC_SHA256"});const bv=Ag(()=>ue(null,null,function*(){try{const e=yield function(e){return ue(this,null,function*(){return yield(yield fetch(e)).json()})}(gv),{data:t}=e,{timestamp:n}=t,o=1e3*n-(new Date).getTime();Math.abs(o)>6e4&&yv(o)}catch(_v){console.error(_v)}}),{immediate:!1}),wv=(e,t)=>ue(null,null,function*(){return e=function(e){const t=pv,n={YjGLI:t(148)+t(131)+t(142),lskBF
+---
+
+=== 'signVersion' found 6 times ===
+
+--- At position 250287 ---
+nent(r)},e=arguments,nv.VOtWsW=!0}var i=t+n[0],s=e[i];return s?r=s:(r=nv.VlCAXl(r),e[i]=r),r},nv(e,t)}function ov(){var e=["odG4mdC4uM1OqwLj","sMXz","twPr","mZuXmZm4ouzPvNnLwG","n3bLB3rLua","odm5ote1yNPsshLj","zNHA","veeY","tLDs","odq4mtb0wePVt2u","t1rz","ngn0q1DTCa","D1Hx","uND3","AvLx","mvKY","Dwvp","wvrf","ELeX","DMfS","ndq4mdmWDg5dtMHc","sM1A","BfLT","D00Y","m05u","v00X","vfKY","mtbhrfHIwuS","nZmWnfDwuvvXDW","odK1ntG0vefxqvzf","mJG1m1jRDgPotq"];return(ov=function(){return e})()}function rv({signVersion:e,signType:t}){var n=nv;return{"X-Request-Sign":n(200)+"yNj"+n(227)+n(197)+n(198)+n(204)+"I4ZDkwMzA"+n(214)+n(222)+n(215)+"N2Y"+n(205)+"VjYWZh"+n(223)+n(213)+"ZhY"+n(208)+"NTB"+n(212)+n(211)+n(216)+n(207)+n(202)+n(203)+"wwwww==","X-Request-Timestamp":(new Date)[n(209)+n(206)+"f"]()+"","X-Request-Package-Sign-Version":e,"X-Request-Sign-Version":"v1","X-Request-Sign-Type":t}}function iv(e,t){var n=sv();return iv=function(t,o){var r=n[t-=432];if(void 0===iv.DXBaPw){iv.fySifu=function(e)
+---
+
+--- At position 255963 ---
+ift())}}(),function(){const e=pv,t=fv();for(;;)try{if(parseInt(e(141))/1*(-parseInt(e(136))/2)+parseInt(e(149))/3+-parseInt(e(150))/4+parseInt(e(135))/5+parseInt(e(143))/6+-parseInt(e(155))/7*(-parseInt(e(137))/8)+parseInt(e(139))/9==604516)break;t.push(t.shift())}catch(n){t.push(t.shift())}}();const hv={production:"2TJhRTpCpUIgnWl3qwIaoMMt3KhL2nkC",development:"67svK1GJqP0GMW31TfGI9YAOcyvLUX0q"};let mv=!1,gv="https://api.qiandao.cn/now";const{sign:vv,setTimeOffset:yv}=(({fetchSkey:e,platform:t,signVersion:n,signType:o})=>{const r=av,i={ivtme:r(485)+r(480)+"ey fai"+r(491),eemKk:function(e,t){return e(t)},ReSAB:function(e){return e()},izDpH:r(489)+r(478)+"t",QTBHj:function(e,t){return e||t}};let s=0,a="0";const l=Ag(()=>ue(null,null,function*(){const t=r;try{const n=yield e();if(!n)throw new Error(i[t(496)+"me"]);return n}catch(n){throw a=Number(a)+1+"",n}}),{withKey:!0});function c(){return ue(this,null,function*(){return yield l(a)})}const u=function(e){const t=r,n=function(e,t){retur
+---
+
+--- At position 257004 ---
+)+t(484)]((e,o,r)=>{const i=t;let[s,a]=o[i(464)+"it"]("=");return s=encodeURIComponent(s),a=a||"",n(e+(r>0?"&":""),s)+"="+a},""):""};return{setTimeOffset:function(e){s=e},refreshSkey:function(){return ue(this,null,function*(){const e=r;return yield i[e(473)+"Kk"](l,(new Date)[e(463)+e(456)+"f"]()+"")})},sign:function(e){return ue(this,arguments,function*({url:e,requestId:a="",timestamp:l,skey:d="",query:f}){const p=r;switch(t){case p(469)+p(490)+p(472)+"am":if(!i.ReSAB(Yg))return rv({signType:o,signVersion:n});break;case p(474):if(!function(){const e=Zg;return{cUbaf:function(e,t){return e!==t}}[e(220)+"af"](typeof window,e(217)+"efi"+e(228))?tv[e(179)+"e"](t=>{const n=e,o=window[n(192)+n(200)+"on"][n(221)+"tname"];return o===t||o[n(196)+n(211)+"th"]("."+t)||!0===window[n(225)]}):!0===globalThis.lbb}())return rv({signType:o,signVersion:n});break;case p(492)+"0b":break;default:return i[p(473)+"Kk"](rv,{signType:o,signVersion:n})}const h=(l||(new Date)[p(471)+p(481)+"e"]()+s)+"",m=functio
+---

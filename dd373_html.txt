@@ -1,0 +1,2731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="referrer" content="always">
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>流放之路2(国际服)神圣石交易平台-游戏币交易比例-DD373.COM</title>
+    <meta name="description" content="流放之路2(国际服)神圣石交易平台，神圣石，预兆，碑牌，装备，游戏账号，超值游戏币、极品账号，DD373不只提高你的战斗力!">
+    <meta name="keywords" content="流放之路2(国际服)神圣石交易平台,游戏币装备账号交易">
+    <link href="//cdnimg.dd373.com/file/general/images/favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/common/stlye/common.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/file/general/Css/idangerous.swiper.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/common/style/default/common_sprite.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/common/style/default/icon_sprite.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/common/style/default/common_style.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/common/style/default/footer_icons.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/common/stlye/right_hover.css?v=202607231641">
+    
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/goods/style/default/goods_comm.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/goods/style/default/goods_list_sprite.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/common/style/default/page_pagination.css?v=202607231641">
+    <link rel="stylesheet" href="//sta.dd373.com/newfile/goods/style/default/goods_list_new.css?v=202607231641">
+
+</head>
+<body>
+    <div class="header">
+
+        <!--顶部菜单-->
+        <div class='top'><div class='row'><ul class='fr menu-wrap' id='topMenus'><li class='item'><a href='//www.dd373.com/' ><span style=' '>DD373首页</span></a><span class='right-line'></span></li><li class='item'><a href='//imservice.dd373.com/usercenter/recent_session_list.html'target='_blank' ><span style='color:#FF5B01 '>订单聊天</span></a><span class='right-line'></span></li><li class='item'><a href='//newuser.dd373.com/usercenter/index.html'target='_blank' class='two-select-menu'><span style=' '>我的DD373</span><i class='arrow'></i></a><div class='dropdown-menu'><ul class='wsn mt6'><li><a href ='https://newuser.dd373.com/usercenter/index.html'  class='b' style=' '>我是买家</a><ul class='wsn'><li><a href ='//game.dd373.com/y-0-2.html' target='_blank' class='' style=' '>我要买</a></li></ul><ul class='wsn'><li><a href ='//order.dd373.com/usercenter/buyer/buy_orders.html' target='_blank' class='' style=' '>买家订单管理</a></li></ul><ul class='wsn'><li><a href ='https://order.dd373.com/usercenter/buyer/bargain_goods_list.html' target='_blank' class='' style=' '>求降价的商品</a></li></ul><li><a href ='https://newuser.dd373.com/usercenter/index.html'  class='b' style=' '>我是卖家</a><ul class='wsn'><li><a href ='//game.dd373.com/default/sell/sell_goods.html'  class='' style=' '>我要卖</a></li></ul><ul class='wsn'><li><a href ='//order.dd373.com/usercenter/seller/sale_orders.html'  class='' style=' '>卖家订单管理</a></li></ul><ul class='wsn'><li><a href ='//goods.dd373.com/usercenter/seller/sell_goods_list.html'  class='' style=' '>卖家商品管理</a></li></ul></li></ul></div><i class='fukie'></i><span class='right-line'></span></li><li class='item'><a href='//newpay.dd373.com/usercenter/diamond_exchange.html'target='_blank' ><span style=' '>钻石兑换</span></a><span class='right-line'></span></li><li class='item'><a href='//kf.dd373.com/'target='_blank' class='two-select-menu'><span style=' '>客服中心</span><i class='arrow'></i></a><div class='dropdown-menu'><ul class='wsn '><li><a href ='//kf.dd373.com/ServiceCenter/HelpCenter'  class='' style=' '>帮助中心</a></li></ul><ul class='wsn '><li><a href ='//kf.dd373.com/ServiceCenter/SafeCenter'  class='' style=' '>安全中心</a></li></ul><ul class='wsn '><li><a href ='//kf.dd373.com/ServiceCenter/ConsultCenter'  class='' style=' '>咨询中心</a></li></ul><ul class='wsn '><li><a href ='//kf.dd373.com/ServiceCenter/AppealCenter	'  class='' style=' '>申诉中心</a></li></ul><ul class='wsn '><li><a href ='//kf.dd373.com/ServiceCenter/NoticeCenter'  class='' style=' '>公告中心</a></li></ul></div><i class='fukie'></i><span class='right-line'></span></li><li class='item'><a href='' class='two-select-menu'><span style=' '>网站导航</span><i class='arrow'></i></a><div class='dropdown-menu'><ul class='wsn mt6'><li><a href ='//www.dd373.com'  class='b' style=' '>游戏交易</a><ul class='wsn'><li><a href ='//www.dd373.com'  class='' style=' '>端游交易</a><li><a href ='//game.dd373.com/mg.html'  class='' style=' '>手游交易</a></li></ul><ul class='wsn'><li><a href ='//www.dd373.com/coin/index'  class='' style=' '>金币交易</a></li></ul></li></ul><ul class='wsn mt6'><li><a href =''  class='b' style=' '>特色服务</a><ul class='wsn'><li><a href ='//gift.dd373.com/GiftBag/Index'  class='' style=' '>游戏礼包</a><li><a href ='//kf.dd373.com/Information/index'  class='' style=' '>游戏资讯</a></li></ul><ul class='wsn'><li><a href ='//www.dd373.com/Account/Valuation'  class='' style=' '>账号估价</a></li></ul></li></ul><ul class='wsn mt6'><li><a href =''  class='b' style=' '>更多精选</a><ul class='wsn'><li><a href ='//kf.dd373.com/'  class='' style=' '>客服中心</a><li><a href ='https://point.dd373.com/default/m_club_index.html'  class='' style=' '>会员俱乐部</a></li></ul><ul class='wsn'><li><a href ='https://tg.dd373.com/default/index.html'  class='' style=' '>推广联盟</a><li><a href ='//gift.dd373.com/usercenter/cdkey_exchange.html' target='_blank' class='' style=' '>CDKEY兑换</a></li></ul><ul class='wsn'><li><a href ='//merchant.dd373.com/usercenter/management.html'  class='' style=' '>商家认证</a></li></ul></li></ul></div><i class='fukie'></i><span class='right-line'></span></li><li class='item'><a href='https://cms.dd373.com/default/app_down.html'target='_blank' class='two-select-menu'><span style='color:#333 '>手机APP</span><i class='arrow'></i></a><div class='dropdown-menu'><ul class='wsn ' style='white-space:normal'><li class='code-li'><div class='code-div'><img class='db' src='//publicimg.pp373.com/Upload/2024-01-26/65b9efc6-790b-477e-b758-1b7e68a6941c.png' /></div><a href ='https://cms.dd373.com/default/app_down.html' target='_blank' class='' style=';word-break:break-all'> 交易平台APP</a></li></ul></div><i class='fukie'></i><span class='right-line'></span></li><li class='item'><a href='https://kf.dd373.com/helpdetail/a302e9318d9343b3aeaffe818aeec7cc.html'target='_blank' ><span style=' '>企业资质</span></a></li></ul> </div ></div > 
+
+        <!-- logo and search -->
+        <div class="cont clear">
+            <div class="row ovh">
+                <div class="fl logo-wrap">
+                    <h1>
+                        <a title="嘟嘟网络游戏服务网" href=//www.dd373.com><img alt="嘟嘟网络游戏服务网" src="//publicimg.pp373.com/SitePic/2026-03-05/e7b2bee9d63c447f806c63ff06e913d1.png" style="width:227px;height:100px"></a>
+                    </h1>
+                </div>
+
+
+                <div class="fr">
+                    <div class="ovh search-wrap">
+                        <div class="fl search-tab-cont">
+                            <div class="advanced ovh" id="advancedGameArea">
+                                <ul class="fl">
+                                    <li data-leveltype="1"><span>游戏名称</span> <i class="arrow"></i></li>
+                                    <li data-leveltype="2" data-lastleveltype="1"><span>商品类型</span> <i class="arrow"></i></li>
+                                </ul>
+                                <div class="fl input-search">
+                                    <i class="icon-search"></i>
+                                    <input type="text" placeholder="请输入商品编号或标题关键字" value="">
+                                </div>
+                                <button class="fr btn-search">搜 索</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="ovh hot-search">
+                        <tr>
+                            <td class="title">热门搜索：</td>
+                            <td class="hot-items">
+                                <div class="elip">
+                                                <a class="item" href="//www.dd373.com/s-rj8jp0.html" id="c97d2193c0a445b6a717acb6fdb17c16" title="暗黑2：重制版国服" target="_blank">暗黑2：重制版国服</a>
+                                                <a class="item" href="//www.dd373.com/s-aj0khw.html" id="aaf1d31698cb4f28bde719be2b0ee15d" title="魔兽世界时光服" target="_blank">魔兽世界时光服</a>
+                                                <a class="item" href="//www.dd373.com/s-r0f5te.html" id="9b8f7770c0d1454c9b813a6725dc259c" title="永恒之塔2" target="_blank">永恒之塔2</a>
+                                                <a class="item" href="//www.dd373.com/s-hjhpcg.html" id="8e70f6f0278249c8b0e1108c2c9c61ed" title="异环" target="_blank">异环</a>
+                                                <a class="item" href="//www.dd373.com/s-3ndhp0.html" id="86054ff3-61a9-443f-ba33-eb6fddf7897c" title="火炬之光（国服）" target="_blank">火炬之光（国服）</a>
+                                                <a class="item" href="//www.dd373.com/s-xg4wjs.html" id="56e2092c904347f4a844d0277678e749" title="洛克王国:世界" target="_blank">洛克王国:世界</a>
+                                                <a class="item" href="//www.dd373.com/s-q0kacj.html" id="1c7054e525d6471b9a0e71102e81d6d7" title="天堂:经典版" target="_blank">天堂:经典版</a>
+                                                <a class="item" href="//www.dd373.com/s-xu9np3.html" id="68039e54-18ed-4915-b882-7117734aa54a" title="逆水寒" target="_blank">逆水寒</a>
+                                                <a class="item" href="//www.dd373.com/s-qcgvm9.html" id="16b7a9a8ec164ac189f6a8648833e5bc" title="魔兽世界旧世经典（60级）" target="_blank">魔兽世界旧世经典（60级）</a>
+                                                <a class="item" href="//www.dd373.com/s-80pgns.html" id="da2d2336-8457-467c-8af8-f8f8ede1f225" title="暗黑破坏神4国服" target="_blank">暗黑破坏神4国服</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!-- /logo and search -->
+
+        <div class="nav">
+            <div class="row ovh"> 
+                <ul class="goods-top-left">
+                                <li>
+                                    <a href="//www.dd373.com/"  >首页</a>
+                                </li>
+                                <li>
+                                    <a href="//game.dd373.com/y-0-0.html"  >全部游戏</a>
+                                </li>
+                                <li>
+                                        <i style="background-image: url(//publicimg.pp373.com/SitePic/2025-08-11/63dfdc2e036b436ba5b38b4a3334330a.png)"></i>
+                                    <a href="//game.dd373.com/y-0-0.html?GoodsType=4"  >买账号</a>
+                                </li>
+                                <li>
+                                    <a href="//game.dd373.com/y-0-2.html?GoodsType=1"  >金币交易</a>
+                                </li>
+                                <li>
+                                    <a href="//game.dd373.com/default/sell/sell_goods.html"  >我要卖</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.ecosteam.cn"  target=_blank>cs2饰品交易</a>
+                                </li>
+                                <li>
+                                    <a href="https://dd373.com/81q"  target=_blank>直播交友</a>
+                                </li>
+                </ul>
+                <ul class="goods-top-right">
+                                <li>
+                                    <a href="https://point.dd373.com/default/m_club_index.html"  >会员俱乐部</a>
+                                </li>
+                                <li>
+                                    <a href="//tg.dd373.com/default/index.html"  >推广联盟</a>
+                                </li>
+                                <li>
+                                    <a href="//kf.dd373.com/"  >客服中心</a>
+                                </li>
+                                <li>
+                                        <i style="background-image: url(//publicimg.pp373.com/SitePic/2025-12-17/c6f1f774b0d54ae09e7d045487680672.png)"></i>
+                                    <a href="https://cms.dd373.com/default/app_down.html"  target=_blank>手机APP</a>
+                                </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main" style="min-height: calc(70px);">
+    <div class="page-contnet">
+        <div class="current-address">
+            <div>
+                <span class="color999 font12">您的位置：</span>
+                <a href="//www.dd373.com">首页</a>
+                <a href="//game.dd373.com/y-0-0.html">游戏列表</a>
+                <span class="color999 font12">商品列表</span>
+            </div>
+        </div>
+
+        <div class="adv-top">
+            <a href="#">
+                <img src="//publicimg.dd373.com/SitePic/2019-12-17/d2b05fa3d3454b80bcee40834a76f7ee.jpg?x-oss-process=image/format,webp">
+            </a>
+        </div>
+
+        <div class="user-info-box">
+            <div class="user-person-info">
+                    <p class="usre-img" style="background:url(//publicimg.pp373.com/SitePic/2025-11-08/0e3ba10fe7ec473582371b26e425d520.png?x-oss-process=image/resize,w_200/format,webp) no-repeat;background-size:cover;"></p>
+                    <div class="user-name-box">
+                        <p class="same-name">流放之路2(国际服)</p>
+                        <p>
+                            <span>网络游戏</span>
+                        </p>
+                    </div>
+
+			</div>
+			<div class="current-right-box">
+				<a class="open-seach-history dn"  href="javascript:;" id="searchHistorySelect">历史筛选记录<i class="cd-down-orange"></i></a>
+			</div>
+			<div class="search-history-list dn" id="searchHistoryDown">
+				<div class="tips">
+					<span>历史筛选记录</span>
+					<span>（展示近10条）</span>
+				</div>
+				<div class="history-list  dn" id="searchHistoryList">
+				</div>
+				<div class="nolist">
+					<span>暂无历史筛选记录</span>
+				</div>
+			</div>
+			<div class="current-right-box m-r40">
+                <a class="color999" href="/s-3hcpqw-0-0-0-0-0-8rknmp-0-0-0-0-1-0-0-1.html"><i class="goods-icon-refresh m-r5"></i>重置所有选项</a>
+            </div>
+        </div>
+    </div>
+
+	<div class="goods-select-condition-box">
+		<!-- 右侧筛选几热卖商城 -->
+		<div class="goods-select-condition">
+			<!-- 左侧广告 及热卖商城收货-->
+			<div class="top-left-content">
+				<!-- 热卖商城收货,所选商品类型开通商城才显示此区域 -->
+
+<div class="hot-receiving-goods">
+    <p class="list-sh-top"></p>
+    <p class="list-sh-bottom"></p>
+    <div class="receive-title">
+        <i class="icon-list-5 f-left"></i>
+        <span class="font16 colorFF5 f-left">极速收货</span>
+        <a href="//merchant.dd373.com/usercenter/marchant_apply.html?applyName=商家收货&merchantType=8" class="f-right font12 color666 " target="_blank">我要入驻</a> <!-- 没有商家---我要入驻不显示 -->
+    </div>
+
+    <!--有商家入驻平台收货显示此区域-->
+        <div class="swiper-container">
+            <div id="receve-swiper" class="slides210" max-num="7">
+                <div class="slides_container">
+                    <!-- 一个另一个 -->
+                        <div class="swiper-slide slides210">
+                            <div>
+                                <div class="receive-address">
+                                    <span class="receiveQufu0"></span>
+                                </div>
+                                <div class="receive-lable">
+                                            <span>当面</span>
+                                            <span>邮寄</span>
+                                            <span>拍卖</span>
+                                            <span>摆摊</span>
+                                </div>
+                                <div>
+                                        <p class="proportion-icon-box f_left m-r6">
+                                            <i class="icon-bese_proportion"></i>
+                                        </p>
+                                        <p class="line-height14 font12 colorFF5 t-m4 center" style="text-align:left">1元=14.65个</p>
+                                        <p class="font12 color666 line-height14 t-m4" style="text-align:left">0.0683元 /个</p>
+                                </div>
+
+                                <div class="receive-number">
+                                    <p>
+                                        <span class="font12 color666">收货数量：</span>
+                                        <span class="font12 colorFF5">75669</span>
+                                        <span class="font12 color666">个</span>
+                                    </p>
+                                </div>
+                                <div class="input-recevie buy-box">
+                                    <input type="text" id="receiveInputSH20260530082908-89002" data-min="2000" value="2000" data-max="40000" data-bili="14.6500"> 
+                                    <span>个</span>
+                                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                                </div>
+                                <p class="get-money p-lr16">
+                                    <span class="font12 color666 f-left">获得金额：</span>
+                                        <span class="font12 colorFF5 f-left yuan bold">136.52</span>
+                                    <span class="font12 color666 f-left">元</span>
+                                </p>
+                                <a onclick="jumpReceive('SH20260530082908-89002')" class="sell-recevie-btn">立即出售</a>
+                            </div>
+                                <div class="receive-line">
+                                    <div class="receive-address">
+                                        <span class="receiveQufu1"></span>
+                                    </div>
+                                    <div class="receive-lable">
+                                                <span>当面</span>
+                                                <span>拍卖</span>
+                                    </div>
+                                    <div>
+                                            <p class="proportion-icon-box f_left m-r6">
+                                                <i class="icon-bese_proportion"></i>
+                                            </p>
+                                        <!-- 有最佳比例添加样式, 无都不添加 -->
+                                            <p class="line-height14 font12 colorFF5 t-m4 center" style="text-align:left">1元=14.7029个</p>
+                                            <p class="font12 color666 line-height14 t-m4" style="text-align:left">0.068元/个</p>
+                                    </div>
+
+                                    <div class="receive-number">
+                                        <p>
+                                            <span class="font12 color666">收货数量：</span>
+                                            <span class="font12 colorFF5">20000</span>
+                                            <span class="font12 color666">个</span>
+                                        </p>
+                                    </div>
+                                    <div class="input-recevie buy-box">
+                                        <input type="text" id="receiveInputSH20260531085351-66003" data-min="500" value="500" data-max="12000" data-bili="14.7029"> 
+                                        <span>个</span>
+                                        <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                                    </div>
+                                    <p class="get-money p-lr16">
+                                        <span class="font12 color666 f-left">获得金额：</span>
+                                            <span class="font12 colorFF5 f-left yuan bold">34.01</span> 
+
+                                        <span class="font12 color666 f-left">元</span>
+                                    </p>
+                                    <a onclick="jumpReceive('SH20260531085351-66003')" class="sell-recevie-btn">立即出售</a>
+                                </div>
+                        </div>
+                        <div class="swiper-slide slides210">
+                            <div>
+                                <div class="receive-address">
+                                    <span class="receiveQufu2"></span>
+                                </div>
+                                <div class="receive-lable">
+                                            <span>当面</span>
+                                            <span>邮寄</span>
+                                            <span>拍卖</span>
+                                            <span>摆摊</span>
+                                </div>
+                                <div>
+                                        <p class="line-height14 font12 colorFF5 t-m4 center" style="">1元=14.703个</p>
+                                        <p class="font12 color666 line-height14 t-m4" style="">0.068元 /个</p>
+                                </div>
+
+                                <div class="receive-number">
+                                    <p>
+                                        <span class="font12 color666">收货数量：</span>
+                                        <span class="font12 colorFF5">96500</span>
+                                        <span class="font12 color666">个</span>
+                                    </p>
+                                </div>
+                                <div class="input-recevie buy-box">
+                                    <input type="text" id="receiveInputSH20260530090447-12002" data-min="1000" value="1000" data-max="20000" data-bili="14.7030"> 
+                                    <span>个</span>
+                                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                                </div>
+                                <p class="get-money p-lr16">
+                                    <span class="font12 color666 f-left">获得金额：</span>
+                                        <span class="font12 colorFF5 f-left yuan bold">68.01</span>
+                                    <span class="font12 color666 f-left">元</span>
+                                </p>
+                                <a onclick="jumpReceive('SH20260530090447-12002')" class="sell-recevie-btn">立即出售</a>
+                            </div>
+                                <div class="receive-line">
+                                    <div class="receive-address">
+                                        <span class="receiveQufu3"></span>
+                                    </div>
+                                    <div class="receive-lable">
+                                                <span>当面</span>
+                                    </div>
+                                    <div>
+                                        <!-- 有最佳比例添加样式, 无都不添加 -->
+                                            <p class="line-height14 font12 colorFF5 t-m4 center" style="">1元=14.866个</p>
+                                            <p class="font12 color666 line-height14 t-m4" style="">0.0673元/个</p>
+                                    </div>
+
+                                    <div class="receive-number">
+                                        <p>
+                                            <span class="font12 color666">收货数量：</span>
+                                            <span class="font12 colorFF5">30000</span>
+                                            <span class="font12 color666">个</span>
+                                        </p>
+                                    </div>
+                                    <div class="input-recevie buy-box">
+                                        <input type="text" id="receiveInputSH20260530101650-27002" data-min="5000" value="5000" data-max="30000" data-bili="14.8660"> 
+                                        <span>个</span>
+                                        <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                                    </div>
+                                    <p class="get-money p-lr16">
+                                        <span class="font12 color666 f-left">获得金额：</span>
+                                            <span class="font12 colorFF5 f-left yuan bold">336.34</span> 
+
+                                        <span class="font12 color666 f-left">元</span>
+                                    </p>
+                                    <a onclick="jumpReceive('SH20260530101650-27002')" class="sell-recevie-btn">立即出售</a>
+                                </div>
+                        </div>
+                        <div class="swiper-slide slides210">
+                            <div>
+                                <div class="receive-address">
+                                    <span class="receiveQufu4"></span>
+                                </div>
+                                <div class="receive-lable">
+                                            <span>拍卖</span>
+                                </div>
+                                <div>
+                                        <p class="line-height14 font12 colorFF5 t-m4 center" style="">1元=14.869个</p>
+                                        <p class="font12 color666 line-height14 t-m4" style="">0.0673元 /个</p>
+                                </div>
+
+                                <div class="receive-number">
+                                    <p>
+                                        <span class="font12 color666">收货数量：</span>
+                                        <span class="font12 colorFF5">945590</span>
+                                        <span class="font12 color666">个</span>
+                                    </p>
+                                </div>
+                                <div class="input-recevie buy-box">
+                                    <input type="text" id="receiveInputSH20260531222420-88002" data-min="1000" value="1000" data-max="60000" data-bili="14.8690"> 
+                                    <span>个</span>
+                                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                                </div>
+                                <p class="get-money p-lr16">
+                                    <span class="font12 color666 f-left">获得金额：</span>
+                                        <span class="font12 colorFF5 f-left yuan bold">67.25</span>
+                                    <span class="font12 color666 f-left">元</span>
+                                </p>
+                                <a onclick="jumpReceive('SH20260531222420-88002')" class="sell-recevie-btn">立即出售</a>
+                            </div>
+                                <div class="receive-line">
+                                    <div class="receive-address">
+                                        <span class="receiveQufu5"></span>
+                                    </div>
+                                    <div class="receive-lable">
+                                                <span>当面</span>
+                                                <span>邮寄</span>
+                                                <span>拍卖</span>
+                                                <span>摆摊</span>
+                                    </div>
+                                    <div>
+                                        <!-- 有最佳比例添加样式, 无都不添加 -->
+                                            <p class="line-height14 font12 colorFF5 t-m4 center" style="">1元=14.88个</p>
+                                            <p class="font12 color666 line-height14 t-m4" style="">0.0672元/个</p>
+                                    </div>
+
+                                    <div class="receive-number">
+                                        <p>
+                                            <span class="font12 color666">收货数量：</span>
+                                            <span class="font12 colorFF5">9908586</span>
+                                            <span class="font12 color666">个</span>
+                                        </p>
+                                    </div>
+                                    <div class="input-recevie buy-box">
+                                        <input type="text" id="receiveInputSH20260721155232-76003" data-min="1000" value="1000" data-max="50001" data-bili="14.8800"> 
+                                        <span>个</span>
+                                        <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                                    </div>
+                                    <p class="get-money p-lr16">
+                                        <span class="font12 color666 f-left">获得金额：</span>
+                                            <span class="font12 colorFF5 f-left yuan bold">67.20</span> 
+
+                                        <span class="font12 color666 f-left">元</span>
+                                    </p>
+                                    <a onclick="jumpReceive('SH20260721155232-76003')" class="sell-recevie-btn">立即出售</a>
+                                </div>
+                        </div>
+                        <div class="swiper-slide slides210">
+                            <div>
+                                <div class="receive-address">
+                                    <span class="receiveQufu6"></span>
+                                </div>
+                                <div class="receive-lable">
+                                            <span>当面</span>
+                                </div>
+                                <div>
+                                        <p class="line-height14 font12 colorFF5 t-m4 center" style="">1元=15.14个</p>
+                                        <p class="font12 color666 line-height14 t-m4" style="">0.0661元 /个</p>
+                                </div>
+
+                                <div class="receive-number">
+                                    <p>
+                                        <span class="font12 color666">收货数量：</span>
+                                        <span class="font12 colorFF5">3200</span>
+                                        <span class="font12 color666">个</span>
+                                    </p>
+                                </div>
+                                <div class="input-recevie buy-box">
+                                    <input type="text" id="receiveInputSH20260530092702-57003" data-min="100" value="100" data-max="3000" data-bili="15.1400"> 
+                                    <span>个</span>
+                                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                                </div>
+                                <p class="get-money p-lr16">
+                                    <span class="font12 color666 f-left">获得金额：</span>
+                                        <span class="font12 colorFF5 f-left yuan bold">6.61</span>
+                                    <span class="font12 color666 f-left">元</span>
+                                </p>
+                                <a onclick="jumpReceive('SH20260530092702-57003')" class="sell-recevie-btn">立即出售</a>
+                            </div>
+                                    <div class="receive-line">
+                                        <div class="no-receive-goods">
+                                            <p class="font24 colorFF5 bold center">黄金展位</p>
+                                            <p class="font24 colorFF5 m-t10 bold center">欢迎入驻</p>
+                                            <a href="//merchant.dd373.com/usercenter/marchant_apply.html?applyName=商家收货&merchantType=8" class="settled-in-btn" target="_blank">立即入驻</a>
+                                        </div>
+                                    </div>
+                        </div>
+                </div>
+                    <a href="#" class="next hot-btn-next2"><img src="//cdnimg.dd373.com/newfile/goods/images/default/right.png" alt=""></a>
+                    <a href="#" class="prev hot-btn-prev2"><img src="//cdnimg.dd373.com/newfile/goods/images/default/left.png" alt=""></a>
+            </div>
+            <div class="bussiness-num p-lr16">
+                <a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-receive-0-0-1-0-3-0.html" class="font12 colorFF5" target="_blank">点击查看全部<i class="icon-all-down"></i></a>
+            </div>
+        </div>
+</div>
+			</div>
+			<!--路由信息-->
+			<div class="goods-select-content"><div class="goods-select-item"><div class="goods-select-title"><span>商品类型</span></div><div class="goods-select-value"><a class="active" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a><a class="" href="/s-3hcpqw-c-pmx45h-bwgvrk-fj6p5a.html">预兆</a><a class="" href="/s-3hcpqw-c-07j12h-bwgvrk-fj6p5a.html">碑牌</a><a class="" href="/s-3hcpqw-c-v79b5v-bwgvrk-fj6p5a.html">装备</a><a class="" href="/s-3hcpqw-c-nw2wfw-bwgvrk-fj6p5a.html">游戏账号</a><a class="" href="/s-3hcpqw-c-03p71h-bwgvrk-fj6p5a.html">游戏小号</a><a class="" href="/s-3hcpqw-c-40desb-bwgvrk-fj6p5a.html">套装</a><a class="" href="/s-3hcpqw-c-tqcbc6-bwgvrk-fj6p5a.html">崇高石</a><a class="" href="/s-3hcpqw-c-ps1cnn-bwgvrk-fj6p5a.html">普通工匠石</a><a class="" href="/s-3hcpqw-c-b5br4n-bwgvrk-fj6p5a.html">技能工匠石</a><a class="" href="/s-3hcpqw-c-309tf1-bwgvrk-fj6p5a.html">装备工匠石</a><a class="" href="/s-3hcpqw-c-e99qa6-bwgvrk-fj6p5a.html">高级工匠石</a><a class="" href="/s-3hcpqw-c-ne9e0x-bwgvrk-fj6p5a.html">完美工匠石</a><a class="" href="/s-3hcpqw-c-henjrw-bwgvrk-fj6p5a.html">混沌石</a><a class="" href="/s-3hcpqw-c-cbejn9-bwgvrk-fj6p5a.html">富豪石</a><a class="" href="/s-3hcpqw-c-qhes51-bwgvrk-fj6p5a.html">链结石</a><a class="" href="/s-3hcpqw-c-15g30u-bwgvrk-fj6p5a.html">破裂石</a><a class="" href="/s-3hcpqw-c-drh82k-bwgvrk-fj6p5a.html">幻色石</a><a class="" href="/s-3hcpqw-c-cafdhh-bwgvrk-fj6p5a.html">高阶崇高石</a><a class="" href="/s-3hcpqw-c-s0bww7-bwgvrk-fj6p5a.html">高阶混沌石</a><a class="" href="/s-3hcpqw-c-e0770b-bwgvrk-fj6p5a.html">高阶富豪石</a><a class="" href="/s-3hcpqw-c-2phtec-bwgvrk-fj6p5a.html">完美崇高石</a><a class="" href="/s-3hcpqw-c-agh14g-bwgvrk-fj6p5a.html">完美混沌石</a><a class="" href="/s-3hcpqw-c-f3p0ax-bwgvrk-fj6p5a.html">卡兰德的魔镜</a><a class="" href="/s-3hcpqw-c-1rchjr-bwgvrk-fj6p5a.html">完美富豪石</a><a class="" href="/s-3hcpqw-c-2mrwm5-bwgvrk-fj6p5a.html">点金石</a><a class="" href="/s-3hcpqw-c-86recc-bwgvrk-fj6p5a.html">机会石</a><a class="" href="/s-3hcpqw-c-qq4760-bwgvrk-fj6p5a.html">技能石</a><a class="" href="/s-3hcpqw-c-dk3268-bwgvrk-fj6p5a.html">无效石</a><a class="" href="/s-3hcpqw-c-9dphnx-bwgvrk-fj6p5a.html">地图</a><a class="" href="/s-3hcpqw-c-mhfhnn-bwgvrk-fj6p5a.html">宝石匠的棱镜</a><a class="" href="/s-3hcpqw-c-mxn8x3-bwgvrk-fj6p5a.html">瓦尔宝珠</a><a class="" href="/s-3hcpqw-c-dbp75j-bwgvrk-fj6p5a.html">珠宝</a><a class="" href="/s-3hcpqw-c-3v4ew7-bwgvrk-fj6p5a.html">其他</a><a class="" href="/s-3hcpqw-c-1fr4v9-bwgvrk-fj6p5a.html">护甲片</a><a class="" href="/s-3hcpqw-c-e9xbxu-bwgvrk-fj6p5a.html">磨刀石</a><a class="" href="/s-3hcpqw-c-7e7nq5-bwgvrk-fj6p5a.html">悉尼蔻拉的发丝</a><a class="" href="/s-3hcpqw-c-qj22hk-bwgvrk-fj6p5a.html">CDK</a><a class="" href="/s-3hcpqw-c-ptrsp0-bwgvrk-fj6p5a.html">巨灵之币</a><a class="" href="/s-3hcpqw-c-ujcdr1-bwgvrk-fj6p5a.html">最后通牒雕刻</a><a class="" href="/s-3hcpqw-c-1rsa2d-bwgvrk-fj6p5a.html">奥术蚀刻师</a><a class="" href="/s-3hcpqw-c-bd5adq-bwgvrk-fj6p5a.html">破碎之环文物</a><a class="" href="/s-3hcpqw-c-1f0q08-bwgvrk-fj6p5a.html">精炼的厌恶</a><a class="" href="/s-3hcpqw-c-4w47br-bwgvrk-fj6p5a.html">削切之兆</a><a class="" href="/s-3hcpqw-c-988drr-bwgvrk-fj6p5a.html">玻璃弹珠</a><a class="" href="/s-3hcpqw-c-j2bt38-bwgvrk-fj6p5a.html">复制装</a><a class="" href="/s-3hcpqw-c-7uvcm3-bwgvrk-fj6p5a.html">商家代练</a></div></div><div class="goods-select-item"><div class="goods-select-title"><span>游戏区</span></div><div class="goods-select-value isretract select-the-area-box"  id="3hcpqwQu "><div class="select-the-server routeQuArea" id="game-area"><a class="active" href="/s-3hcpqw-c-8rknmp-1.html">POE2</a><a class="" href="/s-3hcpqw-c-8rknmp-bjfexd.html">PS</a></div></div></div><div class="goods-select-item"><div class="goods-select-title"><span>游戏服</span></div><div class="goods-select-value isretract select-the-area-box"  id="3hcpqwFu "><div class="select-the-server routeFuArea" id="game-area"><a id="3hcpqwallFu " class=" gameotherall " href="/s-3hcpqw-c-8rknmp-bwgvrk.html">全部</a><a class="active" href="/s-3hcpqw-c-8rknmp-bwgvrk-1.html">阿德尔的符文（标准）</a><a class="" href="/s-3hcpqw-c-8rknmp-bwgvrk-vkap70.html">阿德尔的符文（专家）</a><a class="" href="/s-3hcpqw-c-8rknmp-bwgvrk-nxspw7.html">永久(标准)</a><a class="" href="/s-3hcpqw-c-8rknmp-bwgvrk-73spjt.html">永久(专家)</a><a class="" href="/s-3hcpqw-c-8rknmp-bwgvrk-u8wa7q.html">其他联盟</a></div></div></div><!--价格区间--><div class="goods-select-item"><div class="goods-select-title"><span>价格区间</span></div><div class="goods-select-value"><a  href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-3-0.html?MinPrice=0.00&MaxPrice=200.00" >200以内</a><a  href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-3-0.html?MinPrice=200.00&MaxPrice=500.00" >200-500</a><a  href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-3-0.html?MinPrice=500.00&MaxPrice=1000.00" >500-1000</a><a  href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-3-0.html?MinPrice=1000.00&MaxPrice=2000.00" >1000-2000</a><a  href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-3-0.html?MinPrice=2000.00&MaxPrice=9999999.00" >2000以上</a><div class="sell-price-box"><div class="min-price-box"><div><span class=" f-left">￥</span><input type = "text" id="minprice"  value=""></div></div><div class="connect-symbol"> - </div><div class="max-price-box"><div><span class=" f-left">￥</span><input type = "text" id="maxprice" value=""></div></div><div class="price-sure-box"><span class="price-sure" onclick="addPriceParam()">确定</span></div</div></div></div></div></div><div class="goods-select-item "><div class="goods-select-title"><span>交易方式</span></div><div class="goods-select-value isretract  "  id="byuqqx"><a id="k626g7">当面交易</a><a id="nr8rb5">一口价市集交易</a></div></div><!--其他选项--><div class="goods-select-item"><div class="goods-select-title"><span>其他选项</span></div><div class="your-select-value"><div class="your-select-item"><div class="m-r25 your-select-attr"><span>服务保障<i class="icon-list-down"></i></span><div class="triangle1"></div><div class="your-select-attr-box"><div class="your-select-attr-title"><p>服务保障</p></div><div><ul class="your-select-attr-item"><li><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-11-1-0-3-0.html">赠永久包赔</a></li><li><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-5-1-0-3-0.html">安全保障</a></li><li><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-1-1-0-3-0.html">押金赔付</a></li><li><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-4-1-0-3-0.html">商家认证</a></li><li><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-8-1-0-3-0.html">支持过户</a></li></ul></div></div></div><div class="m-r25 your-select-attr"><span>交易类型<i class="icon-list-down"></i></span><div class="triangle1"></div><div class="your-select-attr-box"><div class="your-select-attr-title"><p>交易类型</p></div><div><ul class="your-select-attr-item"><li><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-1-0-0-0-1-0-3-0.html">客服代发</a></li><li><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-2-0-0-0-1-0-3-0.html">卖家发货</a></li></ul></div></div></div></div></div></div></div>
+
+			<!-- 热门商城 -->
+<div class="hot-shopping hot-shopping-new">
+    <div class="hot-shopping-title">
+        <i class="icon-shopping_title"></i>
+        <span><i class="icon-feature-white"></i>安全保障</span>
+        <span><i class="icon-feature-white"></i>灵活购买</span>
+        <span><i class="icon-feature-white"></i>快速发货</span>
+        <a href="//merchant.dd373.com/usercenter/marchant_apply.html?merchantType=6&amp;applyName=热卖商城" class="shopping_mall" target="_blank"><i class="icon-shopping_mall"></i>我要入驻</a>
+    </div>
+    <div class="hot-goods">
+            <div class="hot-title-box">
+                <ul>
+                    <li class="font14 color666 ">商品信息</li>
+                    <li class="font14 color666 ">比例</li>
+                    <li class="font14 color666 ">购买数量</li>
+                    <li class="font14 color666 ">服务保障</li>
+                </ul>
+            </div>
+            <div class="hot-goods-content">
+                <!-- max-scroll 分屏数量 -->
+                <div class="hot-shopping-swiper" max-num="5" max-scroll="2">
+                    <div id="slides" class="slides1166">
+                        <div class="slides_container">
+                            <!-- 一个另一个 -->
+                                    <div>
+<ul class="p-tb hotulMO20260723112145-39012">
+    <li class="width86">
+        <img src="" alt="当面交易" class="hot-img">
+    </li>
+    <li class="width225">
+        <div class="hot-game-area">
+            <p class="font14 hotQufu0">
+            </p>
+            <div class="hot-game-area-hover font14"></div>
+        </div>
+        <p class="line-height14">
+            <span class="font12 color333">发货均时</span>
+            <span class="font12 colorFF5">4分钟</span>
+        </p>
+    </li>
+    <li class="width211">
+        <div class="proportion-icon-box f_left">
+                <i class="icon-bese_proportion"></i>
+        </div>
+        <div class="proportion-box">
+                <p class="font12 colorFF5">1元=14.2777个</p>
+                <p class="font14 color666 m-t3">0.07元/个</p>
+
+        </div>
+    </li>
+    <li class="width398">
+        <div class="buy-title f_left m-r10">
+            <div class="radio-group">
+                <input type="radio" autocomplete="off" id="btc_0" checked="checked" name="bt_0">
+                <label for="btc_0">按数量</label>
+            </div>
+            <div class="radio-group m-t8">
+                <input type="radio" autocomplete="off" id="btm_0" name="bt_0">
+                <label for="btm_0">按金额</label>
+            </div> 
+        </div>
+        <div class="f_left m-l16">
+            <div class="buy-number-box buy-number-boxMO20260723112145-39012">
+                <div class="buy-num buy-box">
+                    <input id="hotInputNumMO20260723112145-39012" type="text" data-min="286" data-max="3349" data-bili="14.2777" value="286" data-minjs="1">
+                    <span>个</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span class="font14 colorFF5 fontMT bold yuan">20.04</span>
+                    <span class="font14">元</span>
+                </div>
+            </div>
+            <div class="buy-money-box buy-money-boxMO20260723112145-39012 none">
+                <div class="buy-money buy-box">
+                    <input type="text" data-min="20.04" data-max="234.56" data-bili="14.2777" value="20.04" data-minjs="1" data-maxnum="3349">
+                    <span>元</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span id="hotMoneySpanMO20260723112145-39012" class="font14 colorFF5 fontMT bold jinbi">286</span>
+                    <span class="font14">个</span>
+                </div>
+            </div>
+            <p class="line-height14">
+                <span class="font12 color666 f-left">库存数量：</span>
+                <span class="font12 color666 f-left">3349</span>
+                <span class="font12 color666 f-left">个</span>
+            </p>
+        </div>
+    </li>
+    <li class="width80">
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">售后无忧</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">无货赔付</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">超时赔付</span>
+                </p>
+    </li>
+    <li class="width120 text-right">
+        <a onclick="hotBuy('MO20260723112145-39012')" class="hot-buy-btn" data-index="1">立即购买</a>
+    </li>
+</ul><ul class="p-tb hotulMO20260723230119-87001">
+    <li class="width86">
+        <img src="" alt="当面交易" class="hot-img">
+    </li>
+    <li class="width225">
+        <div class="hot-game-area">
+            <p class="font14 hotQufu1">
+            </p>
+            <div class="hot-game-area-hover font14"></div>
+        </div>
+        <p class="line-height14">
+            <span class="font12 color333">发货均时</span>
+            <span class="font12 colorFF5">5分钟</span>
+        </p>
+    </li>
+    <li class="width211">
+        <div class="proportion-icon-box f_left">
+                <i class="icon-bese_proportion"></i>
+        </div>
+        <div class="proportion-box">
+                <p class="font12 colorFF5">1元=14.091个</p>
+                <p class="font14 color666 m-t3">0.071元/个</p>
+
+        </div>
+    </li>
+    <li class="width398">
+        <div class="buy-title f_left m-r10">
+            <div class="radio-group">
+                <input type="radio" autocomplete="off" id="btc_1" checked="checked" name="bt_1">
+                <label for="btc_1">按数量</label>
+            </div>
+            <div class="radio-group m-t8">
+                <input type="radio" autocomplete="off" id="btm_1" name="bt_1">
+                <label for="btm_1">按金额</label>
+            </div> 
+        </div>
+        <div class="f_left m-l16">
+            <div class="buy-number-box buy-number-boxMO20260723230119-87001">
+                <div class="buy-num buy-box">
+                    <input id="hotInputNumMO20260723230119-87001" type="text" data-min="282" data-max="45226" data-bili="14.0910" value="282" data-minjs="1">
+                    <span>个</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span class="font14 colorFF5 fontMT bold yuan">20.02</span>
+                    <span class="font14">元</span>
+                </div>
+            </div>
+            <div class="buy-money-box buy-money-boxMO20260723230119-87001 none">
+                <div class="buy-money buy-box">
+                    <input type="text" data-min="20.02" data-max="3209.55" data-bili="14.0910" value="20.02" data-minjs="1" data-maxnum="45226">
+                    <span>元</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span id="hotMoneySpanMO20260723230119-87001" class="font14 colorFF5 fontMT bold jinbi">282</span>
+                    <span class="font14">个</span>
+                </div>
+            </div>
+            <p class="line-height14">
+                <span class="font12 color666 f-left">库存数量：</span>
+                <span class="font12 color666 f-left">45226</span>
+                <span class="font12 color666 f-left">个</span>
+            </p>
+        </div>
+    </li>
+    <li class="width80">
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">售后无忧</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">无货赔付</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">超时赔付</span>
+                </p>
+    </li>
+    <li class="width120 text-right">
+        <a onclick="hotBuy('MO20260723230119-87001')" class="hot-buy-btn" data-index="1">立即购买</a>
+    </li>
+</ul><ul class="p-tb hotulMO20260703201859-25008">
+    <li class="width86">
+        <img src="" alt="当面交易" class="hot-img">
+    </li>
+    <li class="width225">
+        <div class="hot-game-area">
+            <p class="font14 hotQufu2">
+            </p>
+            <div class="hot-game-area-hover font14"></div>
+        </div>
+        <p class="line-height14">
+            <span class="font12 color333">发货均时</span>
+            <span class="font12 colorFF5">6分钟</span>
+        </p>
+    </li>
+    <li class="width211">
+        <div class="proportion-icon-box f_left">
+                <i class="icon-bese_proportion"></i>
+        </div>
+        <div class="proportion-box">
+                <p class="font12 colorFF5">1元=13.5001个</p>
+                <p class="font14 color666 m-t3">0.0741元/个</p>
+
+        </div>
+    </li>
+    <li class="width398">
+        <div class="buy-title f_left m-r10">
+            <div class="radio-group">
+                <input type="radio" autocomplete="off" id="btc_2" checked="checked" name="bt_2">
+                <label for="btc_2">按数量</label>
+            </div>
+            <div class="radio-group m-t8">
+                <input type="radio" autocomplete="off" id="btm_2" name="bt_2">
+                <label for="btm_2">按金额</label>
+            </div> 
+        </div>
+        <div class="f_left m-l16">
+            <div class="buy-number-box buy-number-boxMO20260703201859-25008">
+                <div class="buy-num buy-box">
+                    <input id="hotInputNumMO20260703201859-25008" type="text" data-min="271" data-max="12345" data-bili="13.5001" value="271" data-minjs="1">
+                    <span>个</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span class="font14 colorFF5 fontMT bold yuan">20.08</span>
+                    <span class="font14">元</span>
+                </div>
+            </div>
+            <div class="buy-money-box buy-money-boxMO20260703201859-25008 none">
+                <div class="buy-money buy-box">
+                    <input type="text" data-min="20.08" data-max="914.44" data-bili="13.5001" value="20.08" data-minjs="1" data-maxnum="12345">
+                    <span>元</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span id="hotMoneySpanMO20260703201859-25008" class="font14 colorFF5 fontMT bold jinbi">271</span>
+                    <span class="font14">个</span>
+                </div>
+            </div>
+            <p class="line-height14">
+                <span class="font12 color666 f-left">库存数量：</span>
+                <span class="font12 color666 f-left">12345</span>
+                <span class="font12 color666 f-left">个</span>
+            </p>
+        </div>
+    </li>
+    <li class="width80">
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">售后无忧</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">无货赔付</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">超时赔付</span>
+                </p>
+    </li>
+    <li class="width120 text-right">
+        <a onclick="hotBuy('MO20260703201859-25008')" class="hot-buy-btn" data-index="1">立即购买</a>
+    </li>
+</ul>                                    </div>
+                                    <div>
+<ul class="p-tb hotulMO20260530053539-54001">
+    <li class="width86">
+        <img src="" alt="一口价市集交易" class="hot-img">
+    </li>
+    <li class="width225">
+        <div class="hot-game-area">
+            <p class="font14 hotQufu3">
+            </p>
+            <div class="hot-game-area-hover font14"></div>
+        </div>
+        <p class="line-height14">
+            <span class="font12 color333">发货均时</span>
+            <span class="font12 colorFF5">5分钟</span>
+        </p>
+    </li>
+    <li class="width211">
+        <div class="proportion-icon-box f_left">
+        </div>
+        <div class="proportion-box">
+                <p class="font12 colorFF5">1元=13.5个</p>
+                <p class="font14 color666 m-t3">0.0741元/个</p>
+
+        </div>
+    </li>
+    <li class="width398">
+        <div class="buy-title f_left m-r10">
+            <div class="radio-group">
+                <input type="radio" autocomplete="off" id="btc_3" checked="checked" name="bt_3">
+                <label for="btc_3">按数量</label>
+            </div>
+            <div class="radio-group m-t8">
+                <input type="radio" autocomplete="off" id="btm_3" name="bt_3">
+                <label for="btm_3">按金额</label>
+            </div> 
+        </div>
+        <div class="f_left m-l16">
+            <div class="buy-number-box buy-number-boxMO20260530053539-54001">
+                <div class="buy-num buy-box">
+                    <input id="hotInputNumMO20260530053539-54001" type="text" data-min="270" data-max="14000" data-bili="13.5000" value="270" data-minjs="1">
+                    <span>个</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span class="font14 colorFF5 fontMT bold yuan">20.00</span>
+                    <span class="font14">元</span>
+                </div>
+            </div>
+            <div class="buy-money-box buy-money-boxMO20260530053539-54001 none">
+                <div class="buy-money buy-box">
+                    <input type="text" data-min="20.00" data-max="1037.04" data-bili="13.5000" value="20.00" data-minjs="1" data-maxnum="14000">
+                    <span>元</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span id="hotMoneySpanMO20260530053539-54001" class="font14 colorFF5 fontMT bold jinbi">270</span>
+                    <span class="font14">个</span>
+                </div>
+            </div>
+            <p class="line-height14">
+                <span class="font12 color666 f-left">库存数量：</span>
+                <span class="font12 color666 f-left">14000</span>
+                <span class="font12 color666 f-left">个</span>
+            </p>
+        </div>
+    </li>
+    <li class="width80">
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">售后无忧</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">无货赔付</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">超时赔付</span>
+                </p>
+    </li>
+    <li class="width120 text-right">
+        <a onclick="hotBuy('MO20260530053539-54001')" class="hot-buy-btn" data-index="1">立即购买</a>
+    </li>
+</ul><ul class="p-tb hotulMO20260606161518-29012">
+    <li class="width86">
+        <img src="" alt="当面交易" class="hot-img">
+    </li>
+    <li class="width225">
+        <div class="hot-game-area">
+            <p class="font14 hotQufu4">
+            </p>
+            <div class="hot-game-area-hover font14"></div>
+        </div>
+        <p class="line-height14">
+            <span class="font12 color333">发货均时</span>
+            <span class="font12 colorFF5">4分钟</span>
+        </p>
+    </li>
+    <li class="width211">
+        <div class="proportion-icon-box f_left">
+        </div>
+        <div class="proportion-box">
+                <p class="font12 colorFF5">1元=11.9个</p>
+                <p class="font14 color666 m-t3">0.084元/个</p>
+
+        </div>
+    </li>
+    <li class="width398">
+        <div class="buy-title f_left m-r10">
+            <div class="radio-group">
+                <input type="radio" autocomplete="off" id="btc_4" checked="checked" name="bt_4">
+                <label for="btc_4">按数量</label>
+            </div>
+            <div class="radio-group m-t8">
+                <input type="radio" autocomplete="off" id="btm_4" name="bt_4">
+                <label for="btm_4">按金额</label>
+            </div> 
+        </div>
+        <div class="f_left m-l16">
+            <div class="buy-number-box buy-number-boxMO20260606161518-29012">
+                <div class="buy-num buy-box">
+                    <input id="hotInputNumMO20260606161518-29012" type="text" data-min="238" data-max="5000" data-bili="11.9000" value="238" data-minjs="1">
+                    <span>个</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span class="font14 colorFF5 fontMT bold yuan">20.00</span>
+                    <span class="font14">元</span>
+                </div>
+            </div>
+            <div class="buy-money-box buy-money-boxMO20260606161518-29012 none">
+                <div class="buy-money buy-box">
+                    <input type="text" data-min="20.00" data-max="420.17" data-bili="11.9000" value="20.00" data-minjs="1" data-maxnum="5000">
+                    <span>元</span>
+                    <img src="//cdnimg.dd373.com/newfile/common/images/default/icons/search_clear_btn.png" class="input-clear-btn" alt="">
+                </div>
+                <span class="font14 m-r6 m-l6 f-left">=</span>
+                <div class="top5">
+                    <span id="hotMoneySpanMO20260606161518-29012" class="font14 colorFF5 fontMT bold jinbi">238</span>
+                    <span class="font14">个</span>
+                </div>
+            </div>
+            <p class="line-height14">
+                <span class="font12 color666 f-left">库存数量：</span>
+                <span class="font12 color666 f-left">5000</span>
+                <span class="font12 color666 f-left">个</span>
+            </p>
+        </div>
+    </li>
+    <li class="width80">
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">售后无忧</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">无货赔付</span>
+                </p>
+                <p class="server-guarantee">
+                    <i class="icon-feature"></i>
+                    <span class="font12 color666">超时赔付</span>
+                </p>
+    </li>
+    <li class="width120 text-right">
+        <a onclick="hotBuy('MO20260606161518-29012')" class="hot-buy-btn" data-index="1">立即购买</a>
+    </li>
+</ul>                                                <div class="no-hot-goods">
+                                                    <div class="goods-adv-box">
+                                                        <p class="goods-adv">
+                                                            <span>高曝光</span>
+                                                            <span>高销售</span>
+                                                            <span>黄金展位</span>
+                                                            <span>欢迎入驻</span>
+                                                        </p>
+                                                        <p>
+                                                            <a href="//merchant.dd373.com/usercenter/marchant_apply.html?merchantType=6&amp;applyName=热卖商城" class="hot-buy-btn" target="_blank">立即入驻</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                    </div>
+
+                        </div>
+                        <a href="#" class="next hot-btn-next1"><img src="//cdnimg.dd373.com/newfile/goods/images/default/right.png" alt=""></a>
+                        <a href="#" class="prev hot-btn-prev1"><img src="//cdnimg.dd373.com/newfile/goods/images/default/left.png" alt=""></a>
+                    </div>
+                        <div class="all-look">
+                            <a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-hot-0-0-1-0-3-0.html" target="_blank">
+                                <span>查看更多</span>
+                                <i class="cd-down"></i>
+                            </a>
+                        </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+		</div>
+	</div>
+    <div class="goods-list-content">
+        <div class="goods-type-box">
+
+                <!-- 出售商品 -->
+                <div class="sell-goods">
+<!-- 商品筛选条件及标题 -->
+<div class="sell-goods-nav">
+    <div class="sell-screen">
+        <div class="sell-btn-box">
+            <a class="" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-1-0.html">综合排序</a>
+         
+                <div class="title-bili ">
+                    <a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-5-0.html">
+                        比例最佳
+                    </a>
+                        <div class="biliLabel">
+                            <span>点击这里更便宜</span> <i class="icon-label-close"></i>
+                            <i class="small-angle"></i>
+                        </div>
+                </div>
+            <a class="" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-2-0.html">最新发布</a>
+            <a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-4-0.html" class="price-sort  sell-btn-active">
+                价格排序
+                    <span class=" sort-box">
+                        <i class="sort-up  sort-select"></i>
+                        <i class="sort-down "></i>
+                    </span>
+            </a>
+        </div>
+            <a class="my-sell" href="//game.dd373.com/default/sell/sell_goods.html?game=3e7c2e61c71142b2a330b85a5f6d09b2&amp;area=84217c5bec5a4e48bc9359b94bc6ae90&amp;goodstype=a34b2bed8f794b6eac11dce4fa9bb6d7" target="_blank">
+                <i class="goods-icon-sell"></i>
+                <span>我也要卖</span>
+            </a>
+        <div class="page-box">
+            <span class="font12 color666 p-r18">为您找到<span class="colorFF5">106</span>条记录</span>
+            <span class="font12 color666 p-r18">20条/页</span>
+            <i class="page-pre goods-icon-left  icon-left-disable"></i>
+            <span class="font12 colorFF5 hot-current-page">1</span>
+            <span class="font12 color666">/</span>
+            <span class="font12 color666  hot-sum">6</span>
+            <i class="page-next goods-icon-right icon-right-enable"></i>
+            <span class="font12 color666">前往</span>
+            <input type="text" placeholder="页码" class="current-index page-index" value="1">
+            <span class="font12 color666">页</span>
+            <a class="page-sure ui-pagination-page-btn" href="javascript:void(0);">确定</a>
+        </div>
+    </div>
+    <!--引流菜单-->
+    <div class="account-navbar" id="drainMenu" style="display:none">
+    </div>
+</div>
+
+
+
+<div class="good-list-box">
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260719191138-54342.html" target="_blank" class="goods-list-title  account-title font16 " id="title0">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+100个=6.98元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle0" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea0">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">11</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo0">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥6.98</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">11</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.3266个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0698元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260719191138-54342">
+                                    <a href="javascript:;" onclick="AddCart('DB20260719191138-54342')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action0" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260719191138-54342&goodsNum=1&goodsVersion=12" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260531190056-31124.html" target="_blank" class="goods-list-title  account-title font16 " id="title1">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+200个=13.80元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle1" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea1">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">4</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo1">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥13.80</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">4</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.4928个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0690元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260531190056-31124">
+                                    <a href="javascript:;" onclick="AddCart('DB20260531190056-31124')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action1" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260531190056-31124&goodsNum=1&goodsVersion=52" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260609125146-21039.html" target="_blank" class="goods-list-title  account-title font16 " id="title2">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+200个=13.84元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle2" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea2">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">5</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo2">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥13.84</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">5</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.4509个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0692元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260609125146-21039">
+                                    <a href="javascript:;" onclick="AddCart('DB20260609125146-21039')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action2" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260609125146-21039&goodsNum=1&goodsVersion=64" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260720152714-36547.html" target="_blank" class="goods-list-title  account-title font16 " id="title3">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+100个=17.82元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle3" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea3">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">1</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo3">信用等级：</span>
+                                        <i class="icon-heart"></i>
+                                        <i class="icon-heart"></i>
+                                        <i class="icon-heart"></i>
+                                        <i class="icon-heart"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥17.82</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">1</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=5.6117个</p>
+                                    <p class="font12 color666 m-t5">1个=0.1782元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260720152714-36547">
+                                    <a href="javascript:;" onclick="AddCart('DB20260720152714-36547')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action3" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260720152714-36547&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260530155343-91945.html" target="_blank" class="goods-list-title  account-title font16 " id="title4">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+2个=22.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle4" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea4">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">1</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo4">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥22.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">1</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=0.0909个</p>
+                                    <p class="font12 color666 m-t5">1个=11.0000元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260530155343-91945">
+                                    <a href="javascript:;" onclick="AddCart('DB20260530155343-91945')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action4" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260530155343-91945&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723101145-50833.html" target="_blank" class="goods-list-title  account-title font16 " id="title5">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+500个=34.65元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle5" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea5">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">6</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo5">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥34.65</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">6</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.4300个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0693元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723101145-50833">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723101145-50833')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action5" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723101145-50833&goodsNum=1&goodsVersion=16" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723105608-79250.html" target="_blank" class="goods-list-title  account-title font16 " id="title6">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+500个=42.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle6" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea6">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">2</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo6">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥42.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">2</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=11.9048个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0840元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723105608-79250">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723105608-79250')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action6" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723105608-79250&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723103029-15719.html" target="_blank" class="goods-list-title  account-title font16 " id="title7">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+500个=42.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle7" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea7">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">2</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo7">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥42.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">2</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=11.9048个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0840元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723103029-15719">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723103029-15719')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action7" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723103029-15719&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260720203820-65280.html" target="_blank" class="goods-list-title  account-title font16 " id="title8">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+600个=47.88元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle8" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea8">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">8</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo8">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥47.88</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">8</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=12.5313个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0798元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260720203820-65280">
+                                    <a href="javascript:;" onclick="AddCart('DB20260720203820-65280')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action8" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260720203820-65280&goodsNum=1&goodsVersion=7" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260722075354-43740.html" target="_blank" class="goods-list-title  account-title font16 " id="title9">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+500个=48.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle9" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea9">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">2</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo9">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥48.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">2</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=10.4167个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0960元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260722075354-43740">
+                                    <a href="javascript:;" onclick="AddCart('DB20260722075354-43740')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action9" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260722075354-43740&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260601165339-89716.html" target="_blank" class="goods-list-title  account-title font16 " id="title10">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+15个=53.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle10" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea10">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">1</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo10">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥53.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">1</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=0.2830个</p>
+                                    <p class="font12 color666 m-t5">1个=3.5333元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260601165339-89716">
+                                    <a href="javascript:;" onclick="AddCart('DB20260601165339-89716')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action10" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260601165339-89716&goodsNum=1&goodsVersion=1" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723185813-29027.html" target="_blank" class="goods-list-title  account-title font16 " id="title11">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1000个=69.99元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle11" class="goods-item-attr "><span class="label-bg">一口价市集交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea11">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">30</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo11">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥69.99</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">30</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.2878个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0700元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723185813-29027">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723185813-29027')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action11" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723185813-29027&goodsNum=1&goodsVersion=11" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723213054-38002.html" target="_blank" class="goods-list-title  account-title font16 " id="title12">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1000个=70.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle12" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea12">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">1</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo12">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥70.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">1</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.2857个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0700元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723213054-38002">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723213054-38002')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action12" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723213054-38002&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723082555-95759.html" target="_blank" class="goods-list-title  account-title font16 " id="title13">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1000个=70.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle13" class="goods-item-attr "><span class="label-bg">一口价市集交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea13">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">70</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo13">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥70.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">70</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.2857个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0700元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723082555-95759">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723082555-95759')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action13" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723082555-95759&goodsNum=1&goodsVersion=4" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260601024824-45164.html" target="_blank" class="goods-list-title  account-title font16 " id="title14">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1000个=70.83元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle14" class="goods-item-attr "><span class="label-bg">一口价市集交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea14">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">35</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo14">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥70.83</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">35</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.1183个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0708元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260601024824-45164">
+                                    <a href="javascript:;" onclick="AddCart('DB20260601024824-45164')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action14" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260601024824-45164&goodsNum=1&goodsVersion=305" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260717222024-27175.html" target="_blank" class="goods-list-title  account-title font16 " id="title15">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+300个=71.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle15" class="goods-item-attr "><span class="label-bg">当面交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea15">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">1</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo15">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥71.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">1</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=4.2254个</p>
+                                    <p class="font12 color666 m-t5">1个=0.2367元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260717222024-27175">
+                                    <a href="javascript:;" onclick="AddCart('DB20260717222024-27175')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action15" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260717222024-27175&goodsNum=1&goodsVersion=3" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260724092302-59811.html" target="_blank" class="goods-list-title  account-title font16 " id="title16">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1050个=72.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle16" class="goods-item-attr "><span class="label-bg">一口价市集交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea16">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-0-0-0-1.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">1</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo16">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥72.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">1</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=14.5833个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0686元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260724092302-59811">
+                                    <a href="javascript:;" onclick="AddCart('DB20260724092302-59811')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action16" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260724092302-59811&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723212516-61405.html" target="_blank" class="goods-list-title  account-title font16 " id="title17">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1000个=72.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle17" class="goods-item-attr "><span class="label-bg">一口价市集交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea17">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">1</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo17">信用等级：</span>
+                                        <i class="icon-heart"></i>
+                                        <i class="icon-heart"></i>
+                                        <i class="icon-heart"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥72.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">1</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=13.8889个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0720元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723212516-61405">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723212516-61405')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action17" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723212516-61405&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260607214358-43661.html" target="_blank" class="goods-list-title  account-title font16 " id="title18">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1000个=72.80元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle18" class="goods-item-attr "><span class="label-bg">一口价市集交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea18">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">50</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo18">信用等级：</span>
+                                        <i class="icon-crown"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥72.80</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">50</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=13.7363个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0728元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260607214358-43661">
+                                    <a href="javascript:;" onclick="AddCart('DB20260607214358-43661')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action18" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260607214358-43661&goodsNum=1&goodsVersion=187" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-list-item">
+                        <div class="border-box  ">
+
+                        <!-- 游戏信息 -->
+                        <div class="width592">
+                            <!-- 如果有折扣width464 没有宽度width610-->
+                            <div class="h1-box">
+                                <h2>
+                                    <a href="/detail-DB20260723125641-84235.html" target="_blank" class="goods-list-title  account-title font16 " id="title19">
+                                        <div class="game-account-flag">
+                <i class="icon-db top3 m-r5"></i>
+1000个=73.00元
+</div>
+                                    </a>
+                                </h2>
+                                
+                            </div>
+
+                            <!--副标题-->
+                                    <p id="goodsSubTitle19" class="goods-item-attr "><span class="label-bg">一口价市集交易</span></p>
+                            <p class="game-qufu-attr normalGoodsArea19">
+                                <span class="font12 color666">游戏区服：</span>
+                    <span class="font12 color666 game-qufu-value ">
+                                <a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">POE2</a>/<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">阿德尔的符文（标准）</a>
+                    </span>
+                            </p>
+
+                            <p class="game-reputation">
+                                <span class="font12 color666">商品类型：</span>
+                                <span class="font12 color666 game-qufu-value maxW295">
+<a class="font12 color666" target="_blank" href="/s-3hcpqw-c-8rknmp-bwgvrk-fj6p5a.html">神圣石</a>                                 </span>
+                               <span class="m-lr8">|</span>
+                                <span class="font12 color666">库存：</span>
+                                <span class="font12 color666">
+                                <span class="font12 colorff5 bold">10</span>
+                                </span>
+                                <span class="m-lr8">|</span>
+                                <span class="font12 color666" id="trustInfo19">信用等级：</span>
+                                        <i class="icon-bluediamond"></i>
+                            </p>
+                        </div>
+                        <!-- 价格 -->
+                        <div class="goods-price game-currency-price">
+                            <span class="">￥73.00</span>
+                        </div>
+                         <!-- 库存
+                        <div class="kucun kucunW94">
+                            <span class="font12">10</span>
+                         </div> -->
+                            <!--比例-->
+                        <div class="kucun">
+                                <div>
+                                    <p class="font12 colorFF5">1元=13.6986个</p>
+                                    <p class="font12 color666 m-t5">1个=0.0730元</p>
+                                </div>
+                            </div>
+                        <!-- 服务保障
+                            <div class="server-protection serverW160">
+                                        <div>
+            <i class="goods-icon-feature"></i><span>可购永久包赔</span>
+            <div class="else-server-hover">
+                <p>
+                    此商品支持购买永久包赔，投保后商品被找回、封号、回收等，均可申请理赔，最高全额赔偿
+                </p>
+            </div>
+        </div>
+
+                            </div>
+                         -->
+                        <!-- 购物按钮 -->
+                        <div class="shop-btn-group" id="buyButtonDB20260723125641-84235">
+                                    <a href="javascript:;" onclick="AddCart('DB20260723125641-84235')" class="add-card-btn none"><i class="goods-icon-car top3"></i></a>
+                            <a id="action19" href="//order.dd373.com/default/buy_form.html?shopNumber=DB20260723125641-84235&goodsNum=1&goodsVersion=0" class="im-buy-btn">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+</div>
+
+    <div class="footer-pagination">
+        <p class="f-left">
+            <span class="font12 color999">为您找到</span>
+            <span class="font12 colorFF5">106</span>
+            <span class="font12 color999">条记录</span>
+        </p>
+
+        <div id="pagination-box"><div class="ui-pagination-container"><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-3-0.html" class="ui-pagination-page-item active">1</a><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-2-0-3-0.html" class="ui-pagination-page-item">2</a><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-3-0-3-0.html" class="ui-pagination-page-item">3</a><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-4-0-3-0.html" class="ui-pagination-page-item">4</a><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-5-0-3-0.html" class="ui-pagination-page-item">5</a><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-6-0-3-0.html" class="ui-pagination-page-item">6</a><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-2-0-3-0.html" class="ui-pagination-page-item pre-next-btn">下一页</a><a href="/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-6-0-3-0.html" class="ui-pagination-page-item first-last-btn">尾页</a><span class="font-color m-l14">20</span><span class="font-color m-r16">条/页</span><span class="font-color">共</span><span class="font-colorff5b max-number">6</span><span class="font-color m-r16">页</span><span class="font-color m-r10">到</span><div class="current-index-box"><input type="text" placeholder="页码" class="current-index" value="1"><div class="top-down-btn-box"><div class="top-btn icon-top"></div><div class="down-btn icon-down"></div></div></div><span class="font-color m-lr10">页</span><a class="ui-pagination-page-btn" href="javascript:void(0);">确定</a></div></div>
+    </div>
+
+
+                </div>
+
+            <div id="invisibleData" data-jsData="{&quot;requestModel&quot;:{&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;,&quot;GoodsTypeId&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;GameId&quot;:&quot;3hcpqw&quot;,&quot;QuId&quot;:&quot;bwgvrk&quot;,&quot;FuId&quot;:&quot;fj6p5a&quot;,&quot;ZYId&quot;:&quot;0&quot;,&quot;OperatorId&quot;:&quot;0&quot;,&quot;OSId&quot;:&quot;0&quot;,&quot;TypeId&quot;:&quot;8rknmp&quot;,&quot;SubTypeId&quot;:&quot;0&quot;,&quot;DealType&quot;:&quot;0&quot;,&quot;Column&quot;:&quot;0&quot;,&quot;Property&quot;:&quot;0&quot;,&quot;AttachProperty&quot;:&quot;0&quot;,&quot;PageIndex&quot;:1,&quot;PageSize&quot;:0,&quot;Order&quot;:&quot;3&quot;,&quot;IsOpenDeliveryTime&quot;:false,&quot;Issearch&quot;:&quot;0&quot;,&quot;KeyWord&quot;:null,&quot;MinPrice&quot;:null,&quot;MaxPrice&quot;:null},&quot;page1Href&quot;:&quot;/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-1-0-3-0.html&quot;,&quot;pageGt1Href&quot;:&quot;/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-0-0-0-####-0-3-0.html&quot;,&quot;hotGoods&quot;:[{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;}],&quot;receiveGoods&quot;:[{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;},{&quot;GoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;LastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;}],&quot;topCount&quot;:106,&quot;hotPicKeyWord&quot;:&quot;流放之路2(国际服)游戏币&quot;,&quot;configurationList&quot;:[],&quot;interPicLastId&quot;:&quot;84217c5bec5a4e48bc9359b94bc6ae90&quot;,&quot;interPicGoodsType&quot;:&quot;a34b2bed8f794b6eac11dce4fa9bb6d7&quot;,&quot;gameId&quot;:&quot;3e7c2e61c71142b2a330b85a5f6d09b2&quot;,&quot;SearchGuid&quot;:&quot;4837aca544d64226a3d45048f3741505&quot;}"></div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+  
+    <div class="footer-box">
+        <div id="config_footer1"> <div class="footer1">            <div class="footer1-box">                <div class="footer1-item">                    <p><i class="icon-footer-4"></i></p>                    <div>                        <p class="">无货超时赔付</p>                        <p class="color666">资金保障，交易更放心</p>                    </div>                </div>                <div class="footer1-item">                    <p><i class="icon-footer-2"></i></p>                    <div>                        <p class="">安全保障</p>                        <p class="color666">防盗措施，保障交易安全</p>                    </div>                </div>                <div class="footer1-item">                    <p><i class="icon-footer-5"></i></p>                    <div>                        <p class="">专业团队</p>                        <p class="color666">高效专业引导完成交易</p>                    </div>                </div>                <div class="footer1-item">                    <p><i class="icon-footer-1"></i></p>                    <div>                        <p class="">7×24小时客服</p>                        <p class="color666">优质客服贴心服务，全年无休</p>                    </div>                </div>            </div>        </div></div>
+        <div class="footer2">
+            <div class="footer2-left">
+                            <div class="footer2-item width96">
+                                <p class="footer-title">新手入门</p>
+                                <ul>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/88c4c567d7af41cbb7ee9f3704922965.html">担保交易</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/71e4ab5bd97d4962bc816d9f55d67713.html">寄售交易</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/39732072dd674b3e8159af197af05457.html">联系接手客服</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/67c59caa23b7497aa8c1571b3b3ec062.html">登录DD373账户</a>
+                                            </li>
+                                </ul>
+                            </div>
+                            <div class="footer2-item width96">
+                                <p class="footer-title">购买项目</p>
+                                <ul>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/3894e247726f467b83a1b70e2d6f8b43.html">搜索商品</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/e746dc8f2ed9478ca42e290f6f194980.html">购买商品</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/840e85568ec141468953e72be6f7242c.html">购买求降价</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/8d8faf8454a343dda7262efba32502fb.html">购买商城商品</a>
+                                            </li>
+                                </ul>
+                            </div>
+                            <div class="footer2-item width96">
+                                <p class="footer-title">出售项目</p>
+                                <ul>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/0d46178fb77e4f889e097ac077750cc3.html">发布商品</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/78e1f90efede4860b513412ce5c32570.html">出货给收货商家</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/9fa33de35a114f1dab54eabf473b64a2.html">管理发布的商品</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/c12b3acec9224d59be610208db89674a.html">编辑发布的商品</a>
+                                            </li>
+                                </ul>
+                            </div>
+                            <div class="footer2-item width96">
+                                <p class="footer-title">账户安全</p>
+                                <ul>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/8003162d9ba547238b5dc3ab8bf1c9f9.html">实名认证</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/b417d795c41e4799a5f65df93876a02e.html">绑定手机</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/35c42b2a611748cdba72ec7c18e4839a.html">换绑邮箱</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/e05d6795f52d4824a75f21ebbf881944.html">设置支付密码</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/8adf1e4d4c804cd89acd9f83d5e73ffb.html">更换绑定手机</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/a0baf96eb8cd4dc6aec36ef1583768eb.html">修改登录密码</a>
+                                            </li>
+                                </ul>
+                            </div>
+                            <div class="footer2-item width96">
+                                <p class="footer-title">协议条款</p>
+                                <ul>
+                                            <li>
+                                                <a href="https://kf.dd373.com/ServiceCenter/HelpDetail?id=a3c0dad4109b4a179197f1beb8865287">隐私政策</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://kf.dd373.com/helpdetail/78dba8ca31b44712aef8e923f6c61984.html">用户服务协议</a>
+                                            </li>
+                                </ul>
+                            </div>
+            </div>
+            <div class="footer2-item2-right">
+                <div class="f-left share-img">
+                    <img alt="" src="//cdnimg.dd373.com/newfile/goods/images/default/douyin.png">
+                    <p class="m-t12">抖音</p>
+
+                </div>
+                <div class="f-left">
+                    <p class="footer-phone">0373-5805373</p>
+                    <p class="footer-phone-title">7×24小时客服热线</p>
+                    <p class="font12 color999 m-t12">(仅能呼入不能呼出，凡接到此来电必为诈骗)</p>
+                    <p class="advisory" onclick="OpenConsult()"><i class="icon-headset"></i><span>24小时在线咨询</span></p>
+                    <p class="footer-phone-title color999 font12 m-t9">推荐在线咨询</p>
+                </div>
+
+            </div>
+            <p class="clear"></p>
+        </div>
+    </div>
+    <div id="config_footer">    <div class="footer">        <!-- 用户中心底部 -->        <div class="row ovh">            <div class="user-bottom">                <ul class="user-btmenu ovh">                    <li><a href="//about.dd373.com/" target="_blank">关于我们</a></li>                    <li><a href="//about.dd373.com/Index.html?catenum=3736" target="_blank">联系我们</a></li>                    <li><a href="//cms.dd373.com/default/complaint_opinion.html" target="_blank">投诉建议</a></li>                    <li><a href="//about.dd373.com/Index.html?catenum=3734" target="_blank">诚聘英才</a></li>                    <li><a href="//publicimg.pp373.com/Upload/2025-11-25/07faf3a8ded04c19affb0950fbb77947.png" target="_blank">营业执照</a></li>                    <li><a href="//about.dd373.com/Index.html?catenum=3732&childcatenum=37325" target="_blank">免责声明</a></li>                    <li><a href="//tg.dd373.com/default/index.html" target="_blank">推广联盟</a></li>                    <li><a href="//point.dd373.com/default/m_club_index.html" target="_blank">会员俱乐部</a></li>                    <li><a href="//kf.dd373.com" target="_blank">客服中心</a></li>                    <li><a href="#">返回顶部</a></li>                </ul>                <ul class="ovh ko-record">                    <li>                        <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">豫ICP备10201480号</a>                    </li>                    <li>                        <a href="https://publicimg.pp373.com/SitePic/2026-07-21/0533e7b289b9487eaba2f74e2224a7f2.png" target="_blank">ICP证：豫B2-20110028</a>                    </li>                    <li>                        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41070202000193" target="_blank" rel="nofollow">                            <i class="safe"></i>豫公网安备 41070202000193号                        </a>                    </li>                </ul>                <p>                    Copyright&nbsp;© 2008-现在                    <a href="//www.dd373.com" target="_blank">                        &nbsp;<span>DD373.com</span>&nbsp;新乡市嘟嘟网络技术有限公司                    </a>                    &nbsp;版权所有                </p>            </div>            <div class="user-bticon" style="line-height:58px;">                <ul>                    <li>                        <a href="https://kx.xcc.cn/newCan/2022080826188160532" target="_blank" style="position: relative;" rel="nofollow">                            <img src="//cdnimg.dd373.com/newfile/common/images/default/footer_xin.png" style="width: 119px;height: 38px;border: none;">                        </a>                    </li>                </ul>            </div>        </div>    </div></div><script>    !(function(c,b,d,a){c[a]||(c[a]={});c[a]=    {       endpoint: 'https://proj-xtrace-1d34caa9e8e196b1db805a2ec7242dfa-cn-hangzhou.cn-hangzhou.log.aliyuncs.com/rum/web/v2?workspace=default-cms-31475944-cn-hangzhou&service_id=iqmzs@90e8df1a49630d19f8281',      env: 'pro',      spaMode: 'auto',      sessionConfig: {        sampleRate: 0.02,      }    }    with(b)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("crossorigin","",src=d)})(window, document, "https://sdk.rum.aliyuncs.com/v2/browser-sdk.js", "__rum");</script>
+    <script src="//sta.dd373.com/file/general/Scripts/jquery-1.12.3.min.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/newfile/common/js/game_area_selector.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/file/general/Scripts/layer/layer.js?v=202607231641"></script>
+    <!--[if lt IE 10]>
+        <script src="//sta.dd373.com/newfile/general/Scripts/jquery.placeholder.min.js?v=202607231641"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+        <script src="//sta.dd373.com/file/general/Scripts/html5.js?v=202607231641" type="text/javascript"></script>
+    <![endif]-->
+
+    <script src="//sta.dd373.com/newfile/common/js/ajax_filter.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/newfile/consult/scripts/loadchat.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/file/general/Scripts/idangerous.swiper.min.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/newfile/common/js/default/mvc_header.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/newfile/common/js/default/common.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/newfile/common/js/right_hover.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/file/general/Scripts/jquery.lazyload.min.js?v=202607231641"></script>
+    <script type="text/javascript" src="//sta.dd373.com/newfile/common/js/default/bd_statistics.js?v=202607231641"></script>
+    
+    <script src="//sta.dd373.com/newfile/common/js/default/slides.min.jquery.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/newfile/goods/js/default/goods_list.js?v=202607231641"></script>
+    <script src="//sta.dd373.com/file/general/Scripts/jquery.lazyload.min.js?v=202607231641"></script>
+    <script type="text/javascript">
+
+                $.ajax({
+                    type: 'GET',
+                    data: { guid: '4837aca544d64226a3d45048f3741505' },
+                    dataType: "jsonp",
+                    url: '//goods.dd373.com/Api/GoodsBrowseHistory/AddGoodsBrowseHistory',
+                    success: function (res) {
+                    }
+                })
+                </script>
+
+    <script type='text/javascript'>      
+        //举报
+        function OpenConsult() {
+             transferInfo({
+                appid: "00c90442c2a3446d89eb80744bf88f73",
+                showBtn: 0 //是否显示用户咨询入口  0：不显示   1：显示
+
+            });
+
+            handAppend();
+        }
+    </script>
+    <script>
+        (function () {
+          if (document.cookie.indexOf('imagestylewebp=') !== -1) return;
+
+          var img = new Image();
+          img.onload = function () {
+            document.cookie = "imagestylewebp=1;path=/;domain=.dd373.com;max-age=604800";
+          };
+          img.onerror = function () {
+            document.cookie = "imagestylewebp=0;path=/;domain=.dd373.com;max-age=604800";
+          };
+
+          img.src = "https://publicimg.pp373.com/test.webp";
+        })();
+    </script>
+</body>
+</html>

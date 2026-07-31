@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+venv/
+env/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Frontend Build
+dist/
+build/
+.output/
+
+# Databases
+*.db
+*.sqlite3
+
+# Logs and debug files
+*.log
+npm-debug.log*
+
+# Scraping dumps / Temp files
+# Nếu bạn không muốn lưu trữ các file html/json rác sinh ra từ tool thì có thể bỏ comment
+# *_success.html
+# *_html.txt
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

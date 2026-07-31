@@ -1,0 +1,29 @@
+
+cd client_tool
+pip install curl_cffi
+python sniper_client.py
+
+
+
+python -m venv venv
+
+
+.\venv\Scripts\activate
+
+pip install fastapi uvicorn websockets pydantic requests curl_cffi beautifulsoup4 lxml
+
+npm create vite@latest frontend -- --template react
+
+cd frontend
+
+npm install
+npm install axios lightweight-charts
+
+
+npm run dev
+
+cd client_tool
+python sniper_client.py
+
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser

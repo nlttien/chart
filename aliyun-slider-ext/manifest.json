@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Aliyun WAF Slider",
+  "version": "3.0",
+  "description": "Tu dong keo thanh truot WAF cua Aliyun bang Computer Vision (Docs man hinh)",
+  "permissions": ["debugger", "tabs", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
