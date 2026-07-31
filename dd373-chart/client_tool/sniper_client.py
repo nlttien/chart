@@ -70,6 +70,85 @@ class SniperEngine:
             self.log(f"   ⚠️ Không thể mở ChromiumPage: {e}")
             return None
 
+    def auto_solve_slider(self, page):
+        """Tự động phát hiện và trượt nút xác minh Aliyun WAF bằng thao tác giả lập người thật (Human-like Random Drag)"""
+        try:
+            selectors = [
+                '#aliyunCaptcha-sliding-slider',
+                '#nc_1_n1z',
+                '.nc_iconfont.btn_slide',
+                'span[id*="sliding"]',
+                '.btn_slide',
+                'div[class*="sliding"] span'
+            ]
+            
+            slider_btn = None
+            for sel in selectors:
+                try:
+                    btn = page.ele(sel, timeout=1)
+                    if btn:
+                        slider_btn = btn; break
+                except Exception: pass
+
+            if not slider_btn:
+                try:
+                    frames = page.get_frames()
+                    for frame in frames:
+                        for sel in selectors:
+                            try:
+                                btn = frame.ele(sel, timeout=1)
+                                if btn:
+                                    slider_btn = btn; break
+                            except Exception: pass
+                        if slider_btn: break
+                except Exception: pass
+
+            if slider_btn:
+                self.log("   🤖 Phát hiện nút trượt WAF! Đang giả lập kéo tay người thật (Human-like Random Speed)...")
+                
+                rect = slider_btn.rect
+                start_x = rect.location[0] + random.randint(5, 12)
+                start_y = rect.location[1] + random.randint(5, 12)
+                
+                # Tổng quãng đường kéo ngẫu nhiên (340px - 380px)
+                target_distance = random.randint(345, 375)
+                
+                # Bắt đầu giữ nút
+                actions = page.actions
+                actions.move_to((start_x, start_y)).hold()
+                time.sleep(random.uniform(0.1, 0.3))
+
+                # Giả lập gia tốc kéo của tay người (Tăng tốc nhanh đầu -> Giảm tốc nhẹ cuối)
+                curr_x = start_x
+                curr_y = start_y
+                steps = random.randint(15, 25)
+                
+                for i in range(steps):
+                    # Tỷ lệ tiến trình
+                    progress = (i + 1) / steps
+                    # Hàm gia tốc phi tuyến tính (Easing Out)
+                    step_ratio = 1 - (1 - progress) ** 3
+                    
+                    next_x = start_x + int(target_distance * step_ratio)
+                    # Thêm độ rung nhẹ trục Y (tự nhiên như tay người rung nhẹ ±1px đến 2px)
+                    next_y = start_y + random.choice([-1, 0, 1, 2, -1, 0])
+                    
+                    dx = next_x - curr_x
+                    dy = next_y - curr_y
+                    
+                    actions.move(offset_x=dx, offset_y=dy, duration=random.uniform(0.015, 0.045))
+                    curr_x, curr_y = next_x, next_y
+
+                # Thao tác thả nút ngẫu nhiên nhẹ
+                time.sleep(random.uniform(0.15, 0.35))
+                actions.release()
+                
+                time.sleep(2.5)
+                return True
+        except Exception as e:
+            self.log(f"   ⚠️ Lỗi tự động trượt nút: {e}")
+        return False
+
     def scan_single_item(self, item_config):
         """Quét trang Recycle của DD373 (Tự động vượt WAF Aliyun bằng DrissionPage)"""
         try:
@@ -146,11 +225,14 @@ class SniperEngine:
                     page = self.get_browser_page()
                     if page:
                         page.get(url)
-                        import time
-                        # Đợi tối đa 60s để người dùng giải Captcha (nếu có)
+                        time.sleep(2)
+                        
+                        # Tự động trượt CAPTCHA nếu xuất hiện
+                        self.auto_solve_slider(page)
+
+                        # Đợi tối đa 60s để giải Captcha (nếu có)
                         self.log("   ⏳ Đang chờ xác thực Captcha (Thử tự động giải hoặc bạn có thể kéo bằng tay)...")
                         for i in range(60):
-                            import time
                             time.sleep(1) # RẤT QUAN TRỌNG ĐỂ CHỜ TRANG TẢI
                             try:
                                 resp_text = page.html
@@ -172,55 +254,12 @@ class SniperEngine:
                                         refresh_btn.click()
                                         time.sleep(1)
                                         
-                                    # Tìm cục slider (phiên bản mới nằm thẳng ở page, bản cũ ở iframe, hoặc ẩn trong Shadow DOM)
-                                    slider = (
-                                        page.ele('#aliyunCaptcha-sliding-slider', timeout=0.2) or 
-                                        page.ele('#nc_1_n1z', timeout=0.2) or 
-                                        page.ele('.aliyunCaptcha-sliding-slider', timeout=0.2) or 
-                                        page.ele('.btn_slide', timeout=0.2) or
-                                        page.ele('sr:#nc_1_n1z', timeout=0.2) or
-                                        page.ele('sr:#aliyunCaptcha-sliding-slider', timeout=0.2)
-                                    )
-                                    
-                                    if not slider:
-                                        # Quét toàn bộ iframes thay vì chỉ tìm theo ID cố định
-                                        for fr in page.get_frames():
-                                            try:
-                                                slider = (
-                                                    fr.ele('#nc_1_n1z', timeout=0.1) or 
-                                                    fr.ele('.btn_slide', timeout=0.1) or
-                                                    fr.ele('#aliyunCaptcha-sliding-slider', timeout=0.1) or
-                                                    fr.ele('sr:#nc_1_n1z', timeout=0.1)
-                                                )
-                                                if slider:
-                                                    break
-                                            except: pass
-                                            
-                                    if not slider and i == 2:
-                                        # Dump HTML để debug nếu không tìm thấy sau 2 giây
-                                        try:
-                                            with open('debug_waf_dom.txt', 'w', encoding='utf-8') as f:
-                                                f.write(page.html)
-                                        except: pass
-                                            
-                                    if slider and slider.is_displayed:
-                                        self.log("   🤖 Đã tìm thấy thanh trượt, đang tự động kéo...")
-                                        try:
-                                            # Dùng ActionChains cho chắc chắn
-                                            from DrissionPage.common import Actions
-                                            ac = Actions(page)
-                                            ac.hold(slider).move(380, 0, duration=1.2).release()
-                                        except Exception as e:
-                                            self.log(f"   ⚠️ Lỗi khi kéo: {e}")
-                                            # Fallback
-                                            slider.drag(380, 0, 1.2)
-                                    else:
-                                        # Kích hoạt Computer Vision nhận diện ảnh trên màn hình!
-                                        if i % 4 == 0:  # Quét ảnh mỗi 4 giây để đỡ nặng máy
-                                            if self._auto_slide_visual():
-                                                pass # Thành công kéo bằng hình ảnh
+                                    if self.auto_solve_slider(page):
+                                        time.sleep(1.5)
+                                    elif i % 4 == 0:
+                                        # Kích hoạt Computer Vision nhận diện ảnh trên màn hình làm phương án dự phòng!
+                                        self._auto_slide_visual()
                                 except Exception as e:
-                                    # self.log(f"   ⚠️ Lỗi tìm slider: {e}")
                                     pass
                         
                         status_code = 200
