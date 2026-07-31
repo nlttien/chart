@@ -36,3 +36,7 @@ npm-debug.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Custom additions
+g2g_market.db-wal
+debug_waf
