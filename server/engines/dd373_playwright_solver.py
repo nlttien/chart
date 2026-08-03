@@ -21,14 +21,31 @@ os.makedirs(PROFILE_DIR, exist_ok=True)
 _BROWSER_LOCK = threading.Lock()
 
 STEALTH_JS = """
-// Overwrite navigator.webdriver
+// Overwrite navigator.webdriver & Automation flags
 Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-// Mock window.chrome
 window.chrome = { runtime: {}, loadTimes: function() {}, csi: function() {}, app: {} };
-// Overwrite navigator.languages
 Object.defineProperty(navigator, 'languages', { get: () => ['zh-CN', 'zh', 'en-US', 'en'] });
 Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
-// Mock permissions
+
+// Mock CDC / Aliyun WAF detection objects
+delete window.cdc_adoQpoasndfTargetKCchStandard;
+delete window.__driver_evaluate;
+delete window.__webdriver_evaluate;
+delete window.__selenium_evaluate;
+delete window.__fxdriver_evaluate;
+delete window.__driver_unwrapped;
+delete window.__webdriver_unwrapped;
+delete window.__selenium_unwrapped;
+delete window.__fxdriver_unwrapped;
+
+// Mock WebGL Vendor & Renderer
+const getParameter = WebGLRenderingContext.prototype.getParameter;
+WebGLRenderingContext.prototype.getParameter = function(parameter) {
+    if (parameter === 37445) return 'Google Inc. (NVIDIA)';
+    if (parameter === 37446) return 'ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Direct3D11 vs_5_0 ps_5_0, D3D11)';
+    return getParameter.apply(this, [parameter]);
+};
+
 const originalQuery = window.navigator.permissions.query;
 window.navigator.permissions.query = (parameters) => (
     parameters.name === 'notifications' ?
@@ -55,27 +72,61 @@ def clean_stale_singleton_lock():
 
 def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
     """
-    Generate realistic human mouse movement steps with ease-in-out curve.
+    Generate realistic human mouse movement steps with Ease-in-out,
+    micro-jitter noise, and natural overshoot-correction behavior for slider captchas.
     """
     steps = []
     current_x = 0.0
     current_y = 0.0
     
-    num_steps = random.randint(35, 55)
-    for i in range(1, num_steps + 1):
-        t = i / num_steps
-        # Ease-in-out (smooth acceleration and deceleration)
+    # 1. Giả lập hiệu ứng tay người kéo quá đà (Overshoot) 4-12px
+    overshoot = random.uniform(4.0, 12.0) if distance > 100 else random.uniform(2.0, 6.0)
+    target_overshoot_x = distance + overshoot
+    
+    # Phase 1: Kéo chính tới điểm vượt đích (Chiếm khoảng 80% - 85% tổng số bước)
+    main_steps_count = random.randint(35, 50)
+    for i in range(1, main_steps_count + 1):
+        t = i / main_steps_count
+        # Smooth cubic ease-in-out curve (gia tốc rồi giảm tốc)
         if t < 0.5:
             ease = 4 * t * t * t
         else:
             ease = 1 - math.pow(-2 * t + 2, 3) / 2
             
-        next_x = distance * ease
+        next_x = target_overshoot_x * ease
         dx = next_x - current_x
-        dy = random.uniform(-0.8, 0.8)
+        
+        # Nhiễu rung vi mô (Micro-jitter) trục X và sóng sinh lý trục Y
+        dx_jitter = dx + random.uniform(-0.35, 0.35) if 0.1 < t < 0.9 else dx
+        dy = math.sin(t * math.pi) * random.uniform(0.3, 1.2) + random.uniform(-0.4, 0.4)
+        
+        current_x += dx_jitter
+        current_y += dy
+        steps.append((dx_jitter, dy))
+        
+    # Phase 2: Kéo lùi hiệu chỉnh về đúng điểm đích `distance` (15% - 20% tổng số bước)
+    correction_steps_count = random.randint(6, 12)
+    start_corr_x = current_x
+    delta_back = distance - start_corr_x  # Khoảng kéo lùi (âm)
+    
+    for j in range(1, correction_steps_count + 1):
+        t = j / correction_steps_count
+        # Giảm tốc nhẹ khi kéo lùi căn chỉnh
+        ease = math.sin(t * math.pi / 2)
+        next_x = start_corr_x + delta_back * ease
+        dx = next_x - current_x
+        dy = random.uniform(-0.3, 0.3)
+        
         current_x = next_x
         current_y += dy
         steps.append((dx, dy))
+        
+    # Đảm bảo tổng khoảng cách dx đạt chính xác 100% target `distance`
+    total_dx = sum(s[0] for s in steps)
+    diff = distance - total_dx
+    if abs(diff) > 0.0001 and len(steps) > 0:
+        last_dx, last_dy = steps[-1]
+        steps[-1] = (last_dx + diff, last_dy)
         
     return steps
 
@@ -133,7 +184,7 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    slide_distance = 318.0
+    slide_distance = 320.0
     track_selectors = [
         '#aliyunCaptcha-sliding-wrapper',
         '.aliyunCaptcha-sliding-wrapper',
@@ -164,13 +215,14 @@ async def solve_aliyun_slider(page: Page) -> bool:
         details={"start_x": start_x, "start_y": start_y, "distance": slide_distance}
     )
 
-    await page.mouse.move(start_x - random.uniform(5, 15), start_y - random.uniform(5, 15))
-    time.sleep(random.uniform(0.1, 0.3))
+    # Human-like approach mouse movement
+    await page.mouse.move(start_x - random.uniform(20, 40), start_y - random.uniform(10, 20))
+    time.sleep(random.uniform(0.1, 0.25))
     await page.mouse.move(start_x, start_y)
     time.sleep(random.uniform(0.1, 0.2))
     
     await page.mouse.down()
-    time.sleep(random.uniform(0.08, 0.15))
+    time.sleep(random.uniform(0.1, 0.25))
     
     curr_x, curr_y = start_x, start_y
     trajectory = generate_human_steps(slide_distance)
@@ -179,11 +231,11 @@ async def solve_aliyun_slider(page: Page) -> bool:
         curr_x += dx
         curr_y += dy
         await page.mouse.move(curr_x, curr_y)
-        time.sleep(random.uniform(0.01, 0.025))
+        time.sleep(random.uniform(0.008, 0.02))
 
-    time.sleep(random.uniform(0.15, 0.3))
+    time.sleep(random.uniform(0.2, 0.4))
     await page.mouse.up()
-    time.sleep(3.5)
+    time.sleep(4.0)
 
     page_content = await page.content()
     is_success = False
@@ -331,7 +383,8 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                         "--disable-blink-features=AutomationControlled",
                         "--disable-infobars",
                         "--window-size=1920,1080",
-                        "--lang=zh-CN,zh"
+                        "--lang=zh-CN,zh",
+                        "--disable-web-security"
                     ],
                     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
                     viewport={"width": 1920, "height": 1080}
@@ -343,7 +396,6 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                 response = await page.goto(url, wait_until="domcontentloaded", timeout=25000)
                 status_code = response.status if response else 0
 
-                # Wait 2s for potential redirect or WAF injection
                 time.sleep(2.0)
 
                 for attempt in range(1, max_retries + 1):
@@ -360,7 +412,6 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     else:
                         break
 
-                # Extract HTML & parse
                 html_content = await page.content()
                 cookies = await context.cookies()
                 cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in cookies])
@@ -377,7 +428,6 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                         details={"url": url, "http_status": status_code, "execution_time_ms": exec_time, "items_count": len(clean_results)}
                     )
                 else:
-                    # Check if captcha prompt is still present or if page is normal empty
                     if "aliyunCaptcha" in html_content or "sliding-slider" in html_content:
                         err_code = "WAF_CAPTCHA_BLOCKED"
                         err_msg = "Playwright page still blocked by Aliyun Captcha WAF"
