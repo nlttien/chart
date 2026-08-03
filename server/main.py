@@ -192,19 +192,8 @@ async def api_platform_lowest(platform: str, item_name: Optional[str] = Query(No
 
 @app.get("/api/v1/{platform}/snapshot")
 async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(None)):
-    plat = platform.lower()
-    data = get_latest_snapshot(plat, item_name)
-    
-    # Auto-trigger scraper if DB is empty or has no snapshot data
-    if not data:
-        config = load_config()
-        items = config.get(plat, [])
-        for item in items:
-            if not item_name or item.get("name") == item_name:
-                await worker.scrape_platform_item(plat, item)
-        data = get_latest_snapshot(plat, item_name)
-
-    return {"status": "success", "platform": plat, "order_book": data}
+    data = get_latest_snapshot(platform.lower(), item_name)
+    return {"status": "success", "platform": platform, "order_book": data}
 
 @app.get("/api/v1/{platform}/history")
 async def api_platform_history(platform: str, item_name: str = Query(...)):
