@@ -21,13 +21,23 @@ os.makedirs(PROFILE_DIR, exist_ok=True)
 _BROWSER_LOCK = threading.Lock()
 
 STEALTH_JS = """
-// Overwrite navigator.webdriver & Automation flags
+// 1. Overwrite navigator.webdriver & Automation flags
 Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
 window.chrome = { runtime: {}, loadTimes: function() {}, csi: function() {}, app: {} };
 Object.defineProperty(navigator, 'languages', { get: () => ['zh-CN', 'zh', 'en-US', 'en'] });
-Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 8 });
+Object.defineProperty(navigator, 'deviceMemory', { get: () => 8 });
 
-// Mock CDC / Aliyun WAF detection objects
+// 2. Mock plugins array
+Object.defineProperty(navigator, 'plugins', {
+    get: () => [
+        { name: 'Chrome PDF Plugin', filename: 'internal-pdf-viewer', description: 'Portable Document Format' },
+        { name: 'Chrome PDF Viewer', filename: 'mhjfbheakVisualpdf', description: '' },
+        { name: 'Native Client', filename: 'internal-nacl-plugin', description: '' }
+    ]
+});
+
+// 3. Mock CDC / Aliyun WAF detection objects
 delete window.cdc_adoQpoasndfTargetKCchStandard;
 delete window.__driver_evaluate;
 delete window.__webdriver_evaluate;
@@ -38,7 +48,7 @@ delete window.__webdriver_unwrapped;
 delete window.__selenium_unwrapped;
 delete window.__fxdriver_unwrapped;
 
-// Mock WebGL Vendor & Renderer
+// 4. Mock WebGL Vendor & Renderer
 const getParameter = WebGLRenderingContext.prototype.getParameter;
 WebGLRenderingContext.prototype.getParameter = function(parameter) {
     if (parameter === 37445) return 'Google Inc. (NVIDIA)';
@@ -46,6 +56,7 @@ WebGLRenderingContext.prototype.getParameter = function(parameter) {
     return getParameter.apply(this, [parameter]);
 };
 
+// 5. Override Permissions Query API
 const originalQuery = window.navigator.permissions.query;
 window.navigator.permissions.query = (parameters) => (
     parameters.name === 'notifications' ?
@@ -382,12 +393,22 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                         "--disable-setuid-sandbox",
                         "--disable-blink-features=AutomationControlled",
                         "--disable-infobars",
+                        "--no-first-run",
+                        "--no-default-browser-check",
                         "--window-size=1920,1080",
                         "--lang=zh-CN,zh",
-                        "--disable-web-security"
+                        "--disable-web-security",
+                        "--disable-ipc-flooding-protection"
                     ],
-                    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-                    viewport={"width": 1920, "height": 1080}
+                    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+                    viewport={"width": 1920, "height": 1080},
+                    device_scale_factor=1,
+                    locale="zh-CN",
+                    timezone_id="Asia/Shanghai",
+                    has_touch=False,
+                    is_mobile=False,
+                    java_script_enabled=True,
+                    ignore_https_errors=True
                 )
 
                 page = context.pages[0] if context.pages else await context.new_page()
