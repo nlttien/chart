@@ -55,33 +55,22 @@ def clean_stale_singleton_lock():
 
 def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
     """
-    Generate realistic human mouse movement steps (X, Y jitter) with easing acceleration and slight overshoot.
+    Generate realistic human mouse movement steps (X, Y jitter) with easing acceleration.
     """
     steps = []
     current_x = 0.0
     current_y = 0.0
     
-    # 90% distance with easing, slight overshoot
-    main_distance = distance * (1.02 + random.uniform(0.01, 0.03))
-    num_steps = random.randint(25, 40)
-    
+    num_steps = random.randint(30, 50)
     for i in range(1, num_steps + 1):
         t = i / num_steps
         ease = 1 - math.pow(1 - t, 3)
-        next_x = main_distance * ease
+        next_x = distance * ease
         dx = next_x - current_x
-        dy = random.uniform(-1.5, 1.5)
+        dy = random.uniform(-1.0, 1.0)
         current_x = next_x
         current_y += dy
         steps.append((dx, dy))
-        
-    # Overshoot correction back to target
-    correction_steps = random.randint(3, 6)
-    target_overshoot_diff = current_x - distance
-    for j in range(1, correction_steps + 1):
-        back_dx = -(target_overshoot_diff / correction_steps) + random.uniform(-0.5, 0.5)
-        back_dy = random.uniform(-1.0, 1.0)
-        steps.append((back_dx, back_dy))
         
     return steps
 
@@ -139,8 +128,8 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    # Measure container track width for precise slide distance
-    slide_distance = 300.0
+    # Measure track container width
+    slide_distance = 318.0
     track_selectors = [
         '#aliyunCaptcha-sliding-wrapper',
         '.aliyunCaptcha-sliding-wrapper',
@@ -154,7 +143,7 @@ async def solve_aliyun_slider(page: Page) -> bool:
             if await track_el.count() > 0:
                 t_box = await track_el.bounding_box()
                 if t_box and t_box["width"] > box["width"]:
-                    slide_distance = t_box["width"] - box["width"] - 2.0
+                    slide_distance = t_box["width"] - box["width"]
                     logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px")
                     break
         except Exception:
@@ -171,8 +160,14 @@ async def solve_aliyun_slider(page: Page) -> bool:
         details={"start_x": start_x, "start_y": start_y, "distance": slide_distance}
     )
 
+    # Hover before clicking
+    await page.mouse.move(start_x - random.uniform(5, 15), start_y - random.uniform(5, 15))
+    time.sleep(random.uniform(0.1, 0.3))
     await page.mouse.move(start_x, start_y)
+    time.sleep(random.uniform(0.1, 0.2))
+    
     await page.mouse.down()
+    time.sleep(random.uniform(0.08, 0.15))
     
     curr_x, curr_y = start_x, start_y
     trajectory = generate_human_steps(slide_distance)
@@ -181,13 +176,28 @@ async def solve_aliyun_slider(page: Page) -> bool:
         curr_x += dx
         curr_y += dy
         await page.mouse.move(curr_x, curr_y)
-        time.sleep(random.uniform(0.008, 0.025))
+        time.sleep(random.uniform(0.01, 0.03))
 
+    time.sleep(random.uniform(0.1, 0.2))
     await page.mouse.up()
-    time.sleep(2.5)
+    time.sleep(3.0)
 
+    # Check DOM for success or redirection
     page_content = await page.content()
+    is_success = False
+    
+    # Method 1: Check if captcha prompt is gone
     if "aliyunCaptcha" not in page_content and "Please complete the operation" not in page_content:
+        is_success = True
+    else:
+        # Method 2: Check for success class on slider element
+        succ_el = page.locator('.nc-lang-cnt, .aliyunCaptcha-sliding-text-box, span[class*="success"]').first
+        if await succ_el.count() > 0:
+            txt = await succ_el.text_content()
+            if txt and ("验证" in txt or "成功" in txt or "verified" in txt.lower()):
+                is_success = True
+
+    if is_success:
         SmartLogger.log_event(
             platform="dd373",
             level="INFO",
@@ -207,14 +217,13 @@ async def solve_aliyun_slider(page: Page) -> bool:
         await page.screenshot(path=LAST_ERROR_SCREENSHOT, full_page=True)
         return False
 
-async def fetch_dd373_with_playwright(url: str, max_retries: int = 2) -> Tuple[List[Dict[str, Any]], str]:
+async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[List[Dict[str, Any]], str]:
     """
     Fetch DD373 page using Playwright stealth persistent browser context (Thread-safe with Lock).
     Returns (clean_items_list, cookie_header_string).
     """
     start_time = time.time()
     
-    # Acquire lock to prevent ProcessSingleton collision
     with _BROWSER_LOCK:
         logger.info(f"[Playwright Solver] Lock acquired for {url}. Launching browser...")
         clean_stale_singleton_lock()
@@ -248,10 +257,13 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 2) -> Tuple[L
                     if "aliyunCaptcha" in content or "verify that you are a real person" in content or "sliding-slider" in content:
                         solved = await solve_aliyun_slider(page)
                         if solved:
-                            await page.wait_for_load_state("networkidle", timeout=5000)
+                            try:
+                                await page.wait_for_selector('ul, li, div.goods-list', timeout=6000)
+                            except Exception:
+                                pass
                             break
                         else:
-                            logger.warning(f"[Playwright Solver] Captcha solve attempt {attempt}/{max_retries} failed. Reloading...")
+                            logger.warning(f"[Playwright Solver] Captcha solve attempt {attempt}/{max_retries} failed. Refreshing page...")
                             await page.reload(wait_until="domcontentloaded")
                             time.sleep(2)
                     else:
