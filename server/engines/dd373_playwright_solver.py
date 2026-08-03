@@ -55,19 +55,24 @@ def clean_stale_singleton_lock():
 
 def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
     """
-    Generate realistic human mouse movement steps (X, Y jitter) with easing acceleration.
+    Generate realistic human mouse movement steps with ease-in-out curve.
     """
     steps = []
     current_x = 0.0
     current_y = 0.0
     
-    num_steps = random.randint(30, 50)
+    num_steps = random.randint(35, 55)
     for i in range(1, num_steps + 1):
         t = i / num_steps
-        ease = 1 - math.pow(1 - t, 3)
+        # Ease-in-out (smooth acceleration and deceleration)
+        if t < 0.5:
+            ease = 4 * t * t * t
+        else:
+            ease = 1 - math.pow(-2 * t + 2, 3) / 2
+            
         next_x = distance * ease
         dx = next_x - current_x
-        dy = random.uniform(-1.0, 1.0)
+        dy = random.uniform(-0.8, 0.8)
         current_x = next_x
         current_y += dy
         steps.append((dx, dy))
@@ -128,7 +133,6 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    # Measure track container width
     slide_distance = 318.0
     track_selectors = [
         '#aliyunCaptcha-sliding-wrapper',
@@ -160,7 +164,6 @@ async def solve_aliyun_slider(page: Page) -> bool:
         details={"start_x": start_x, "start_y": start_y, "distance": slide_distance}
     )
 
-    # Hover before clicking
     await page.mouse.move(start_x - random.uniform(5, 15), start_y - random.uniform(5, 15))
     time.sleep(random.uniform(0.1, 0.3))
     await page.mouse.move(start_x, start_y)
@@ -176,21 +179,18 @@ async def solve_aliyun_slider(page: Page) -> bool:
         curr_x += dx
         curr_y += dy
         await page.mouse.move(curr_x, curr_y)
-        time.sleep(random.uniform(0.01, 0.03))
+        time.sleep(random.uniform(0.01, 0.025))
 
-    time.sleep(random.uniform(0.1, 0.2))
+    time.sleep(random.uniform(0.15, 0.3))
     await page.mouse.up()
-    time.sleep(3.0)
+    time.sleep(3.5)
 
-    # Check DOM for success or redirection
     page_content = await page.content()
     is_success = False
     
-    # Method 1: Check if captcha prompt is gone
     if "aliyunCaptcha" not in page_content and "Please complete the operation" not in page_content:
         is_success = True
     else:
-        # Method 2: Check for success class on slider element
         succ_el = page.locator('.nc-lang-cnt, .aliyunCaptcha-sliding-text-box, span[class*="success"]').first
         if await succ_el.count() > 0:
             txt = await succ_el.text_content()
@@ -216,6 +216,97 @@ async def solve_aliyun_slider(page: Page) -> bool:
         )
         await page.screenshot(path=LAST_ERROR_SCREENSHOT, full_page=True)
         return False
+
+def parse_dd373_html(html_content: str) -> List[Dict[str, Any]]:
+    """Universal robust parser for DD373 price list DOM."""
+    soup = BeautifulSoup(html_content, 'lxml')
+    
+    def is_valid_row(tag):
+        if tag.name not in ['div', 'li', 'ul', 'tr']:
+            return False
+        text = tag.get_text()
+        if '元/个' not in text and '1元=' not in text and '1元 =' not in text:
+            return False
+        for child in tag.find_all(['div', 'li', 'ul', 'tr']):
+            child_text = child.get_text()
+            if '元/个' in child_text or '1元=' in child_text or '1元 =' in child_text:
+                return False
+        return True
+
+    inner_items = soup.find_all(is_valid_row)
+    rows = []
+    for item in inner_items:
+        row = item
+        while row.parent:
+            count_in_parent = len([i for i in inner_items if i in row.parent.descendants or i == row.parent])
+            count_in_row = len([i for i in inner_items if i in row.descendants or i == row])
+            if count_in_parent > count_in_row:
+                break
+            row = row.parent
+        if row not in rows:
+            rows.append(row)
+
+    clean_results = []
+    for r in rows:
+        text = r.get_text(separator=' | ', strip=True)
+        parts = [p.strip() for p in text.split('|') if p.strip()]
+        
+        price = 0.0
+        stock = 0
+        min_qty = 0
+        ratio = ""
+        delivery = "Online"
+        seller_found = ""
+
+        for p in parts:
+            if "极速收货" in p:
+                delivery = "极速收货"
+            elif "分钟" in p:
+                delivery = p
+
+            if '1元=' in p or '1元 =' in p:
+                ratio_match = re.search(r"1\s*元\s*=\s*([\d\.]+)", p)
+                if ratio_match:
+                    ratio = ratio_match.group(1)
+
+            if '元/个' in p or '1元=' in p or '1元 =' in p:
+                price = parse_number(p)
+            elif '件' in p or '万' in p or '个' in p:
+                num = parse_number(p)
+                if '万' in p:
+                    num *= 10000
+                if stock == 0:
+                    stock = int(num)
+                else:
+                    min_qty = int(num)
+
+            if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟']):
+                if len(p) > 1 and len(p) < 30:
+                    seller_found = p
+
+        if price == 0.0 and ratio:
+            try:
+                price = round(1.0 / float(ratio), 4)
+            except Exception:
+                pass
+
+        seller = seller_found if seller_found else (f"Trader (1¥={ratio})" if ratio else "DD373 Trader")
+        
+        if price > 0:
+            clean_results.append({
+                'seller': seller,
+                'unit_price': price,
+                'stock': stock,
+                'sold_total': 0,
+                'online': delivery,
+                'min_qty': min_qty,
+                'ratio': ratio,
+                'delivery': delivery,
+                'source': 'dd373'
+            })
+
+    clean_results.sort(key=lambda x: x['unit_price'])
+    return clean_results
 
 async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[List[Dict[str, Any]], str]:
     """
@@ -252,114 +343,29 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                 response = await page.goto(url, wait_until="domcontentloaded", timeout=25000)
                 status_code = response.status if response else 0
 
+                # Wait 2s for potential redirect or WAF injection
+                time.sleep(2.0)
+
                 for attempt in range(1, max_retries + 1):
                     content = await page.content()
                     if "aliyunCaptcha" in content or "verify that you are a real person" in content or "sliding-slider" in content:
                         solved = await solve_aliyun_slider(page)
                         if solved:
-                            try:
-                                await page.wait_for_selector('ul, li, div.goods-list', timeout=6000)
-                            except Exception:
-                                pass
+                            time.sleep(3.0)
                             break
                         else:
                             logger.warning(f"[Playwright Solver] Captcha solve attempt {attempt}/{max_retries} failed. Refreshing page...")
                             await page.reload(wait_until="domcontentloaded")
-                            time.sleep(2)
+                            time.sleep(2.5)
                     else:
                         break
 
+                # Extract HTML & parse
                 html_content = await page.content()
                 cookies = await context.cookies()
                 cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in cookies])
 
-                soup = BeautifulSoup(html_content, 'lxml')
-                
-                def is_valid_row(tag):
-                    if tag.name not in ['div', 'li', 'ul', 'tr']:
-                        return False
-                    text = tag.get_text()
-                    if '元/个' not in text and '1元=' not in text:
-                        return False
-                    for child in tag.find_all(['div', 'li', 'ul', 'tr']):
-                        child_text = child.get_text()
-                        if '元/个' in child_text or '1元=' in child_text:
-                            return False
-                    return True
-
-                inner_items = soup.find_all(is_valid_row)
-                rows = []
-                for item in inner_items:
-                    row = item
-                    while row.parent:
-                        count_in_parent = len([i for i in inner_items if i in row.parent.descendants or i == row.parent])
-                        count_in_row = len([i for i in inner_items if i in row.descendants or i == row])
-                        if count_in_parent > count_in_row:
-                            break
-                        row = row.parent
-                    if row not in rows:
-                        rows.append(row)
-
-                clean_results = []
-                for r in rows:
-                    text = r.get_text(separator=' | ', strip=True)
-                    parts = [p.strip() for p in text.split('|') if p.strip()]
-                    
-                    price = 0.0
-                    stock = 0
-                    min_qty = 0
-                    ratio = ""
-                    delivery = "Online"
-                    seller_found = ""
-
-                    for p in parts:
-                        if "极速收货" in p:
-                            delivery = "极速收货"
-                        elif "分钟" in p:
-                            delivery = p
-
-                        if '1元=' in p or '1元 =' in p:
-                            ratio_match = re.search(r"1\s*元\s*=\s*([\d\.]+)", p)
-                            if ratio_match:
-                                ratio = ratio_match.group(1)
-
-                        if '元/个' in p or '1元=' in p:
-                            price = parse_number(p)
-                        elif '件' in p or '万' in p or '个' in p:
-                            num = parse_number(p)
-                            if '万' in p:
-                                num *= 10000
-                            if stock == 0:
-                                stock = int(num)
-                            else:
-                                min_qty = int(num)
-
-                        if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟']):
-                            if len(p) > 1 and len(p) < 30:
-                                seller_found = p
-
-                    if price == 0.0 and ratio:
-                        try:
-                            price = round(1.0 / float(ratio), 4)
-                        except Exception:
-                            pass
-
-                    seller = seller_found if seller_found else (f"Trader (1¥={ratio})" if ratio else "DD373 Trader")
-                    
-                    if price > 0:
-                        clean_results.append({
-                            'seller': seller,
-                            'unit_price': price,
-                            'stock': stock,
-                            'sold_total': 0,
-                            'online': delivery,
-                            'min_qty': min_qty,
-                            'ratio': ratio,
-                            'delivery': delivery,
-                            'source': 'dd373'
-                        })
-
-                clean_results.sort(key=lambda x: x['unit_price'])
+                clean_results = parse_dd373_html(html_content)
                 exec_time = int((time.time() - start_time) * 1000)
 
                 if len(clean_results) > 0:
@@ -371,11 +377,19 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                         details={"url": url, "http_status": status_code, "execution_time_ms": exec_time, "items_count": len(clean_results)}
                     )
                 else:
+                    # Check if captcha prompt is still present or if page is normal empty
+                    if "aliyunCaptcha" in html_content or "sliding-slider" in html_content:
+                        err_code = "WAF_CAPTCHA_BLOCKED"
+                        err_msg = "Playwright page still blocked by Aliyun Captcha WAF"
+                    else:
+                        err_code = "DOM_ELEMENT_NOT_FOUND"
+                        err_msg = "Playwright fetched page but failed to parse price table (DOM structure changed or no offers)"
+
                     SmartLogger.log_event(
                         platform="dd373",
                         level="ERROR",
-                        error_code="DOM_ELEMENT_NOT_FOUND",
-                        message="Playwright fetched page but failed to parse price table (DOM structure changed or blocked)",
+                        error_code=err_code,
+                        message=err_msg,
                         details={"url": url, "http_status": status_code, "execution_time_ms": exec_time},
                         screenshot_saved=True
                     )
