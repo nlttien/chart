@@ -18,7 +18,13 @@ source venv/bin/activate
 
 if ! command -v pip &> /dev/null; then
     echo "[INFO] Installing pip into virtualenv..."
-    curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    if command -v curl &> /dev/null; then
+        curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    elif command -v wget &> /dev/null; then
+        wget -q https://bootstrap.pypa.io/get-pip.py -O get-pip.py
+    else
+        python3 -c "import urllib.request; urllib.request.urlretrieve('https://bootstrap.pypa.io/get-pip.py', 'get-pip.py')"
+    fi
     python get-pip.py
     rm -f get-pip.py
 fi
