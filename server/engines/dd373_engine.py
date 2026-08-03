@@ -229,30 +229,77 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
         return pw_results
     except Exception as e:
         logger.error(f"[DD373 Engine] Playwright Fallback Exception: {e}")
+        SmartLogger.log_event(
+            platform="dd373",
+            level="ERROR",
+            error_code="PLAYWRIGHT_FALLBACK_FAILED",
+            message=f"Playwright Fallback exception: {str(e)}",
+            details={"url": url, "exception": str(e)}
+        )
         return []
-
-    except Exception as e:
-        logger.error(f"[DD373 Engine] Playwright Fallback Exception for {name}: {e}. Trying Puppeteer...")
-        p_results, p_cookie = fetch_dd373_with_puppeteer(url)
-        if p_cookie:
-            update_live_cookie(p_cookie)
-        return p_results
 
 def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
     """Execute Puppeteer Node.js mouse solver script to bypass Captcha and scrape DD373."""
     script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "puppeteer_mouse_solver.js")
     if not os.path.exists(script_path):
+        SmartLogger.log_event(
+            platform="dd373",
+            level="ERROR",
+            error_code="PUPPETEER_SCRIPT_NOT_FOUND",
+            message=f"Script file not found: {script_path}",
+            details={"script_path": script_path}
+        )
         return [], ""
+
     try:
         logger.info(f"[DD373 Engine] Launching Node.js Puppeteer solver for {url}...")
         res = subprocess.run(["node", script_path, url], capture_output=True, text=True, timeout=45)
-        if res.returncode == 0 and res.stdout:
-            data = json.loads(res.stdout)
-            if data.get("success") and data.get("html"):
-                from server.engines.dd373_playwright_solver import parse_dd373_html
-                results = parse_dd373_html(data["html"])
-                logger.info(f"[DD373 Engine] Puppeteer solver parsed {len(results)} items successfully!")
-                return results, data.get("cookies", "")
+        
+        if res.returncode != 0 or not res.stdout:
+            err_msg = res.stderr.strip() if res.stderr else f"Exit code {res.returncode}"
+            logger.error(f"[DD373 Engine] Puppeteer process failed: {err_msg}")
+            SmartLogger.log_event(
+                platform="dd373",
+                level="ERROR",
+                error_code="PUPPETEER_PROCESS_ERROR",
+                message=f"Node.js Puppeteer process returned error: {err_msg}",
+                details={"returncode": res.returncode, "stderr": res.stderr, "stdout": res.stdout}
+            )
+            return [], ""
+
+        data = json.loads(res.stdout)
+        if not data.get("success"):
+            err = data.get("error", "Unknown error in Puppeteer script")
+            logger.error(f"[DD373 Engine] Puppeteer script reported error: {err}")
+            SmartLogger.log_event(
+                platform="dd373",
+                level="ERROR",
+                error_code="PUPPETEER_SOLVE_FAILED",
+                message=f"Puppeteer script execution failed: {err}",
+                details={"error": err}
+            )
+            return [], ""
+
+        if data.get("html"):
+            from server.engines.dd373_playwright_solver import parse_dd373_html
+            results = parse_dd373_html(data["html"])
+            logger.info(f"[DD373 Engine] Puppeteer solver parsed {len(results)} items successfully!")
+            SmartLogger.log_event(
+                platform="dd373",
+                level="INFO",
+                error_code="PUPPETEER_SOLVE_SUCCESS",
+                message=f"Puppeteer Mouse Solver successfully bypassed Captcha & parsed {len(results)} items!",
+                details={"items_count": len(results), "solved": data.get("solved", False)}
+            )
+            return results, data.get("cookies", "")
+
     except Exception as e:
         logger.error(f"[DD373 Engine] Puppeteer solver execution error: {e}")
+        SmartLogger.log_event(
+            platform="dd373",
+            level="ERROR",
+            error_code="PUPPETEER_EXCEPTION",
+            message=f"Puppeteer execution exception: {str(e)}",
+            details={"exception": str(e)}
+        )
     return [], ""
