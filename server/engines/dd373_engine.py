@@ -81,14 +81,24 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
             text = r.get_text(separator=' | ', strip=True)
             parts = [p.strip() for p in text.split('|') if p.strip()]
             
-            seller = "Unknown"
             price = 0.0
             stock = 0
             min_qty = 0
             ratio = ""
-            delivery = ""
-            
+            delivery = "Online"
+            seller_found = ""
+
             for p in parts:
+                if "极速收货" in p:
+                    delivery = "极速收货"
+                elif "分钟" in p:
+                    delivery = p
+
+                if '1元=' in p or '1元 =' in p:
+                    ratio_match = re.search(r"1\s*元\s*=\s*([\d\.]+)", p)
+                    if ratio_match:
+                        ratio = ratio_match.group(1)
+
                 if '元/个' in p or '1元=' in p:
                     price = parse_number(p)
                 elif '件' in p or '万' in p or '个' in p:
@@ -99,6 +109,19 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
                         stock = int(num)
                     else:
                         min_qty = int(num)
+
+                # Tìm tên người bán hoặc ID shop nếu có trong DOM
+                if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟']):
+                    if len(p) > 1 and len(p) < 30:
+                        seller_found = p
+
+            if price == 0.0 and ratio:
+                try:
+                    price = round(1.0 / float(ratio), 4)
+                except Exception:
+                    pass
+
+            seller = seller_found if seller_found else (f"Trader (1¥={ratio})" if ratio else "DD373 Trader")
             
             if price > 0:
                 clean_results.append({
@@ -106,7 +129,7 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
                     'unit_price': price,
                     'stock': stock,
                     'sold_total': 0,
-                    'online': 'Online',
+                    'online': delivery,
                     'min_qty': min_qty,
                     'ratio': ratio,
                     'delivery': delivery,

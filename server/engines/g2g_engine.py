@@ -64,26 +64,40 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
 
         clean_results = []
         for item in all_raw_results:
-            title = item.get('title', '').lower()
-            description = item.get('description', '').lower()
+            title = (item.get('title') or "").lower()
+            description = (item.get('description') or "").lower()
+            prod_name = (item.get('product_name') or "").lower()
             
-            if keyword and (keyword not in title and keyword not in description):
+            if keyword and (keyword not in title and keyword not in description and keyword not in prod_name):
                 continue
                 
-            display_name = item.get('user_name', 'Unknown')
-            converted_unit_price = float(item.get('converted_unit_price', 0))
-            available_qty = int(item.get('available_qty', 0))
-            sold_total = int(item.get('sold_qty', 0))
-            online_status = "Online" if item.get('is_online') == 1 else "Offline"
+            display_name = (
+                item.get('username') or 
+                item.get('user_name') or 
+                item.get('seller_name') or 
+                item.get('display_name') or 
+                (item.get('seller', {}).get('username') if isinstance(item.get('seller'), dict) else item.get('seller')) or 
+                "G2G Seller"
+            )
             
-            clean_results.append({
-                'seller': display_name,
-                'unit_price': converted_unit_price,
-                'stock': available_qty,
-                'sold_total': sold_total,
-                'online': online_status,
-                'source': 'g2g'
-            })
+            converted_unit_price = float(
+                item.get('converted_unit_price') or 
+                item.get('unit_price') or 
+                item.get('display_price') or 0
+            )
+            available_qty = int(item.get('available_qty', 0))
+            sold_total = int(item.get('total_success_order') or item.get('total_completed_orders') or item.get('sold_qty') or 0)
+            online_status = "Online" if item.get('is_online') == 1 or item.get('is_online') is True else "Offline"
+            
+            if converted_unit_price > 0:
+                clean_results.append({
+                    'seller': str(display_name),
+                    'unit_price': converted_unit_price,
+                    'stock': available_qty,
+                    'sold_total': sold_total,
+                    'online': online_status,
+                    'source': 'g2g'
+                })
             
         clean_results.sort(key=lambda x: x['unit_price'])
         logger.info(f"[G2G Engine] Found {len(clean_results)} items for {name}")

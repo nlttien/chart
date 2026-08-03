@@ -90,20 +90,24 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
             offer = item.get('offer', {})
             seller = item.get('seller', {})
             
-            seller_name = seller.get('username', 'Unknown')
+            seller_name = (
+                seller.get('username') if isinstance(seller, dict) else seller
+            ) or item.get('sellerName') or item.get('userName') or "Eldorado Seller"
+            
             price_info = offer.get('pricePerUnit', {})
             unit_price = float(price_info.get('amount', 0))
             quantity = int(offer.get('quantity', 0))
             delivery_time = offer.get('deliveryTime', 'Instant')
             
-            clean_results.append({
-                'seller': seller_name,
-                'unit_price': unit_price,
-                'stock': quantity,
-                'sold_total': 0,
-                'online': str(delivery_time),
-                'source': 'eldorado'
-            })
+            if unit_price > 0:
+                clean_results.append({
+                    'seller': str(seller_name),
+                    'unit_price': unit_price,
+                    'stock': quantity,
+                    'sold_total': 0,
+                    'online': str(delivery_time),
+                    'source': 'eldorado'
+                })
 
         clean_results.sort(key=lambda x: x['unit_price'])
         logger.info(f"[Eldorado Engine] Found {len(clean_results)} items for {name}")
