@@ -30,30 +30,7 @@ def scan_qiandao_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
     
     api_path = "/c2c-web/v1/currency/spu-list-v2" if is_sell else "/c2c-web/v1/currency/buy-direction/spu-list-v2"
     api_url = "https://api.qiandao.com" + api_path
-    timestamp = str(int(time.time() * 1000))
-    sign = generate_sign(api_path, timestamp)
     
-    headers = {
-        'accept': 'application/json',
-        'accept-language': 'zh-CN,zh;q=0.9',
-        'app-id': 'c2c-web',
-        'content-type': 'application/json',
-        'jwt-token': jwt_token,
-        'origin': 'https://www.qiandao.com',
-        'platform': 'web',
-        'referer': 'https://www.qiandao.com/',
-        'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-site',
-        'sign': sign,
-        'timestamp': timestamp,
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'version': '1.0.0'
-    }
-
     payload = {
         'spuId': spu_id,
         'specIdList': [spec_id] if spec_id else [],
@@ -62,41 +39,80 @@ def scan_qiandao_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
         'sort': 1
     }
 
-    try:
-        with requests.Session(impersonate="chrome120") as s:
-            resp = s.post(api_url, json=payload, headers=headers, timeout=15)
-            if resp.status_code != 200:
-                logger.warning(f"[Qiandao Engine] Status {resp.status_code} for {name}")
-                return []
-                
-            res_json = resp.json()
-            if res_json.get('code') != 0 and res_json.get('code') != 200:
-                logger.warning(f"[Qiandao Engine] API Error {res_json.get('msg')} for {name}")
-                return []
+    max_retries = 2
+    for attempt in range(1, max_retries + 1):
+        timestamp = str(int(time.time() * 1000))
+        sign = generate_sign(api_path, timestamp)
+        
+        headers = {
+            'accept': 'application/json',
+            'accept-language': 'zh-CN,zh;q=0.9',
+            'app-id': 'c2c-web',
+            'content-type': 'application/json',
+            'jwt-token': jwt_token,
+            'origin': 'https://www.qiandao.com',
+            'platform': 'web',
+            'referer': 'https://www.qiandao.com/',
+            'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-site',
+            'sign': sign,
+            'timestamp': timestamp,
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'version': '1.0.0'
+        }
 
-            data = res_json.get('data', {})
-            list_items = data.get('list', []) or data.get('records', []) or []
-            
-            clean_results = []
-            for item in list_items:
-                seller_name = item.get('merchantName', item.get('userName', 'Unknown'))
-                unit_price = float(item.get('price', item.get('unitPrice', 0)))
-                stock = int(item.get('stock', item.get('quantity', 0)))
-                sold = int(item.get('salesVolume', 0))
-                
-                clean_results.append({
-                    'seller': seller_name,
-                    'unit_price': unit_price,
-                    'stock': stock,
-                    'sold_total': sold,
-                    'online': 'Online',
-                    'source': 'qiandao'
-                })
+        try:
+            with requests.Session(impersonate="chrome120") as s:
+                resp = s.post(api_url, json=payload, headers=headers, timeout=25)
+                if resp.status_code != 200:
+                    logger.warning(f"[Qiandao Engine] Status {resp.status_code} for {name}")
+                    return []
+                    
+                res_json = resp.json()
+                if res_json.get('code') != 0 and res_json.get('code') != 200:
+                    logger.warning(f"[Qiandao Engine] API Error {res_json.get('msg')} for {name}")
+                    return []
 
-            clean_results.sort(key=lambda x: x['unit_price'])
-            logger.info(f"[Qiandao Engine] Found {len(clean_results)} items for {name}")
-            return clean_results
-            
-    except Exception as e:
-        logger.error(f"[Qiandao Engine] Scan error for {name}: {e}")
-        return []
+                data = res_json.get('data', {})
+                list_items = data.get('list', []) or data.get('records', []) or []
+                
+                clean_results = []
+                for item in list_items:
+                    seller_name = (
+                        item.get('merchantName') or 
+                        item.get('userName') or 
+                        item.get('nickName') or 
+                        item.get('storeName') or 
+                        "Qiandao Merchant"
+                    )
+                    unit_price = float(item.get('price', item.get('unitPrice', 0)))
+                    stock = int(item.get('stock', item.get('quantity', 0)))
+                    sold = int(item.get('salesVolume', 0))
+                    
+                    if unit_price > 0:
+                        clean_results.append({
+                            'seller': str(seller_name),
+                            'unit_price': unit_price,
+                            'stock': stock,
+                            'sold_total': sold,
+                            'online': 'Online',
+                            'source': 'qiandao'
+                        })
+
+                clean_results.sort(key=lambda x: x['unit_price'])
+                logger.info(f"[Qiandao Engine] Found {len(clean_results)} items for {name}")
+                return clean_results
+                
+        except Exception as e:
+            if "timed out" in str(e).lower() or "timeout" in str(e).lower():
+                logger.warning(f"[Qiandao Engine] Attempt {attempt}/{max_retries} timed out connecting to api.qiandao.com for {name}")
+            else:
+                logger.error(f"[Qiandao Engine] Attempt {attempt}/{max_retries} error for {name}: {e}")
+            if attempt < max_retries:
+                time.sleep(2)
+                
+    return []
