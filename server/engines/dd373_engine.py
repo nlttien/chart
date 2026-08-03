@@ -197,20 +197,28 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
         )
         return clean_results
 
-    # FALLBACK: Trigger Playwright Stealth Solver when cURL encounters Captcha WAF or 0 items
-    logger.warning(f"[DD373 Engine] cURL returned 0 items or hit WAF Captcha for {name}. Triggering Playwright Solver fallback...")
+    # FALLBACK: Trigger Puppeteer Mouse Solver when cURL encounters Captcha WAF or 0 items
+    logger.warning(f"[DD373 Engine] cURL returned 0 items or hit WAF Captcha for {name}. Triggering Puppeteer Mouse Solver...")
     SmartLogger.log_event(
         platform="dd373",
         level="WARNING",
         error_code="WAF_CAPTCHA_DETECTED" if is_waf_captcha else "CURL_PARSED_EMPTY",
-        message=f"Triggering Playwright Stealth Solver for {name} (is_waf_captcha={is_waf_captcha})",
+        message=f"Triggering Puppeteer Mouse Solver for {name} (is_waf_captcha={is_waf_captcha})",
         details={"url": url, "http_status": status_code}
     )
 
+    p_results, p_cookie = fetch_dd373_with_puppeteer(url)
+    if p_cookie:
+        update_live_cookie(p_cookie)
+
+    if len(p_results) > 0:
+        logger.info(f"[DD373 Engine] Puppeteer Mouse Solver successfully retrieved {len(p_results)} items for {name}")
+        return p_results
+
+    # Secondary Fallback to Playwright
+    logger.warning(f"[DD373 Engine] Puppeteer returned 0 items for {name}. Trying Playwright Solver...")
     try:
         from server.engines.dd373_playwright_solver import fetch_dd373_with_playwright
-        
-        # Run async function in sync background thread
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         pw_results, updated_cookie = loop.run_until_complete(fetch_dd373_with_playwright(url))
@@ -218,16 +226,10 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
 
         if updated_cookie:
             update_live_cookie(updated_cookie)
-
-        if len(pw_results) > 0:
-            logger.info(f"[DD373 Engine] Playwright Fallback successfully retrieved {len(pw_results)} items for {name}")
-            return pw_results
-        else:
-            logger.warning(f"[DD373 Engine] Playwright returned 0 items for {name}. Triggering Puppeteer Mouse Solver fallback...")
-            p_results, p_cookie = fetch_dd373_with_puppeteer(url)
-            if p_cookie:
-                update_live_cookie(p_cookie)
-            return p_results
+        return pw_results
+    except Exception as e:
+        logger.error(f"[DD373 Engine] Playwright Fallback Exception: {e}")
+        return []
 
     except Exception as e:
         logger.error(f"[DD373 Engine] Playwright Fallback Exception for {name}: {e}. Trying Puppeteer...")

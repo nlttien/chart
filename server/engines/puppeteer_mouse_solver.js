@@ -86,6 +86,30 @@ async function main() {
             Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
             window.chrome = { runtime: {}, loadTimes: function() {}, csi: function() {}, app: {} };
             Object.defineProperty(navigator, 'languages', { get: () => ['zh-CN', 'zh', 'en-US', 'en'] });
+
+            // Visual Red Glowing Mouse Cursor Helper for Screen Recording & Debugging
+            document.addEventListener('DOMContentLoaded', () => {
+                const box = document.createElement('div');
+                box.id = 'visual-mouse-pointer';
+                box.style.position = 'fixed';
+                box.style.top = '0px';
+                box.style.left = '0px';
+                box.style.width = '16px';
+                box.style.height = '16px';
+                box.style.backgroundColor = 'rgba(255, 0, 0, 0.95)';
+                box.style.border = '2px solid #ffffff';
+                box.style.borderRadius = '50%';
+                box.style.pointerEvents = 'none';
+                box.style.zIndex = '99999999';
+                box.style.boxShadow = '0 0 12px rgba(255, 0, 0, 1.0)';
+                box.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(box);
+
+                window.addEventListener('mousemove', (e) => {
+                    box.style.left = e.clientX + 'px';
+                    box.style.top = e.clientY + 'px';
+                });
+            });
         });
 
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 25000 });
