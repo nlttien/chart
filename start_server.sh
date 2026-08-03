@@ -39,6 +39,6 @@ if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     fi
 fi
 
-# 3. Start FastAPI Server
+# 3. Start FastAPI Server with auto-reload
 echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
-exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+exec uvicorn server.main:app --host 0.0.0.0 --port 8000 --reload

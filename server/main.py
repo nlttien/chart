@@ -115,7 +115,7 @@ async def legacy_snapshot(
     platform: Optional[str] = Query("g2g"),
     item_name: Optional[str] = Query(None)
 ):
-    data = get_latest_snapshot(platform.lower(), item_name)
+    data = get_latest_snapshot(platform.lower() if platform else None, item_name)
     return {"status": "success", "platform": platform, "order_book": data}
 
 @app.get("/history")
@@ -123,7 +123,7 @@ async def legacy_history(
     platform: Optional[str] = Query("g2g"),
     item_name: str = Query(...)
 ):
-    logs = get_history_logs(platform.lower(), item_name)
+    logs = get_history_logs(platform.lower() if platform else None, item_name)
     return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs}
 
 @app.get("/competitor_history")
@@ -139,7 +139,7 @@ async def legacy_competitor_history(
 
 @app.get("/items")
 async def legacy_items(platform: Optional[str] = Query("g2g")):
-    items = get_distinct_items(platform.lower())
+    items = get_distinct_items(platform.lower() if platform else None)
     return {"status": "success", "platform": platform, "items": items}
 
 @app.get("/api/exchange_rate")
@@ -271,6 +271,8 @@ if os.path.exists(WEB_DIR):
 
     @app.get("/{full_path:path}")
     async def serve_web_ui(full_path: str):
+        if full_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
         file_path = os.path.join(WEB_DIR, full_path)
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return FileResponse(file_path)
