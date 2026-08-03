@@ -1,8 +1,11 @@
+import os
 import re
 import time
+import json
 import asyncio
 import logging
-from typing import List, Dict, Any, Optional
+import subprocess
+from typing import List, Dict, Any, Tuple, Optional
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 
@@ -220,16 +223,34 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
             logger.info(f"[DD373 Engine] Playwright Fallback successfully retrieved {len(pw_results)} items for {name}")
             return pw_results
         else:
-            logger.error(f"[DD373 Engine] Playwright Fallback also returned 0 items for {name}")
-            return []
+            logger.warning(f"[DD373 Engine] Playwright returned 0 items for {name}. Triggering Puppeteer Mouse Solver fallback...")
+            p_results, p_cookie = fetch_dd373_with_puppeteer(url)
+            if p_cookie:
+                update_live_cookie(p_cookie)
+            return p_results
 
     except Exception as e:
-        logger.error(f"[DD373 Engine] Playwright Fallback Exception for {name}: {e}")
-        SmartLogger.log_event(
-            platform="dd373",
-            level="ERROR",
-            error_code="SOLVER_FALLBACK_FAILED",
-            message=f"Playwright Fallback exception: {str(e)}",
-            details={"url": url, "exception": str(e)}
-        )
-        return []
+        logger.error(f"[DD373 Engine] Playwright Fallback Exception for {name}: {e}. Trying Puppeteer...")
+        p_results, p_cookie = fetch_dd373_with_puppeteer(url)
+        if p_cookie:
+            update_live_cookie(p_cookie)
+        return p_results
+
+def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
+    """Execute Puppeteer Node.js mouse solver script to bypass Captcha and scrape DD373."""
+    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "puppeteer_mouse_solver.js")
+    if not os.path.exists(script_path):
+        return [], ""
+    try:
+        logger.info(f"[DD373 Engine] Launching Node.js Puppeteer solver for {url}...")
+        res = subprocess.run(["node", script_path, url], capture_output=True, text=True, timeout=45)
+        if res.returncode == 0 and res.stdout:
+            data = json.loads(res.stdout)
+            if data.get("success") and data.get("html"):
+                from server.engines.dd373_playwright_solver import parse_dd373_html
+                results = parse_dd373_html(data["html"])
+                logger.info(f"[DD373 Engine] Puppeteer solver parsed {len(results)} items successfully!")
+                return results, data.get("cookies", "")
+    except Exception as e:
+        logger.error(f"[DD373 Engine] Puppeteer solver execution error: {e}")
+    return [], ""
