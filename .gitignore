@@ -27,6 +27,9 @@ data/
 *.log
 npm-debug.log*
 
+# HTTP Test Files
+*.http
+
 # Scraping dumps / Temp files
 *_success.html
 *_html.txt
