@@ -397,7 +397,7 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
 
                 context = await p.chromium.launch_persistent_context(
                     user_data_dir=PROFILE_DIR,
-                    headless=True,
+                    headless=False,
                     channel="chromium",
                     args=[
                         "--no-sandbox",

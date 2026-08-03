@@ -81,7 +81,7 @@ async function main() {
     let browser;
     try {
         const launchOptions = {
-            headless: true,
+            headless: false,
             userDataDir: profileDir,
             args: [
                 '--no-sandbox',
