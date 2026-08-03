@@ -101,6 +101,14 @@ async def update_data(payload: UpdatePayloadModel):
     records = [item.dict() for item in payload.data]
     save_market_batch(platform, payload.item_name, records, now_str)
     
+    SmartLogger.log_event(
+        platform=platform,
+        level="INFO",
+        error_code="TAMPERMONKEY_DATA_RECEIVED",
+        message=f"Received {len(records)} items from Tampermonkey browser for {payload.item_name}",
+        details={"item_name": payload.item_name, "count": len(records)}
+    )
+    
     msg = {
         "type": "market_update",
         "platform": platform,
