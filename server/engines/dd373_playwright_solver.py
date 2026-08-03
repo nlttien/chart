@@ -148,11 +148,13 @@ async def solve_aliyun_slider(page: Page) -> bool:
     selectors = [
         '#aliyunCaptcha-sliding-slider',
         '.aliyunCaptcha-sliding-slider',
+        '.aliyunCaptcha-sliding-btn',
+        'div[class*="sliding-btn"]',
+        'div[class*="sliding-slider"]',
         '#nc_1_n1z',
         '.nc_iconfont.btn_slide',
-        'span[id*="sliding"]',
         '.btn_slide',
-        'div[class*="sliding"] span'
+        'span[class*="btn"]'
     ]
     
     slider_btn = None
@@ -195,8 +197,10 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    slide_distance = 320.0
+    slide_distance = 260.0
     track_selectors = [
+        '#aliyunCaptcha-sliding-body',
+        '.sliding',
         '#aliyunCaptcha-sliding-wrapper',
         '.aliyunCaptcha-sliding-wrapper',
         'div[class*="sliding-wrapper"]',
@@ -210,10 +214,18 @@ async def solve_aliyun_slider(page: Page) -> bool:
                 t_box = await track_el.bounding_box()
                 if t_box and t_box["width"] > box["width"]:
                     slide_distance = t_box["width"] - box["width"]
-                    logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px")
+                    logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px (selector: {t_sel})")
                     break
         except Exception:
             pass
+
+    # Ensure precise mouse focus via hover
+    try:
+        await slider_btn.hover()
+        time.sleep(random.uniform(0.1, 0.2))
+        box = await slider_btn.bounding_box() or box
+    except Exception:
+        pass
 
     start_x = box["x"] + box["width"] / 2
     start_y = box["y"] + box["height"] / 2
