@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import logging
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Any, Optional
 
 logger = logging.getLogger("chart_db")
@@ -117,6 +118,32 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
     finally:
         conn.close()
 
+def get_lowest_prices(platform: Optional[str] = None, item_name: Optional[str] = None) -> List[Dict[str, Any]]:
+    """Lấy danh sách giá thấp nhất (Lowest Price / Floor Price)"""
+    conn = get_connection()
+    c = conn.cursor()
+    try:
+        query = '''
+            SELECT platform, item_name, seller, MIN(price) as lowest_price, stock, sold, online, min_qty, delivery, timestamp
+            FROM market_logs 
+            WHERE price > 0
+        '''
+        params = []
+        if platform:
+            query += " AND platform = ?"
+            params.append(platform)
+        if item_name:
+            query += " AND item_name = ?"
+            params.append(item_name)
+            
+        query += " GROUP BY platform, item_name ORDER BY lowest_price ASC"
+        
+        c.execute(query, params)
+        rows = [dict(row) for row in c.fetchall()]
+        return rows
+    finally:
+        conn.close()
+
 def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = None, limit: int = 1000) -> List[Dict[str, Any]]:
     conn = get_connection()
     c = conn.cursor()
@@ -136,6 +163,38 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
                          FROM market_logs 
                          ORDER BY timestamp ASC LIMIT ?''', (limit,))
         return [dict(row) for row in c.fetchall()]
+    finally:
+        conn.close()
+
+def get_competitor_history_logs(platform: Optional[str], item_name: str, seller_list: List[str], hours: float = 24) -> Dict[str, Any]:
+    conn = get_connection()
+    c = conn.cursor()
+    try:
+        time_threshold = (datetime.now(timezone.utc) - timedelta(hours=hours)).strftime("%Y-%m-%d %H:%M:%SZ")
+        placeholders = ','.join('?' for _ in seller_list)
+        
+        query = f'''
+            SELECT timestamp, seller, price
+            FROM market_logs 
+            WHERE item_name = ? AND seller IN ({placeholders}) 
+        '''
+        params = [item_name] + seller_list
+        if platform:
+            query += " AND platform = ?"
+            params.append(platform)
+        query += " AND timestamp >= ? ORDER BY timestamp ASC"
+        params.append(time_threshold)
+        
+        c.execute(query, params)
+        rows = c.fetchall()
+        
+        result = {}
+        for r in rows:
+            seller = r[1]
+            if seller not in result:
+                result[seller] = []
+            result[seller].append({"timestamp": r[0], "price": r[2]})
+        return result
     finally:
         conn.close()
 

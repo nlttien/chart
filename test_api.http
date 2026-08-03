@@ -13,43 +13,59 @@ Accept: application/json
 GET {{baseUrl}}/api/v1/platforms
 Accept: application/json
 
-### 3. Get Items Configured for G2G
+### 3. Get Lowest Price Across All Platforms (Global Floor Price)
+GET {{baseUrl}}/api/v1/lowest
+Accept: application/json
+
+### 4. Get Lowest Price for Specific Item Across Platforms
+GET {{baseUrl}}/api/v1/lowest?item_name=PoE%201%20Divine%20Orb
+Accept: application/json
+
+### 5. Get Lowest Price on G2G
+GET {{baseUrl}}/api/v1/g2g/lowest
+Accept: application/json
+
+### 6. Get Lowest Price on Eldorado
+GET {{baseUrl}}/api/v1/eldorado/lowest
+Accept: application/json
+
+### 7. Get Items Configured for G2G
 GET {{baseUrl}}/api/v1/g2g/items
 Accept: application/json
 
-### 4. Get Snapshot Price Data (G2G)
+### 8. Get Snapshot Price Data (G2G)
 GET {{baseUrl}}/api/v1/g2g/snapshot
 Accept: application/json
 
-### 5. Get Snapshot Price Data (Eldorado)
+### 9. Get Snapshot Price Data (Eldorado)
 GET {{baseUrl}}/api/v1/eldorado/snapshot
 Accept: application/json
 
-### 6. Get Snapshot Price Data (Qiandao)
+### 10. Get Snapshot Price Data (Qiandao)
 GET {{baseUrl}}/api/v1/qiandao/snapshot
 Accept: application/json
 
-### 7. Get Snapshot Price Data (DD373)
+### 11. Get Snapshot Price Data (DD373)
 GET {{baseUrl}}/api/v1/dd373/snapshot
 Accept: application/json
 
-### 8. Get Price History for Specific Item
+### 12. Get Price History for Specific Item
 GET {{baseUrl}}/api/v1/g2g/history?item_name=PoE%201%20Divine%20Orb
 Accept: application/json
 
-### 9. Trigger On-Demand Scrape for G2G
+### 13. Trigger On-Demand Scrape for G2G
 POST {{baseUrl}}/api/v1/g2g/scrape
 Accept: application/json
 
-### 10. Trigger On-Demand Scrape for Eldorado
+### 14. Trigger On-Demand Scrape for Eldorado
 POST {{baseUrl}}/api/v1/eldorado/scrape
 Accept: application/json
 
-### 11. Get System Configuration
+### 15. Get System Configuration
 GET {{baseUrl}}/api/v1/config
 Accept: application/json
 
-### 12. Check Background Scraper Worker Status
+### 16. Check Background Scraper Worker Status
 GET {{baseUrl}}/api/v1/scraper/status
 Accept: application/json
 

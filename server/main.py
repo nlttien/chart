@@ -13,7 +13,8 @@ from pydantic import BaseModel
 
 from server.database import (
     init_db, save_market_batch, get_latest_snapshot, 
-    get_history_logs, get_distinct_items
+    get_history_logs, get_distinct_items, get_lowest_prices,
+    get_competitor_history_logs
 )
 from server.config import load_config, save_config
 from server.background_worker import BackgroundWorker
@@ -26,7 +27,7 @@ logger = logging.getLogger("chart_server")
 
 app = FastAPI(
     title="Unified Chart Market API & Web Server",
-    version="2.0.0",
+    version="2.1.0",
     description="REST API Server & Scraper Engine for DD373, Eldorado, G2G, Qiandao"
 )
 
@@ -125,6 +126,17 @@ async def legacy_history(
     logs = get_history_logs(platform.lower(), item_name)
     return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs}
 
+@app.get("/competitor_history")
+async def legacy_competitor_history(
+    item_name: str = Query(...),
+    sellers: str = Query(...),
+    hours: float = Query(24),
+    platform: Optional[str] = Query(None)
+):
+    seller_list = [s.strip() for s in sellers.split(',') if s.strip()]
+    data = get_competitor_history_logs(platform.lower() if platform else None, item_name, seller_list, hours)
+    return {"status": "success", "data": data}
+
 @app.get("/items")
 async def legacy_items(platform: Optional[str] = Query("g2g")):
     items = get_distinct_items(platform.lower())
@@ -140,7 +152,6 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            # Echo heartbeat or custom commands
             await websocket.send_text(f"pong: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
@@ -166,6 +177,18 @@ async def api_platforms():
         ]
     }
 
+@app.get("/api/v1/lowest")
+async def api_global_lowest(item_name: Optional[str] = Query(None)):
+    """API lấy giá thấp nhất (Lowest/Floor Price) toàn hệ thống hoặc theo item"""
+    data = get_lowest_prices(platform=None, item_name=item_name)
+    return {"status": "success", "lowest_prices": data}
+
+@app.get("/api/v1/{platform}/lowest")
+async def api_platform_lowest(platform: str, item_name: Optional[str] = Query(None)):
+    """API lấy giá thấp nhất của một sàn cụ thể"""
+    data = get_lowest_prices(platform=platform.lower(), item_name=item_name)
+    return {"status": "success", "platform": platform, "lowest_prices": data}
+
 @app.get("/api/v1/{platform}/snapshot")
 async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(None)):
     data = get_latest_snapshot(platform.lower(), item_name)
@@ -175,6 +198,17 @@ async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(
 async def api_platform_history(platform: str, item_name: str = Query(...)):
     logs = get_history_logs(platform.lower(), item_name)
     return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs}
+
+@app.get("/api/v1/{platform}/competitor_history")
+async def api_platform_competitor_history(
+    platform: str,
+    item_name: str = Query(...),
+    sellers: str = Query(...),
+    hours: float = Query(24)
+):
+    seller_list = [s.strip() for s in sellers.split(',') if s.strip()]
+    data = get_competitor_history_logs(platform.lower(), item_name, seller_list, hours)
+    return {"status": "success", "platform": platform, "data": data}
 
 @app.get("/api/v1/{platform}/items")
 async def api_platform_items(platform: str):

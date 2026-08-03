@@ -40,6 +40,9 @@ def run_tests():
     endpoints = [
         ("GET", "/api/v1/health", "Health Check"),
         ("GET", "/api/v1/platforms", "Get Platforms List"),
+        ("GET", "/api/v1/lowest", "Get Lowest Price (Global)"),
+        ("GET", "/api/v1/g2g/lowest", "Get Lowest Price (G2G)"),
+        ("GET", "/api/v1/eldorado/lowest", "Get Lowest Price (Eldorado)"),
         ("GET", "/api/v1/g2g/items", "Get Monitored Items (G2G)"),
         ("GET", "/api/v1/g2g/snapshot", "Get Snapshot (G2G)"),
         ("GET", "/api/v1/eldorado/snapshot", "Get Snapshot (Eldorado)"),
