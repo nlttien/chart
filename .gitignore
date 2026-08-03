@@ -14,19 +14,22 @@ __pycache__/
 dist/
 build/
 .output/
+unified-chart/dist/
 
 # Databases
 *.db
+*.db-shm
+*.db-wal
 *.sqlite3
+data/
 
 # Logs and debug files
 *.log
 npm-debug.log*
 
 # Scraping dumps / Temp files
-# Nếu bạn không muốn lưu trữ các file html/json rác sinh ra từ tool thì có thể bỏ comment
-# *_success.html
-# *_html.txt
+*_success.html
+*_html.txt
 
 # OS generated files
 .DS_Store
@@ -38,5 +41,4 @@ ehthumbs.db
 Thumbs.db
 
 # Custom additions
-g2g_market.db-wal
 debug_waf
