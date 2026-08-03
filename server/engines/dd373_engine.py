@@ -1,13 +1,20 @@
-import logging
 import re
+import time
+import asyncio
+import logging
 from typing import List, Dict, Any, Optional
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 
+from server.smart_logger import SmartLogger
+
 logger = logging.getLogger("dd373_engine")
 
 DEFAULT_COOKIE = "clientId=a6676ef252c56a2a9f60c09998c13f82; dpushPC=true; Hm_lvt_b1609ca2c0a77d0130ec3cf8396eb4d5=1783669374; HMACCOUNT=2067EC5DCB8D2AE5; firstOpen_cc=true; imagestylewebp=1; headhistorySelectGame=%5B%7B%22Id%22%3A%2246e6971b94044ae3881dfaeb6993abb8%22%7D%5D; AutoSelectHistory=false; _c_WBKFRo=SdND9MOoObdOOBEaFuBUAF0wcGGE0fnmhEUbzpiZ; _nb_ioWEgULi=; acw_tc=6b9b3e2017836767239266076e72366b0fe422b914da8e36d261d7d316; cdn_sec_tc=6b9b3e2017836767239266076e72366b0fe422b914da8e36d261d7d316; acw_sc__v3=6a50bf378bc4cef54169f278582099aa5bca4c7c; Hm_lpvt_b1609ca2c0a77d0130ec3cf8396eb4d5=1783676689"
-DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+
+# In-memory cached dynamic cookie
+_LIVE_COOKIE: str = DEFAULT_COOKIE
 
 def parse_number(text: str) -> float:
     if not text:
@@ -15,19 +22,33 @@ def parse_number(text: str) -> float:
     matches = re.findall(r"(\d+\.?\d*)", text)
     return float(matches[0]) if matches else 0.0
 
+def update_live_cookie(new_cookie: str):
+    global _LIVE_COOKIE
+    if new_cookie and len(new_cookie) > 10:
+        _LIVE_COOKIE = new_cookie
+        logger.info("[DD373 Engine] Live dynamic cookie updated!")
+
 def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = None) -> List[Dict[str, Any]]:
+    global _LIVE_COOKIE
     name = item_config.get('name', 'Unknown')
     url = item_config.get('url', '').strip()
-    
+    start_time = time.time()
+
     if not url:
         logger.warning(f"[DD373 Engine] URL is empty for {name}")
+        SmartLogger.log_event(
+            platform="dd373",
+            level="WARNING",
+            error_code="EMPTY_URL",
+            message=f"Configuration error: URL is empty for item {name}"
+        )
         return []
-        
+
     logger.info(f"[DD373 Engine] Scanning {name} (URL: {url})...")
-    
-    cookie = custom_cookie or item_config.get('cookie', '').strip() or DEFAULT_COOKIE
+
+    cookie = custom_cookie or item_config.get('cookie', '').strip() or _LIVE_COOKIE
     user_agent = item_config.get('user_agent', '').strip() or DEFAULT_USER_AGENT
-    
+
     headers = {
         "User-Agent": user_agent,
         "Cookie": cookie,
@@ -36,21 +57,45 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
         "Accept-Language": "zh-CN,zh;q=0.9,vi;q=0.8,en;q=0.7"
     }
 
+    resp_text = ""
+    status_code = 0
     try:
-        resp_text = ""
         with requests.Session(impersonate="chrome120") as s:
             resp = s.get(url, headers=headers, timeout=15)
-            if resp.status_code == 200:
+            status_code = resp.status_code
+            if status_code == 200:
                 resp_text = resp.text
             else:
-                logger.warning(f"[DD373 Engine] Status {resp.status_code} for {name}")
-                return []
+                logger.warning(f"[DD373 Engine] Status {status_code} for {name}")
+                SmartLogger.log_event(
+                    platform="dd373",
+                    level="WARNING",
+                    error_code="HTTP_BLOCKED",
+                    message=f"DD373 cURL request received HTTP status {status_code}",
+                    details={"url": url, "http_status": status_code}
+                )
 
-        if not resp_text:
-            return []
+    except Exception as e:
+        logger.error(f"[DD373 Engine] cURL request exception: {e}")
+        SmartLogger.log_event(
+            platform="dd373",
+            level="WARNING",
+            error_code="NETWORK_TIMEOUT",
+            message=f"cURL request exception: {str(e)}",
+            details={"url": url, "exception": str(e)}
+        )
 
+    # Check if Aliyun Captcha WAF page is returned
+    is_waf_captcha = False
+    if resp_text:
+        if "aliyunCaptcha" in resp_text or "verify that you are a real person" in resp_text or "sliding-slider" in resp_text:
+            is_waf_captcha = True
+
+    # If cURL succeeds and no WAF Captcha, attempt parsing HTML
+    clean_results = []
+    if resp_text and not is_waf_captcha:
         soup = BeautifulSoup(resp_text, 'lxml')
-        
+
         def is_valid_row(tag):
             if tag.name not in ['div', 'li', 'ul', 'tr']:
                 return False
@@ -76,11 +121,10 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
             if row not in rows:
                 rows.append(row)
 
-        clean_results = []
         for r in rows:
             text = r.get_text(separator=' | ', strip=True)
             parts = [p.strip() for p in text.split('|') if p.strip()]
-            
+
             price = 0.0
             stock = 0
             min_qty = 0
@@ -110,7 +154,6 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
                     else:
                         min_qty = int(num)
 
-                # Tìm tên người bán hoặc ID shop nếu có trong DOM
                 if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟']):
                     if len(p) > 1 and len(p) < 30:
                         seller_found = p
@@ -122,7 +165,7 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
                     pass
 
             seller = seller_found if seller_found else (f"Trader (1¥={ratio})" if ratio else "DD373 Trader")
-            
+
             if price > 0:
                 clean_results.append({
                     'seller': seller,
@@ -137,9 +180,56 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
                 })
 
         clean_results.sort(key=lambda x: x['unit_price'])
-        logger.info(f"[DD373 Engine] Found {len(clean_results)} items for {name}")
+
+    # If cURL returned items > 0, return immediately with success log
+    if len(clean_results) > 0:
+        exec_time = int((time.time() - start_time) * 1000)
+        logger.info(f"[DD373 Engine] cURL found {len(clean_results)} items for {name}")
+        SmartLogger.log_event(
+            platform="dd373",
+            level="INFO",
+            error_code="PARSED_SUCCESS",
+            message=f"cURL Engine successfully parsed {len(clean_results)} items for {name}",
+            details={"url": url, "http_status": status_code, "execution_time_ms": exec_time, "items_count": len(clean_results)}
+        )
         return clean_results
+
+    # FALLBACK: Trigger Playwright Stealth Solver when cURL encounters Captcha WAF or 0 items
+    logger.warning(f"[DD373 Engine] cURL returned 0 items or hit WAF Captcha for {name}. Triggering Playwright Solver fallback...")
+    SmartLogger.log_event(
+        platform="dd373",
+        level="WARNING",
+        error_code="WAF_CAPTCHA_DETECTED" if is_waf_captcha else "CURL_PARSED_EMPTY",
+        message=f"Triggering Playwright Stealth Solver for {name} (is_waf_captcha={is_waf_captcha})",
+        details={"url": url, "http_status": status_code}
+    )
+
+    try:
+        from server.engines.dd373_playwright_solver import fetch_dd373_with_playwright
         
+        # Run async function in sync background thread
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        pw_results, updated_cookie = loop.run_until_complete(fetch_dd373_with_playwright(url))
+        loop.close()
+
+        if updated_cookie:
+            update_live_cookie(updated_cookie)
+
+        if len(pw_results) > 0:
+            logger.info(f"[DD373 Engine] Playwright Fallback successfully retrieved {len(pw_results)} items for {name}")
+            return pw_results
+        else:
+            logger.error(f"[DD373 Engine] Playwright Fallback also returned 0 items for {name}")
+            return []
+
     except Exception as e:
-        logger.error(f"[DD373 Engine] Scan error for {name}: {e}")
+        logger.error(f"[DD373 Engine] Playwright Fallback Exception for {name}: {e}")
+        SmartLogger.log_event(
+            platform="dd373",
+            level="ERROR",
+            error_code="SOLVER_FALLBACK_FAILED",
+            message=f"Playwright Fallback exception: {str(e)}",
+            details={"url": url, "exception": str(e)}
+        )
         return []

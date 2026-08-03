@@ -18,6 +18,7 @@ from server.database import (
 )
 from server.config import load_config, save_config
 from server.background_worker import BackgroundWorker
+from server.smart_logger import SmartLogger
 
 logging.basicConfig(
     level=logging.INFO,
@@ -261,7 +262,35 @@ async def api_stop_scraper():
 
 @app.get("/api/v1/scraper/status")
 async def api_scraper_status():
-    return {"status": "success", "running": worker.is_running}
+    return {"status": "success", "running": worker.is_running, "platform_stats": SmartLogger.get_status("dd373")}
+
+# --- SMART DIAGNOSTIC LOG & SCREENSHOT ENDPOINTS ---
+
+@app.get("/api/v1/logs")
+async def api_get_all_logs(limit: int = Query(50)):
+    """Trả về danh sách log có cấu trúc (Structured JSON Logs) toàn hệ thống"""
+    logs = SmartLogger.get_logs(platform=None, limit=limit)
+    return {"status": "success", "total_logs": len(logs), "logs": logs}
+
+@app.get("/api/v1/{platform}/logs")
+async def api_get_platform_logs(platform: str, limit: int = Query(50)):
+    """Trả về log có cấu trúc cho một sàn cụ thể (VD: dd373)"""
+    logs = SmartLogger.get_logs(platform=platform.lower(), limit=limit)
+    return {"status": "success", "platform": platform, "total_logs": len(logs), "logs": logs}
+
+@app.get("/api/v1/{platform}/status")
+async def api_get_platform_status(platform: str):
+    """Trả về chi tiết trạng thái Scraper, tỷ lệ vượt Captcha, Cookie status"""
+    status_info = SmartLogger.get_status(platform=platform.lower())
+    return {"status": "success", "platform": platform, "details": status_info}
+
+@app.get("/api/v1/{platform}/screenshot")
+async def api_get_platform_screenshot(platform: str):
+    """Trả về ảnh chụp màn hình debug lỗi gần nhất (nếu có)"""
+    img_path = SmartLogger.get_last_error_screenshot()
+    if img_path and os.path.exists(img_path):
+        return FileResponse(img_path, media_type="image/png")
+    raise HTTPException(status_code=404, detail=f"No error screenshot available for {platform}")
 
 # --- STATIC FILES FOR UNIFIED WEB UI ---
 WEB_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "unified-chart", "dist")
