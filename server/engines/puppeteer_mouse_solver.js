@@ -87,6 +87,7 @@ async function main() {
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-blink-features=AutomationControlled',
+                '--silent-debugger-extension-api',
                 '--disable-infobars',
                 '--window-size=1920,1080',
                 '--lang=zh-CN,zh'
@@ -157,7 +158,7 @@ async function main() {
             if (sliderHandle) {
                 const box = await sliderHandle.boundingBox();
                 if (box) {
-                    let slideDistance = 260.0;
+                    let slideDistance = 345.0 + Math.random() * 20.0;
                     const trackSelectors = [
                         '#aliyunCaptcha-sliding-body',
                         '.sliding',
@@ -170,7 +171,10 @@ async function main() {
                         if (trackHandle) {
                             const tBox = await trackHandle.boundingBox();
                             if (tBox && tBox.width > box.width) {
-                                slideDistance = tBox.width - box.width;
+                                const measured = tBox.width - box.width;
+                                if (measured > 200) {
+                                    slideDistance = measured;
+                                }
                                 break;
                             }
                         }
