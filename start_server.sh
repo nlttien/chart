@@ -45,6 +45,10 @@ if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     fi
 fi
 
-# 3. Start FastAPI Server
+# 3. Start FastAPI Server with Virtual Display (xvfb-run for Headed Chrome)
 echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
-exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+if command -v xvfb-run &> /dev/null; then
+    exec xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" uvicorn server.main:app --host 0.0.0.0 --port 8000
+else
+    exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+fi
