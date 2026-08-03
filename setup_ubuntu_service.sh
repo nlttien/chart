@@ -4,27 +4,49 @@ set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
 
+# Dynamic user detection (if run with sudo, get original user)
+REAL_USER="${SUDO_USER:-$USER}"
+
 echo "============================================================"
 echo "    INSTALLING CHART API BACKGROUND SERVICE (SYSTEMD)       "
 echo "============================================================"
+echo " Detected User : $REAL_USER"
+echo " Detected Path : $SCRIPT_DIR"
 
 # Make start_server.sh executable
 chmod +x start_server.sh
 
-# Copy service configuration to systemd
-echo "[1/4] Copying chart-api.service to /etc/systemd/system/..."
-sudo cp chart-api.service /etc/systemd/system/chart-api.service
+SERVICE_PATH="/etc/systemd/system/chart-api.service"
+
+echo "[1/3] Generating dynamic service configuration..."
+cat << EOF | sudo tee $SERVICE_PATH > /dev/null
+[Unit]
+Description=Unified Chart Market Scraper & API Server
+After=network.target
+
+[Service]
+Type=simple
+User=$REAL_USER
+WorkingDirectory=$SCRIPT_DIR
+ExecStart=$SCRIPT_DIR/start_server.sh
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 # Reload systemd manager configuration
-echo "[2/4] Reloading systemd daemon..."
+echo "[2/3] Reloading systemd daemon..."
 sudo systemctl daemon-reload
 
 # Enable service to run on boot
-echo "[3/4] Enabling chart-api service on boot..."
+echo "[3/3] Enabling chart-api service on boot..."
 sudo systemctl enable chart-api
 
 # Start/Restart service
-echo "[4/4] Starting chart-api background service..."
+echo "Starting chart-api background service..."
 sudo systemctl restart chart-api
 
 echo ""

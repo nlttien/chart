@@ -27,7 +27,7 @@ echo "[2/3] Installing Python dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# 2. Build Unified Web UI if NVM/Node is available
+# 2. Build Unified Web UI if NVM/Node is available and dist/ missing
 if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     echo "[INFO] Building Web UI Dashboard (unified-chart)..."
     export NVM_DIR="$HOME/.nvm"
@@ -39,6 +39,6 @@ if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     fi
 fi
 
-# 3. Start FastAPI Server with auto-reload
+# 3. Start FastAPI Server
 echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
-exec uvicorn server.main:app --host 0.0.0.0 --port 8000 --reload
+exec uvicorn server.main:app --host 0.0.0.0 --port 8000
