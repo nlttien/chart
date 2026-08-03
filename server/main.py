@@ -235,6 +235,24 @@ async def api_add_platform_item(platform: str, item: Dict[str, Any] = Body(...))
     save_config(config)
     return {"status": "success", "platform": plat, "items": config[plat]}
 
+@app.post("/api/v1/{platform}/cookie")
+async def api_update_platform_cookie(platform: str, payload: Dict[str, Any] = Body(...)):
+    plat = platform.lower()
+    cookie = payload.get("cookie", "").strip()
+    if cookie:
+        if plat == "dd373":
+            from server.engines.dd373_engine import update_live_cookie
+            update_live_cookie(cookie)
+        SmartLogger.log_event(
+            platform=plat,
+            level="INFO",
+            error_code="LIVE_COOKIE_UPDATED",
+            message=f"Live verified cookie updated from browser for {plat}",
+            details={"cookie_len": len(cookie)}
+        )
+        return {"status": "success", "platform": plat, "message": "Live cookie updated successfully"}
+    raise HTTPException(status_code=400, detail="Empty cookie provided")
+
 @app.post("/api/v1/{platform}/scrape")
 async def api_trigger_scrape(platform: str, item_name: Optional[str] = Query(None)):
     config = load_config()

