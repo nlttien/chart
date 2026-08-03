@@ -57,6 +57,15 @@ def init_db(db_file: str = DB_PATH):
                   value TEXT,
                   updated_at TEXT)''')
 
+    # Dọn dẹp dữ liệu cũ bị gán Unknown seller nếu có
+    try:
+        c.execute("UPDATE market_logs SET seller = 'G2G Trader' WHERE platform = 'g2g' AND (seller IS NULL OR seller = 'Unknown')")
+        c.execute("UPDATE market_logs SET seller = 'Eldorado Trader' WHERE platform = 'eldorado' AND (seller IS NULL OR seller = 'Unknown')")
+        c.execute("UPDATE market_logs SET seller = 'Qiandao Merchant' WHERE platform = 'qiandao' AND (seller IS NULL OR seller = 'Unknown')")
+        c.execute("UPDATE market_logs SET seller = 'DD373 Trader' WHERE platform = 'dd373' AND (seller IS NULL OR seller = 'Unknown')")
+    except Exception as e:
+        logger.warning(f"Cleanup legacy Unknown seller error: {e}")
+
     conn.commit()
     conn.close()
     logger.info(f"Database initialized at {db_file}")
@@ -73,7 +82,7 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                       (timestamp,
                        platform,
-                       item.get("seller", "Unknown"),
+                       item.get("seller", "Seller"),
                        float(item.get("unit_price", item.get("price", 0.0))),
                        int(item.get("stock", 0)),
                        int(item.get("sold_total", item.get("sold", 0))),
@@ -119,24 +128,34 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
         conn.close()
 
 def get_lowest_prices(platform: Optional[str] = None, item_name: Optional[str] = None) -> List[Dict[str, Any]]:
-    """Lấy danh sách giá thấp nhất (Lowest Price / Floor Price)"""
+    """Lấy giá thấp nhất (Lowest/Floor Price) từ ĐỢT QUÉT MỚI NHẤT của mỗi item"""
     conn = get_connection()
     c = conn.cursor()
     try:
         query = '''
-            SELECT platform, item_name, seller, MIN(price) as lowest_price, stock, sold, online, min_qty, delivery, timestamp
-            FROM market_logs 
-            WHERE price > 0
+            WITH LatestScans AS (
+                SELECT platform, item_name, MAX(timestamp) as latest_time
+                FROM market_logs
+                GROUP BY platform, item_name
+            )
+            SELECT m.platform, m.item_name, m.seller, MIN(m.price) as lowest_price, 
+                   m.stock, m.sold, m.online, m.min_qty, m.delivery, m.timestamp
+            FROM market_logs m
+            INNER JOIN LatestScans ls 
+               ON m.platform = ls.platform 
+              AND m.item_name = ls.item_name 
+              AND m.timestamp = ls.latest_time
+            WHERE m.price > 0
         '''
         params = []
         if platform:
-            query += " AND platform = ?"
-            params.append(platform)
+            query += " AND m.platform = ?"
+            params.append(platform.lower())
         if item_name:
-            query += " AND item_name = ?"
+            query += " AND m.item_name = ?"
             params.append(item_name)
             
-        query += " GROUP BY platform, item_name ORDER BY lowest_price ASC"
+        query += " GROUP BY m.platform, m.item_name ORDER BY lowest_price ASC"
         
         c.execute(query, params)
         rows = [dict(row) for row in c.fetchall()]
