@@ -63,9 +63,24 @@ async function main() {
         fs.mkdirSync(profileDir, { recursive: true });
     }
 
+    let executablePath;
+    const possiblePaths = [
+        '/usr/bin/google-chrome',
+        '/usr/bin/google-chrome-stable',
+        '/usr/bin/chromium-browser',
+        '/usr/bin/chromium',
+        '/snap/bin/chromium'
+    ];
+    for (const p of possiblePaths) {
+        if (fs.existsSync(p)) {
+            executablePath = p;
+            break;
+        }
+    }
+
     let browser;
     try {
-        browser = await puppeteer.launch({
+        const launchOptions = {
             headless: true,
             userDataDir: profileDir,
             args: [
@@ -76,7 +91,12 @@ async function main() {
                 '--window-size=1920,1080',
                 '--lang=zh-CN,zh'
             ]
-        });
+        };
+        if (executablePath) {
+            launchOptions.executablePath = executablePath;
+        }
+
+        browser = await puppeteer.launch(launchOptions);
 
         const page = await browser.newPage();
         await page.setViewport({ width: 1920, height: 1080 });
