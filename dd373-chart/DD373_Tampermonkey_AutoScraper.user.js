@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name         ⚡ DD373 Auto Sniper to Localhost Dashboard
+// @name         ⚡ DD373 Auto Sniper to Unified Server
 // @namespace    http://tampermonkey.net/
-// @version      2.0
-// @description  Tự động đọc dữ liệu bảng giá DD373 trên trình duyệt thật và gửi trực tiếp về Localhost Dashboard (Không bao giờ bị WAF Aliyun chặn)
+// @version      2.1
+// @description  Tự động đọc dữ liệu bảng giá DD373 và gia hạn Cookie về Unified Server
 // @author       Antigravity
 // @match        https://www.dd373.com/s-*
 // @grant        GM_xmlhttpRequest
+// @connect      192.168.2.114
 // @connect      localhost
 // @connect      127.0.0.1
 // ==/UserScript==
@@ -13,8 +14,8 @@
 (function() {
     'use strict';
 
-    // CẤU HÌNH
-    const BACKEND_URL = "http://localhost:8000/update_data";
+    // CẤU HÌNH SERVER
+    const BACKEND_URL = "http://192.168.2.114:8000/update_data";
     const ITEM_NAME = "DD373 POE2 Divine Orb";
     const RELOAD_INTERVAL_SEC = 30; // Tự động làm mới trang sau mỗi 30 giây để lấy giá mới nhất
 
@@ -67,8 +68,8 @@
 
         // Tìm container bảng
         let container = document.querySelector(".platform-receive-content") ||
-                        document.querySelector(".b2c-goods-item") ||
-                        document.querySelector(".goods-list");
+            document.querySelector(".b2c-goods-item") ||
+            document.querySelector(".goods-list");
 
         let rows = [];
         if (container) {
@@ -163,14 +164,14 @@
                 "Content-Type": "application/json"
             },
             data: JSON.stringify(payload),
-            onload: function(response) {
+            onload: function (response) {
                 if (response.status >= 200 && response.status < 300) {
                     log(`✅ Đã cập nhật ${offers.length} offers vào Localhost:8000!`, "#00e676");
                 } else {
                     log(`❌ Lỗi gửi Localhost (${response.status})`, "#ff3b30");
                 }
             },
-            onerror: function() {
+            onerror: function () {
                 log("❌ Không thể kết nối Localhost:8000", "#ff3b30");
             }
         });
