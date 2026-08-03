@@ -4,6 +4,7 @@ import time
 import math
 import random
 import logging
+import asyncio
 import threading
 from typing import List, Dict, Any, Tuple, Optional
 from bs4 import BeautifulSoup
@@ -83,22 +84,20 @@ def clean_stale_singleton_lock():
 
 def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
     """
-    Generate realistic human mouse movement steps with Ease-in-out,
-    micro-jitter noise, and natural overshoot-correction behavior for slider captchas.
+    Generate realistic human mouse movement steps with Ease-in-out (~1.0s total duration).
     """
     steps = []
     current_x = 0.0
     current_y = 0.0
     
-    # 1. Giả lập hiệu ứng tay người kéo quá đà (Overshoot) 4-12px
-    overshoot = random.uniform(4.0, 12.0) if distance > 100 else random.uniform(2.0, 6.0)
+    # 1. Giả lập hiệu ứng tay người kéo quá đà (Overshoot) 3-8px
+    overshoot = random.uniform(3.0, 8.0) if distance > 100 else random.uniform(2.0, 5.0)
     target_overshoot_x = distance + overshoot
     
-    # Phase 1: Kéo chính tới điểm vượt đích (Chiếm khoảng 80% - 85% tổng số bước)
-    main_steps_count = random.randint(35, 50)
+    # Phase 1: Kéo chính (22 - 30 bước, mỗi bước ~25ms -> ~0.7s)
+    main_steps_count = random.randint(22, 30)
     for i in range(1, main_steps_count + 1):
         t = i / main_steps_count
-        # Smooth cubic ease-in-out curve (gia tốc rồi giảm tốc)
         if t < 0.5:
             ease = 4 * t * t * t
         else:
@@ -107,32 +106,29 @@ def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
         next_x = target_overshoot_x * ease
         dx = next_x - current_x
         
-        # Nhiễu rung vi mô (Micro-jitter) trục X và sóng sinh lý trục Y
-        dx_jitter = dx + random.uniform(-0.35, 0.35) if 0.1 < t < 0.9 else dx
-        dy = math.sin(t * math.pi) * random.uniform(0.3, 1.2) + random.uniform(-0.4, 0.4)
+        dx_jitter = dx + random.uniform(-0.3, 0.3) if 0.1 < t < 0.9 else dx
+        dy = math.sin(t * math.pi) * random.uniform(0.2, 1.0) + random.uniform(-0.3, 0.3)
         
         current_x += dx_jitter
         current_y += dy
         steps.append((dx_jitter, dy))
         
-    # Phase 2: Kéo lùi hiệu chỉnh về đúng điểm đích `distance` (15% - 20% tổng số bước)
-    correction_steps_count = random.randint(6, 12)
+    # Phase 2: Kéo lùi hiệu chỉnh về đúng điểm đích (5 - 8 bước -> ~0.2s)
+    correction_steps_count = random.randint(5, 8)
     start_corr_x = current_x
-    delta_back = distance - start_corr_x  # Khoảng kéo lùi (âm)
+    delta_back = distance - start_corr_x
     
     for j in range(1, correction_steps_count + 1):
         t = j / correction_steps_count
-        # Giảm tốc nhẹ khi kéo lùi căn chỉnh
         ease = math.sin(t * math.pi / 2)
         next_x = start_corr_x + delta_back * ease
         dx = next_x - current_x
-        dy = random.uniform(-0.3, 0.3)
+        dy = random.uniform(-0.2, 0.2)
         
         current_x = next_x
         current_y += dy
         steps.append((dx, dy))
         
-    # Đảm bảo tổng khoảng cách dx đạt chính xác 100% target `distance`
     total_dx = sum(s[0] for s in steps)
     diff = distance - total_dx
     if abs(diff) > 0.0001 and len(steps) > 0:
@@ -222,7 +218,7 @@ async def solve_aliyun_slider(page: Page) -> bool:
     # Ensure precise mouse focus via hover
     try:
         await slider_btn.hover()
-        time.sleep(random.uniform(0.1, 0.2))
+        await asyncio.sleep(random.uniform(0.08, 0.15))
         box = await slider_btn.bounding_box() or box
     except Exception:
         pass
@@ -238,14 +234,14 @@ async def solve_aliyun_slider(page: Page) -> bool:
         details={"start_x": start_x, "start_y": start_y, "distance": slide_distance}
     )
 
-    # Human-like approach mouse movement
-    await page.mouse.move(start_x - random.uniform(20, 40), start_y - random.uniform(10, 20))
-    time.sleep(random.uniform(0.1, 0.25))
+    # Fast approach & mouse press (~100ms)
+    await page.mouse.move(start_x - random.uniform(15, 30), start_y - random.uniform(5, 15))
+    await asyncio.sleep(random.uniform(0.05, 0.1))
     await page.mouse.move(start_x, start_y)
-    time.sleep(random.uniform(0.1, 0.2))
+    await asyncio.sleep(random.uniform(0.05, 0.1))
     
     await page.mouse.down()
-    time.sleep(random.uniform(0.1, 0.25))
+    await asyncio.sleep(random.uniform(0.08, 0.15))
     
     curr_x, curr_y = start_x, start_y
     trajectory = generate_human_steps(slide_distance)
@@ -254,11 +250,11 @@ async def solve_aliyun_slider(page: Page) -> bool:
         curr_x += dx
         curr_y += dy
         await page.mouse.move(curr_x, curr_y)
-        time.sleep(random.uniform(0.008, 0.02))
+        await asyncio.sleep(random.uniform(0.02, 0.032))
 
-    time.sleep(random.uniform(0.2, 0.4))
+    await asyncio.sleep(random.uniform(0.1, 0.2))
     await page.mouse.up()
-    time.sleep(4.0)
+    await asyncio.sleep(1.5)
 
     page_content = await page.content()
     is_success = False
@@ -429,19 +425,19 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                 response = await page.goto(url, wait_until="domcontentloaded", timeout=25000)
                 status_code = response.status if response else 0
 
-                time.sleep(2.0)
+                await asyncio.sleep(0.5)
 
                 for attempt in range(1, max_retries + 1):
                     content = await page.content()
                     if "aliyunCaptcha" in content or "verify that you are a real person" in content or "sliding-slider" in content:
                         solved = await solve_aliyun_slider(page)
                         if solved:
-                            time.sleep(3.0)
+                            await asyncio.sleep(1.5)
                             break
                         else:
                             logger.warning(f"[Playwright Solver] Captcha solve attempt {attempt}/{max_retries} failed. Refreshing page...")
                             await page.reload(wait_until="domcontentloaded")
-                            time.sleep(2.5)
+                            await asyncio.sleep(1.0)
                     else:
                         break
 
