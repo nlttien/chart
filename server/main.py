@@ -303,6 +303,18 @@ async def api_get_platform_screenshot(platform: str):
         return FileResponse(img_path, media_type="image/png")
     raise HTTPException(status_code=404, detail=f"No error screenshot available for {platform}")
 
+@app.get("/api/v1/{platform}/clip")
+async def api_get_platform_clip(platform: str):
+    """Trả về video clip ghi lại thao tác giải Captcha gần nhất"""
+    plat = platform.lower()
+    video_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "videos", plat)
+    if os.path.exists(video_dir):
+        files = [os.path.join(video_dir, f) for f in os.listdir(video_dir) if f.endswith(".webm")]
+        if files:
+            latest_video = max(files, key=os.path.getmtime)
+            return FileResponse(latest_video, media_type="video/webm")
+    raise HTTPException(status_code=404, detail=f"No video clip available for {platform}")
+
 # --- STATIC FILES FOR UNIFIED WEB UI ---
 WEB_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "unified-chart", "dist")
 

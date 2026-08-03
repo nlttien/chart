@@ -392,6 +392,9 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
 
         async with async_playwright() as p:
             try:
+                video_dir = os.path.join(DATA_DIR, "videos", "dd373")
+                os.makedirs(video_dir, exist_ok=True)
+
                 context = await p.chromium.launch_persistent_context(
                     user_data_dir=PROFILE_DIR,
                     headless=True,
@@ -416,7 +419,9 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     has_touch=False,
                     is_mobile=False,
                     java_script_enabled=True,
-                    ignore_https_errors=True
+                    ignore_https_errors=True,
+                    record_video_dir=video_dir,
+                    record_video_size={"width": 1280, "height": 720}
                 )
 
                 page = context.pages[0] if context.pages else await context.new_page()
