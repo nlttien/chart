@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         ⚡ DD373 Auto Sniper to Unified Server
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.2
 // @description  Tự động đọc dữ liệu bảng giá DD373 và gia hạn Cookie về Unified Server
 // @author       Antigravity
-// @match        https://www.dd373.com/s-*
+// @match        *://*.dd373.com/*
+// @match        *://dd373.com/*
+// @include      *://*.dd373.com/*
 // @grant        GM_xmlhttpRequest
 // @connect      192.168.2.114
 // @connect      localhost
