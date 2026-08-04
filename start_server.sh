@@ -53,32 +53,20 @@ if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     fi
 fi
 
-# 3. Start FastAPI Server with Graphical Display (DISPLAY=:0 for Headed Chrome)
+# 3. Start FastAPI Server with Graphical Display or Virtual Framebuffer
 echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
-
-# Auto-detect dynamic XAUTHORITY for Ubuntu GDM3 / LightDM / Desktop session
-if [ -z "$XAUTHORITY" ] || [ ! -f "$XAUTHORITY" ]; then
-    USER_ID=$(id -u frappe 2>/dev/null || id -u)
-    DYNAMIC_XAUTH=$(find /run/user/$USER_ID /tmp /home -maxdepth 3 \( -name "*Xauthority*" -o -name "xauth_*" \) 2>/dev/null | head -n 1)
-    if [ -n "$DYNAMIC_XAUTH" ]; then
-        export XAUTHORITY="$DYNAMIC_XAUTH"
-    fi
-fi
-
-# Detect active X11 sockets (:0 or :1)
-if [ -e "/tmp/.X11-unix/X0" ]; then
-    export DISPLAY=":0"
-elif [ -e "/tmp/.X11-unix/X1" ]; then
-    export DISPLAY=":1"
-else
-    export DISPLAY="${DISPLAY:-:0}"
-fi
-
-echo "[INFO] GUI Display target set to DISPLAY=$DISPLAY (XAUTHORITY=$XAUTHORITY)"
-xhost +local: 2>/dev/null || xhost + 2>/dev/null || true
 
 # Free port 8000 if occupied by old process
 fuser -k 8000/tcp >/dev/null 2>&1 || true
 sleep 1
 
-exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+# Check if real XServer is accessible, otherwise use xvfb-run for systemd background service
+if command -v xset &>/dev/null && xset q &>/dev/null; then
+    echo "[INFO] Active XServer detected ($DISPLAY). Launching with real GUI display..."
+    exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+elif command -v xvfb-run &> /dev/null; then
+    echo "[INFO] Systemd background service environment (No XServer). Launching with xvfb-run..."
+    exec xvfb-run -a uvicorn server.main:app --host 0.0.0.0 --port 8000
+else
+    exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+fi
