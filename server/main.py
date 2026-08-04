@@ -338,10 +338,32 @@ async def api_get_platform_logs(platform: str, limit: int = Query(50)):
     logs = SmartLogger.get_logs(platform=platform.lower(), limit=limit)
     return {"status": "success", "platform": platform, "total_logs": len(logs), "logs": logs}
 
+_DEBUG_MODE: Dict[str, bool] = {"dd373": True}
+
+@app.get("/api/v1/{platform}/debug")
+async def api_get_debug_mode(platform: str):
+    plat = platform.lower()
+    return {"status": "success", "platform": plat, "debug": _DEBUG_MODE.get(plat, False)}
+
+@app.post("/api/v1/{platform}/debug")
+async def api_toggle_debug_mode(platform: str, payload: Dict[str, Any] = Body(...)):
+    plat = platform.lower()
+    debug_enabled = bool(payload.get("debug", False))
+    _DEBUG_MODE[plat] = debug_enabled
+    SmartLogger.log_event(
+        platform=plat,
+        level="INFO",
+        error_code="DEBUG_MODE_TOGGLED",
+        message=f"Debug mode set to {debug_enabled} for {plat}",
+        details={"debug": debug_enabled}
+    )
+    return {"status": "success", "platform": plat, "debug": debug_enabled}
+
 @app.get("/api/v1/{platform}/status")
 async def api_get_platform_status(platform: str):
     """Trả về chi tiết trạng thái Scraper, tỷ lệ vượt Captcha, Cookie status"""
     status_info = SmartLogger.get_status(platform=platform.lower())
+    status_info["debug"] = _DEBUG_MODE.get(platform.lower(), False)
     return {"status": "success", "platform": platform, "details": status_info}
 
 @app.get("/api/v1/{platform}/screenshot")

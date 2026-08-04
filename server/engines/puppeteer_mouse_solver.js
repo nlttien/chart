@@ -231,6 +231,14 @@ async function main() {
             }
         }
 
+        const logDir = path.join(__dirname, '..', '..', 'data', 'logs');
+        if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
+        const screenshotPath = path.join(logDir, 'dd373_last_error.png');
+
+        if (!solved) {
+            await page.screenshot({ path: screenshotPath, fullPage: true });
+        }
+
         const cookies = await page.cookies();
         const cookieStr = cookies.map(c => `${c.name}=${c.value}`).join('; ');
 
@@ -238,7 +246,8 @@ async function main() {
             success: true,
             solved: solved,
             cookies: cookieStr,
-            html: content
+            html: content,
+            has_screenshot: !solved
         }));
 
     } catch (err) {

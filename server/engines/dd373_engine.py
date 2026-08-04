@@ -292,16 +292,18 @@ def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
             )
             return [], ""
 
+        has_screenshot = data.get("has_screenshot", False)
         if data.get("html"):
             from server.engines.dd373_playwright_solver import parse_dd373_html
             results = parse_dd373_html(data["html"])
             logger.info(f"[DD373 Engine] Puppeteer solver parsed {len(results)} items successfully!")
             SmartLogger.log_event(
                 platform="dd373",
-                level="INFO",
-                error_code="PUPPETEER_SOLVE_SUCCESS",
-                message=f"Puppeteer Mouse Solver successfully bypassed Captcha & parsed {len(results)} items!",
-                details={"items_count": len(results), "solved": data.get("solved", False)}
+                level="INFO" if len(results) > 0 else "WARNING",
+                error_code="PUPPETEER_SOLVE_SUCCESS" if len(results) > 0 else "PUPPETEER_PARSED_EMPTY",
+                message=f"Puppeteer Mouse Solver bypassed Captcha & parsed {len(results)} items!",
+                details={"items_count": len(results), "solved": data.get("solved", False)},
+                screenshot_saved=has_screenshot
             )
             return results, data.get("cookies", "")
 
