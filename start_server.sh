@@ -54,7 +54,7 @@ echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
 export DISPLAY="${DISPLAY:-:0}"
 
 # Free port 8000 if occupied by old process
-fuser -k 8000/tcp 2>/dev/null || fuser -k 8000/tcp 2>/dev/null || true
+fuser -k 8000/tcp >/dev/null 2>&1 || true
 sleep 1
 
 exec uvicorn server.main:app --host 0.0.0.0 --port 8000
