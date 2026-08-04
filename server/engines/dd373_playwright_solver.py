@@ -193,7 +193,7 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    slide_distance = random.uniform(345.0, 365.0)
+    slide_distance = 320.0
     track_selectors = [
         '#aliyunCaptcha-sliding-body',
         '.sliding',
@@ -210,7 +210,7 @@ async def solve_aliyun_slider(page: Page) -> bool:
                 t_box = await track_el.bounding_box()
                 if t_box and t_box["width"] > box["width"]:
                     measured = t_box["width"] - box["width"]
-                    if measured > 200:
+                    if 250 < measured < 380:
                         slide_distance = measured
                     logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px (selector: {t_sel})")
                     break
