@@ -408,13 +408,11 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                 context = await p.chromium.launch_persistent_context(
                     user_data_dir=PROFILE_DIR,
                     headless=False,
-                    channel="chrome",
                     args=[
+                        "--disable-gpu",
                         "--disable-dev-shm-usage",
                         "--disable-gpu-sandbox",
                         "--no-zygote",
-                        "--ignore-gpu-blocklist",
-                        "--enable-webgl",
                         "--no-sandbox",
                         "--disable-setuid-sandbox",
                         "--disable-blink-features=AutomationControlled",
