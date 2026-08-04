@@ -2,7 +2,7 @@ import logging
 import re
 import time
 from typing import List, Dict, Any, Optional
-from curl_cffi import requests
+import requests
 
 logger = logging.getLogger("eldo_engine")
 
@@ -70,7 +70,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
             p = params.copy()
             p['pageIndex'] = str(page)
             try:
-                resp = requests.get(API_BASE, params=p, headers=headers, impersonate="chrome120", timeout=15)
+                resp = requests.get(API_BASE, params=p, headers=headers, timeout=15)
                 if resp.status_code == 200:
                     data = resp.json()
                     results = data.get('results', [])

@@ -1,25 +1,18 @@
 import logging
 import time
 from typing import List, Dict, Any, Optional
-from curl_cffi import requests
+import requests
 
 logger = logging.getLogger("g2g_engine")
 
 API_BASE = "https://sls.g2g.com/offer/search"
 
 HEADERS = {
-    "authority": "sls.g2g.com",
     "accept": "application/json, text/plain, */*",
     "accept-language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7",
     "origin": "https://www.g2g.com",
     "referer": "https://www.g2g.com/",
-    "sec-ch-ua": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"Windows"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-site",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 }
 
 def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -46,7 +39,7 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
             p = params.copy()
             p['page'] = str(page)
             try:
-                resp = requests.get(API_BASE, params=p, headers=HEADERS, impersonate="chrome120", timeout=15)
+                resp = requests.get(API_BASE, params=p, headers=HEADERS, timeout=15)
                 if resp.status_code == 200:
                     data = resp.json()
                     payload = data.get('payload', {})
