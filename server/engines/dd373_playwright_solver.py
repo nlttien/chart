@@ -236,14 +236,14 @@ async def solve_aliyun_slider(page: Page) -> bool:
         details={"start_x": start_x, "start_y": start_y, "distance": slide_distance}
     )
 
-    # Fast approach & mouse press (~100ms)
-    await page.mouse.move(start_x - random.uniform(15, 30), start_y - random.uniform(5, 15))
-    await asyncio.sleep(random.uniform(0.05, 0.1))
+    # Smooth approach to slider button & mouse down with human hold delay (200-300ms)
+    await page.mouse.move(start_x - random.uniform(20, 40), start_y - random.uniform(10, 20))
+    await asyncio.sleep(random.uniform(0.08, 0.15))
     await page.mouse.move(start_x, start_y)
-    await asyncio.sleep(random.uniform(0.05, 0.1))
+    await asyncio.sleep(random.uniform(0.1, 0.2))
     
     await page.mouse.down()
-    await asyncio.sleep(random.uniform(0.08, 0.15))
+    await asyncio.sleep(random.uniform(0.2, 0.35))
     
     curr_x, curr_y = start_x, start_y
     trajectory = generate_human_steps(slide_distance)
@@ -252,11 +252,13 @@ async def solve_aliyun_slider(page: Page) -> bool:
         curr_x += dx
         curr_y += dy
         await page.mouse.move(curr_x, curr_y)
-        await asyncio.sleep(random.uniform(0.02, 0.032))
+        # Variable micro-delays between mouse moves to emulate human muscle inertia
+        await asyncio.sleep(random.uniform(0.012, 0.028))
 
-    await asyncio.sleep(random.uniform(0.1, 0.2))
+    # Hold mouse down at target endpoint to simulate human confirmation before releasing
+    await asyncio.sleep(random.uniform(0.3, 0.55))
     await page.mouse.up()
-    await asyncio.sleep(1.5)
+    await asyncio.sleep(2.0)
 
     page_content = await page.content()
     is_success = False
