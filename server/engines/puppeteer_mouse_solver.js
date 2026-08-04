@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 function generateHumanSteps(distance) {
     const steps = [];
@@ -64,13 +65,32 @@ async function main() {
     }
 
     let executablePath;
+    const homedir = os.homedir();
     const possiblePaths = [
         '/usr/bin/google-chrome',
         '/usr/bin/google-chrome-stable',
         '/usr/bin/chromium-browser',
         '/usr/bin/chromium',
-        '/snap/bin/chromium'
+        '/snap/bin/chromium',
+        path.join(homedir, '.cache', 'ms-playwright', 'chromium-1112', 'chrome-linux', 'chrome'),
+        path.join(homedir, '.cache', 'ms-playwright', 'chromium-1234', 'chrome-linux64', 'chrome')
     ];
+    // Dynamic glob match for any ms-playwright chromium build
+    try {
+        const cacheDir = path.join(homedir, '.cache', 'ms-playwright');
+        if (fs.existsSync(cacheDir)) {
+            const dirs = fs.readdirSync(cacheDir);
+            for (const d of dirs) {
+                if (d.startsWith('chromium-')) {
+                    const p1 = path.join(cacheDir, d, 'chrome-linux', 'chrome');
+                    const p2 = path.join(cacheDir, d, 'chrome-linux64', 'chrome');
+                    if (fs.existsSync(p1)) possiblePaths.push(p1);
+                    if (fs.existsSync(p2)) possiblePaths.push(p2);
+                }
+            }
+        }
+    } catch (e) {}
+
     for (const p of possiblePaths) {
         if (fs.existsSync(p)) {
             executablePath = p;
