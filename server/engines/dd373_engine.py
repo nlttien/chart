@@ -5,6 +5,7 @@ import json
 import asyncio
 import logging
 import subprocess
+import threading
 from typing import List, Dict, Any, Tuple, Optional
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -16,8 +17,9 @@ logger = logging.getLogger("dd373_engine")
 DEFAULT_COOKIE = "clientId=a6676ef252c56a2a9f60c09998c13f82; dpushPC=true; Hm_lvt_b1609ca2c0a77d0130ec3cf8396eb4d5=1783669374; HMACCOUNT=2067EC5DCB8D2AE5; firstOpen_cc=true; imagestylewebp=1; headhistorySelectGame=%5B%7B%22Id%22%3A%2246e6971b94044ae3881dfaeb6993abb8%22%7D%5D; AutoSelectHistory=false; _c_WBKFRo=SdND9MOoObdOOBEaFuBUAF0wcGGE0fnmhEUbzpiZ; _nb_ioWEgULi=; acw_tc=6b9b3e2017836767239266076e72366b0fe422b914da8e36d261d7d316; cdn_sec_tc=6b9b3e2017836767239266076e72366b0fe422b914da8e36d261d7d316; acw_sc__v3=6a50bf378bc4cef54169f278582099aa5bca4c7c; Hm_lpvt_b1609ca2c0a77d0130ec3cf8396eb4d5=1783676689"
 DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 
-# In-memory cached dynamic cookie & solving status
+# In-memory cached dynamic cookie, solving status & thread serialization lock
 _LIVE_COOKIE: str = DEFAULT_COOKIE
+_ENGINE_SOLVER_LOCK = threading.Lock()
 _SOLVING_STATE: Dict[str, Any] = {
     "is_solving": False,
     "last_status": "idle",  # "idle", "solving", "success", "failed"
@@ -207,45 +209,46 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
         )
         return clean_results
 
-    # FALLBACK: Trigger Puppeteer Mouse Solver directly when cURL hits Captcha WAF
-    logger.warning(f"[DD373 Engine] cURL hit WAF Captcha or returned 0 items for {name}. Triggering Puppeteer Mouse Solver...")
-    _SOLVING_STATE["is_solving"] = True
-    _SOLVING_STATE["last_status"] = "solving"
-    _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVING_IN_PROGRESS"
-    _SOLVING_STATE["message"] = "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Puppeteer Mouse Solver..."
+    # FALLBACK: Trigger Puppeteer Mouse Solver sequentially when cURL hits Captcha WAF
+    with _ENGINE_SOLVER_LOCK:
+        logger.warning(f"[DD373 Engine] Lock acquired for {name}. Triggering Puppeteer Mouse Solver...")
+        _SOLVING_STATE["is_solving"] = True
+        _SOLVING_STATE["last_status"] = "solving"
+        _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVING_IN_PROGRESS"
+        _SOLVING_STATE["message"] = "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Puppeteer Mouse Solver..."
 
-    SmartLogger.log_event(
-        platform="dd373",
-        level="WARNING",
-        error_code="WAF_CAPTCHA_DETECTED" if is_waf_captcha else "CURL_PARSED_EMPTY",
-        message=f"Triggering Puppeteer Mouse Solver for {name} (is_waf_captcha={is_waf_captcha})",
-        details={"url": url, "http_status": status_code}
-    )
-
-    p_results, p_cookie = fetch_dd373_with_puppeteer(url)
-    if p_cookie:
-        update_live_cookie(p_cookie)
-
-    if len(p_results) > 0:
-        _SOLVING_STATE["is_solving"] = False
-        _SOLVING_STATE["last_status"] = "success"
-        _SOLVING_STATE["error_code"] = None
-        _SOLVING_STATE["message"] = "Giải mã Captcha WAF bằng Puppeteer Mouse Solver thành công"
-        logger.info(f"[DD373 Engine] Puppeteer Mouse Solver successfully retrieved {len(p_results)} items for {name}")
         SmartLogger.log_event(
             platform="dd373",
-            level="INFO",
-            error_code="PUPPETEER_SOLVE_SUCCESS",
-            message=f"Puppeteer Mouse Solver successfully bypassed Captcha & retrieved {len(p_results)} items for {name}",
-            details={"url": url, "items_count": len(p_results)}
+            level="WARNING",
+            error_code="WAF_CAPTCHA_DETECTED" if is_waf_captcha else "CURL_PARSED_EMPTY",
+            message=f"Triggering Puppeteer Mouse Solver for {name} (is_waf_captcha={is_waf_captcha})",
+            details={"url": url, "http_status": status_code}
         )
-        return p_results
 
-    _SOLVING_STATE["is_solving"] = False
-    _SOLVING_STATE["last_status"] = "failed"
-    _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
-    _SOLVING_STATE["message"] = "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373 bằng Puppeteer Mouse Solver"
-    return []
+        p_results, p_cookie = fetch_dd373_with_puppeteer(url)
+        if p_cookie:
+            update_live_cookie(p_cookie)
+
+        if len(p_results) > 0:
+            _SOLVING_STATE["is_solving"] = False
+            _SOLVING_STATE["last_status"] = "success"
+            _SOLVING_STATE["error_code"] = None
+            _SOLVING_STATE["message"] = "Giải mã Captcha WAF bằng Puppeteer Mouse Solver thành công"
+            logger.info(f"[DD373 Engine] Puppeteer Mouse Solver successfully retrieved {len(p_results)} items for {name}")
+            SmartLogger.log_event(
+                platform="dd373",
+                level="INFO",
+                error_code="PUPPETEER_SOLVE_SUCCESS",
+                message=f"Puppeteer Mouse Solver successfully bypassed Captcha & retrieved {len(p_results)} items for {name}",
+                details={"url": url, "items_count": len(p_results)}
+            )
+            return p_results
+
+        _SOLVING_STATE["is_solving"] = False
+        _SOLVING_STATE["last_status"] = "failed"
+        _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
+        _SOLVING_STATE["message"] = "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373 bằng Puppeteer Mouse Solver"
+        return []
 
 def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
     """Execute Puppeteer Node.js mouse solver script to bypass Captcha and scrape DD373."""
