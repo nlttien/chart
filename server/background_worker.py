@@ -88,13 +88,13 @@ class BackgroundWorker:
 
     async def scrape_all_platforms(self):
         config = load_config()
-        # Chạy từng sàn nối tiếp nhau để đảm bảo RAM luôn ổn định không bị OOM Killed
+        # Chạy nối tiếp từng sàn & từng sản phẩm 1-by-1 để tránh mở nhiều trình duyệt Chrome song song gây tràn RAM
         for platform in ["g2g", "eldorado", "qiandao", "dd373"]:
             items = config.get(platform, [])
-            tasks = []
             for item in items:
                 if item.get("enabled", True):
-                    tasks.append(self.scrape_platform_item(platform, item))
-            if tasks:
-                await asyncio.gather(*tasks, return_exceptions=True)
+                    try:
+                        await self.scrape_platform_item(platform, item)
+                    except Exception as e:
+                        logger.error(f"Error scraping {platform} item {item.get('name')}: {e}")
             gc.collect()
