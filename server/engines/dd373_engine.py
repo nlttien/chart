@@ -270,6 +270,11 @@ def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
         if res.returncode != 0 or not res.stdout:
             err_msg = res.stderr.strip() if res.stderr else f"Exit code {res.returncode}"
             logger.error(f"[DD373 Engine] Puppeteer process failed: {err_msg}")
+            _SOLVING_STATE["is_solving"] = False
+            _SOLVING_STATE["last_status"] = "failed"
+            _SOLVING_STATE["error_code"] = "PUPPETEER_PROCESS_ERROR"
+            _SOLVING_STATE["message"] = f"Node.js Puppeteer process returned error: {err_msg}"
+            _SOLVING_STATE["details"] = {"returncode": res.returncode, "stderr": res.stderr}
             SmartLogger.log_event(
                 platform="dd373",
                 level="ERROR",
@@ -282,11 +287,17 @@ def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
         data = json.loads(res.stdout)
         if not data.get("success"):
             err = data.get("error", "Unknown error in Puppeteer script")
+            err_code = data.get("error_code", "PUPPETEER_SOLVE_FAILED")
             logger.error(f"[DD373 Engine] Puppeteer script reported error: {err}")
+            _SOLVING_STATE["is_solving"] = False
+            _SOLVING_STATE["last_status"] = "failed"
+            _SOLVING_STATE["error_code"] = err_code
+            _SOLVING_STATE["message"] = err
+            _SOLVING_STATE["details"] = {"error": err}
             SmartLogger.log_event(
                 platform="dd373",
                 level="ERROR",
-                error_code="PUPPETEER_SOLVE_FAILED",
+                error_code=err_code,
                 message=f"Puppeteer script execution failed: {err}",
                 details={"error": err}
             )
@@ -296,13 +307,23 @@ def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
         if data.get("html"):
             from server.engines.dd373_playwright_solver import parse_dd373_html
             results = parse_dd373_html(data["html"])
+            
+            if len(results) == 0:
+                raw_err_code = data.get("error_code") or "PARSER_ZERO_ITEMS_FOUND"
+                raw_err_msg = data.get("error_message") or "Bóc tách được 0 gian hàng từ trang DD373"
+                _SOLVING_STATE["is_solving"] = False
+                _SOLVING_STATE["last_status"] = "failed"
+                _SOLVING_STATE["error_code"] = raw_err_code
+                _SOLVING_STATE["message"] = raw_err_msg
+                _SOLVING_STATE["details"] = {"items_count": 0, "solved": data.get("solved", False)}
+            
             logger.info(f"[DD373 Engine] Puppeteer solver parsed {len(results)} items successfully!")
             SmartLogger.log_event(
                 platform="dd373",
                 level="INFO" if len(results) > 0 else "WARNING",
-                error_code="PUPPETEER_SOLVE_SUCCESS" if len(results) > 0 else "PUPPETEER_PARSED_EMPTY",
+                error_code="PUPPETEER_SOLVE_SUCCESS" if len(results) > 0 else (data.get("error_code") or "PUPPETEER_PARSED_EMPTY"),
                 message=f"Puppeteer Mouse Solver bypassed Captcha & parsed {len(results)} items!",
-                details={"items_count": len(results), "solved": data.get("solved", False)},
+                details={"items_count": len(results), "solved": data.get("solved", False), "raw_error": data.get("error_message")},
                 screenshot_saved=has_screenshot
             )
             return results, data.get("cookies", "")

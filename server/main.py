@@ -226,6 +226,7 @@ async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(
                     "status": "failed",
                     "error_code": state.get("error_code") or "CAPTCHA_SOLVE_FAILED",
                     "message": state.get("message") or "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373",
+                    "details": state.get("details") or {},
                     "platform": plat,
                     "order_book": []
                 }

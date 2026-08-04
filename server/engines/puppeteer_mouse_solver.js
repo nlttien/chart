@@ -162,6 +162,8 @@ async function main() {
 
         let content = await page.content();
         let solved = false;
+        let errorCode = null;
+        let errorMessage = null;
 
         if (content.includes('aliyunCaptcha') || content.includes('sliding-slider') || content.includes('verify that you are a real person')) {
             const selectors = [
@@ -228,7 +230,17 @@ async function main() {
                     await sleep(2500);
 
                     content = await page.content();
+                    if (content.includes('aliyunCaptcha') || content.includes('sliding-slider')) {
+                        errorCode = 'CAPTCHA_RECHALLENGED_AFTER_DRAG';
+                        errorMessage = 'Đã trượt slider 320px nhưng Aliyun Captcha WAF vẫn yêu cầu xác minh lại lượt mới';
+                    }
+                } else {
+                    errorCode = 'CAPTCHA_SLIDER_BOX_NULL';
+                    errorMessage = 'Nút trượt slider có trong DOM nhưng không lấy được tọa độ hiển thị (bounding_box is null)';
                 }
+            } else {
+                errorCode = 'CAPTCHA_SLIDER_NOT_FOUND';
+                errorMessage = 'Phát hiện WAF Captcha nhưng không tìm thấy selector nút trượt slider trong DOM';
             }
         } else {
             solved = true;
@@ -243,6 +255,9 @@ async function main() {
                 content = await page.content();
                 if (content.includes('元/个') || content.includes('1元=') || content.includes('1元 =')) {
                     solved = true;
+                } else {
+                    errorCode = 'PARSER_ZERO_ITEMS_FOUND';
+                    errorMessage = 'Không bị WAF vướng Captcha nhưng không tìm thấy dữ liệu gian hàng giá tiền trong DOM';
                 }
             }
         }
@@ -261,13 +276,19 @@ async function main() {
         console.log(JSON.stringify({
             success: true,
             solved: solved,
+            error_code: errorCode,
+            error_message: errorMessage,
             cookies: cookieStr,
             html: content,
             has_screenshot: !solved
         }));
 
     } catch (err) {
-        console.log(JSON.stringify({ success: false, error: err.message }));
+        console.log(JSON.stringify({
+            success: false,
+            error_code: 'PUPPETEER_RUNTIME_ERROR',
+            error: err.message
+        }));
     } finally {
         if (browser) await browser.close();
     }
