@@ -225,7 +225,8 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
             details={"url": url, "http_status": status_code}
         )
 
-        p_results, p_cookie = fetch_dd373_with_puppeteer(url)
+        from server.engines.dd373_playwright_solver import fetch_dd373_with_playwright
+        p_results, p_cookie = asyncio.run(fetch_dd373_with_playwright(url))
         if p_cookie:
             update_live_cookie(p_cookie)
 
@@ -233,13 +234,13 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
             _SOLVING_STATE["is_solving"] = False
             _SOLVING_STATE["last_status"] = "success"
             _SOLVING_STATE["error_code"] = None
-            _SOLVING_STATE["message"] = "Giải mã Captcha WAF bằng Puppeteer Mouse Solver thành công"
-            logger.info(f"[DD373 Engine] Puppeteer Mouse Solver successfully retrieved {len(p_results)} items for {name}")
+            _SOLVING_STATE["message"] = "Giải mã Captcha WAF bằng Playwright Stealth Solver thành công"
+            logger.info(f"[DD373 Engine] Playwright Stealth Solver successfully retrieved {len(p_results)} items for {name}")
             SmartLogger.log_event(
                 platform="dd373",
                 level="INFO",
-                error_code="PUPPETEER_SOLVE_SUCCESS",
-                message=f"Puppeteer Mouse Solver successfully bypassed Captcha & retrieved {len(p_results)} items for {name}",
+                error_code="PLAYWRIGHT_SOLVE_SUCCESS",
+                message=f"Playwright Stealth Solver successfully bypassed Captcha & retrieved {len(p_results)} items for {name}",
                 details={"url": url, "items_count": len(p_results)}
             )
             return p_results
@@ -247,7 +248,7 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
         _SOLVING_STATE["is_solving"] = False
         _SOLVING_STATE["last_status"] = "failed"
         _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
-        _SOLVING_STATE["message"] = "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373 bằng Puppeteer Mouse Solver"
+        _SOLVING_STATE["message"] = "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373 bằng Playwright Stealth Solver"
         return []
 
 def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
