@@ -33,6 +33,10 @@ echo "[2/3] Installing Python dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
 
+echo "[INFO] Installing/Verifying Playwright Chromium Browser..."
+python -m playwright install chromium || playwright install chromium || true
+python -m playwright install-deps chromium 2>/dev/null || true
+
 # 2. Build Unified Web UI if NVM/Node is available (Requires Node >= 18 for Vite 5)
 if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     export NVM_DIR="$HOME/.nvm"
