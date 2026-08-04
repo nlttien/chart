@@ -66,30 +66,28 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
 
     all_raw_results = []
     try:
-        with requests.Session(impersonate="chrome120") as s:
-            for page in range(1, 4):
-                p = params.copy()
-                p['pageIndex'] = str(page)
-                try:
-                    resp = s.get(API_BASE, params=p, headers=headers, timeout=15)
-                    if resp.status_code == 200:
-                        data = resp.json()
-                        results = data.get('results', [])
-                        if not results:
-                            break
-                        all_raw_results.extend(results)
-                    else:
-                        logger.warning(f"[Eldorado Engine] Page {page} status {resp.status_code}")
+        for page in range(1, 4):
+            p = params.copy()
+            p['pageIndex'] = str(page)
+            try:
+                resp = requests.get(API_BASE, params=p, headers=headers, impersonate="chrome120", timeout=15)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    results = data.get('results', [])
+                    if not results:
                         break
-                except Exception as e:
-                    logger.error(f"[Eldorado Engine] Error fetching page {page}: {e}")
+                    all_raw_results.extend(results)
+                else:
+                    logger.warning(f"[Eldorado Engine] Page {page} status {resp.status_code}")
                     break
+            except Exception as e:
+                logger.error(f"[Eldorado Engine] Error fetching page {page}: {e}")
+                break
 
         clean_results = []
         for item in all_raw_results:
             offer = item.get('offer', {})
             seller = item.get('seller', {})
-            
             seller_name = (
                 seller.get('username') if isinstance(seller, dict) else seller
             ) or item.get('sellerName') or item.get('userName') or "Eldorado Seller"

@@ -42,25 +42,24 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
 
     all_raw_results = []
     try:
-        with requests.Session(impersonate="chrome120") as s:
-            for page in range(1, 4):
-                p = params.copy()
-                p['page'] = str(page)
-                try:
-                    resp = s.get(API_BASE, params=p, headers=HEADERS, timeout=15)
-                    if resp.status_code == 200:
-                        data = resp.json()
-                        payload = data.get('payload', {})
-                        results = payload.get('results', [])
-                        if not results:
-                            break
-                        all_raw_results.extend(results)
-                    else:
-                        logger.warning(f"[G2G Engine] Page {page} returned status {resp.status_code}")
+        for page in range(1, 4):
+            p = params.copy()
+            p['page'] = str(page)
+            try:
+                resp = requests.get(API_BASE, params=p, headers=HEADERS, impersonate="chrome120", timeout=15)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    payload = data.get('payload', {})
+                    results = payload.get('results', [])
+                    if not results:
                         break
-                except Exception as e:
-                    logger.error(f"[G2G Engine] Error fetching page {page}: {e}")
+                    all_raw_results.extend(results)
+                else:
+                    logger.warning(f"[G2G Engine] Page {page} returned status {resp.status_code}")
                     break
+            except Exception as e:
+                logger.error(f"[G2G Engine] Error fetching page {page}: {e}")
+                break
 
         clean_results = []
         for item in all_raw_results:
