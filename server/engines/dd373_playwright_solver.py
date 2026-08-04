@@ -82,48 +82,59 @@ def clean_stale_singleton_lock():
         except Exception as e:
             logger.warning(f"[Playwright Solver] Could not remove SingletonLock: {e}")
 
-def generate_human_steps(distance: float) -> List[Tuple[float, float, float]]:
+def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
     """
-    Generate realistic human mouse movement steps with fast dứt khoát velocity profile (~0.3s total duration)
-    and overshoot (+15px to +25px past slider track) with bounce-back correction.
-    Returns list of (next_absolute_x_offset, dy, delay_seconds).
+    Generate realistic human mouse movement steps with Ease-in-out (~1.0s total duration).
     """
     steps = []
     current_x = 0.0
     current_y = 0.0
-
-    overshoot = random.uniform(15.0, 25.0)
+    
+    # 1. Giả lập hiệu ứng tay người kéo quá đà (Overshoot) 3-8px
+    overshoot = random.uniform(3.0, 8.0) if distance > 100 else random.uniform(2.0, 5.0)
     target_overshoot_x = distance + overshoot
-
-    # Phase 1: Rapid dứt khoát drag past right edge (14 - 20 steps)
-    main_steps = random.randint(14, 20)
-    for i in range(1, main_steps + 1):
-        t = i / main_steps
-        ease = 4 * t * t * t if t < 0.5 else 1 - math.pow(-2 * t + 2, 3) / 2
+    
+    # Phase 1: Kéo chính (22 - 30 bước, mỗi bước ~25ms -> ~0.7s)
+    main_steps_count = random.randint(22, 30)
+    for i in range(1, main_steps_count + 1):
+        t = i / main_steps_count
+        if t < 0.5:
+            ease = 4 * t * t * t
+        else:
+            ease = 1 - math.pow(-2 * t + 2, 3) / 2
+            
         next_x = target_overshoot_x * ease
-        dy = math.sin(t * math.pi) * random.uniform(0.2, 0.6) + random.uniform(-0.3, 0.3)
-
-        current_x = next_x
+        dx = next_x - current_x
+        
+        dx_jitter = dx + random.uniform(-0.3, 0.3) if 0.1 < t < 0.9 else dx
+        dy = math.sin(t * math.pi) * random.uniform(0.2, 1.0) + random.uniform(-0.3, 0.3)
+        
+        current_x += dx_jitter
         current_y += dy
-        delay = random.uniform(0.005, 0.015)
-        steps.append((current_x, current_y, delay))
-
-    # Pause briefly at overshoot point
-    steps.append((current_x, current_y, random.uniform(0.03, 0.06)))
-
-    # Phase 2: Bounce-back correction to final destination (+4px over edge)
-    correction_steps = random.randint(4, 7)
-    final_target_x = distance + 4.0
-    for j in range(1, correction_steps + 1):
-        t = j / correction_steps
+        steps.append((dx_jitter, dy))
+        
+    # Phase 2: Kéo lùi hiệu chỉnh về đúng điểm đích (5 - 8 bước -> ~0.2s)
+    correction_steps_count = random.randint(5, 8)
+    start_corr_x = current_x
+    delta_back = distance - start_corr_x
+    
+    for j in range(1, correction_steps_count + 1):
+        t = j / correction_steps_count
         ease = math.sin(t * math.pi / 2)
-        next_x = current_x + (final_target_x - current_x) * ease
+        next_x = start_corr_x + delta_back * ease
+        dx = next_x - current_x
         dy = random.uniform(-0.2, 0.2)
+        
         current_x = next_x
         current_y += dy
-        delay = random.uniform(0.005, 0.012)
-        steps.append((current_x, current_y, delay))
-
+        steps.append((dx, dy))
+        
+    total_dx = sum(s[0] for s in steps)
+    diff = distance - total_dx
+    if abs(diff) > 0.0001 and len(steps) > 0:
+        last_dx, last_dy = steps[-1]
+        steps[-1] = (last_dx + diff, last_dy)
+        
     return steps
 
 async def solve_aliyun_slider(page: Page) -> bool:
@@ -236,11 +247,16 @@ async def solve_aliyun_slider(page: Page) -> bool:
     
     curr_x, curr_y = start_x, start_y
     trajectory = generate_human_steps(slide_distance)
-    for abs_offset_x, dy, delay in trajectory:
-        await page.mouse.move(start_x + abs_offset_x, start_y + dy)
-        await asyncio.sleep(delay)
+    
+    for dx, dy in trajectory:
+        curr_x += dx
+        curr_y += dy
+        await page.mouse.move(curr_x, curr_y)
+        # Variable micro-delays between mouse moves to emulate human muscle inertia
+        await asyncio.sleep(random.uniform(0.012, 0.028))
 
-    await asyncio.sleep(0.35)
+    # Hold mouse down at target endpoint to simulate human confirmation before releasing
+    await asyncio.sleep(random.uniform(0.3, 0.55))
     await page.mouse.up()
     await asyncio.sleep(2.0)
 
@@ -391,8 +407,8 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
 
                 context = await p.chromium.launch_persistent_context(
                     user_data_dir=PROFILE_DIR,
-                    headless=True,
-                    channel="chromium",
+                    headless=False,
+                    channel="chrome",
                     args=[
                         "--ignore-gpu-blocklist",
                         "--enable-webgl",
