@@ -56,14 +56,13 @@ fi
 # 3. Start FastAPI Server with Graphical Display (DISPLAY=:0 for Headed Chrome)
 echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
 export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+
+# Free Xhost permissions for GUI popup on desktop
+xhost +local: 2>/dev/null || true
 
 # Free port 8000 if occupied by old process
 fuser -k 8000/tcp >/dev/null 2>&1 || true
 sleep 1
 
-if command -v xvfb-run &> /dev/null && [ -z "$DISPLAY_ALREADY_ACTIVE" ]; then
-    echo "[INFO] Running inside headless/service environment. Using xvfb-run for virtual display..."
-    exec xvfb-run -a uvicorn server.main:app --host 0.0.0.0 --port 8000
-else
-    exec uvicorn server.main:app --host 0.0.0.0 --port 8000
-fi
+exec uvicorn server.main:app --host 0.0.0.0 --port 8000

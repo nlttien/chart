@@ -41,6 +41,8 @@ ExecStart=$SCRIPT_DIR/start_server.sh
 Restart=always
 RestartSec=5
 Environment=PYTHONUNBUFFERED=1
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/$REAL_USER/.Xauthority
 
 [Install]
 WantedBy=multi-user.target
