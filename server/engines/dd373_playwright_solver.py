@@ -410,6 +410,9 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     headless=False,
                     channel="chrome",
                     args=[
+                        "--disable-dev-shm-usage",
+                        "--disable-gpu-sandbox",
+                        "--no-zygote",
                         "--ignore-gpu-blocklist",
                         "--enable-webgl",
                         "--no-sandbox",
