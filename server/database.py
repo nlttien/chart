@@ -98,31 +98,57 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
     finally:
         conn.close()
 
-def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str] = None) -> List[Dict[str, Any]]:
+def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str] = None, max_age_seconds: int = 900) -> List[Dict[str, Any]]:
+    """
+    Lấy danh sách gian hàng từ duy nhất ĐỢT CÀO MỚI NHẤT (MAX timestamp).
+    Bỏ qua nếu dữ liệu đã cũ quá max_age_seconds (mặc định 15 phút).
+    """
     conn = get_connection()
     c = conn.cursor()
     try:
         if platform and item_name:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         WHERE platform = ? AND item_name = ? 
-                         ORDER BY id DESC LIMIT 100''', (platform, item_name))
+                         WHERE platform = ? AND item_name = ? AND timestamp = (
+                             SELECT MAX(timestamp) FROM market_logs WHERE platform = ? AND item_name = ?
+                         )
+                         ORDER BY price ASC''', (platform, item_name, platform, item_name))
         elif item_name:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         WHERE item_name = ? 
-                         ORDER BY id DESC LIMIT 100''', (item_name,))
+                         WHERE item_name = ? AND timestamp = (
+                             SELECT MAX(timestamp) FROM market_logs WHERE item_name = ?
+                         )
+                         ORDER BY price ASC''', (item_name, item_name))
         elif platform:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         WHERE platform = ? 
-                         ORDER BY id DESC LIMIT 500''', (platform,))
+                         WHERE platform = ? AND (item_name, timestamp) IN (
+                             SELECT item_name, MAX(timestamp) FROM market_logs WHERE platform = ? GROUP BY item_name
+                         )
+                         ORDER BY item_name ASC, price ASC''', (platform, platform))
         else:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         ORDER BY id DESC LIMIT 500''')
+                         WHERE (platform, item_name, timestamp) IN (
+                             SELECT platform, item_name, MAX(timestamp) FROM market_logs GROUP BY platform, item_name
+                         )
+                         ORDER BY platform ASC, item_name ASC, price ASC''')
             
         rows = [dict(row) for row in c.fetchall()]
+        
+        # Verify freshness: if latest timestamp is older than max_age_seconds, return empty list
+        if rows:
+            latest_ts_str = rows[0].get("timestamp", "")
+            try:
+                # Parse timestamp "YYYY-MM-DD HH:MM:SZ"
+                dt = datetime.strptime(latest_ts_str.replace("Z", ""), "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+                age = (datetime.now(timezone.utc) - dt).total_seconds()
+                if age > max_age_seconds:
+                    return []
+            except Exception:
+                pass
+
         return rows
     finally:
         conn.close()

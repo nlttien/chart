@@ -209,25 +209,36 @@ async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(
             return {
                 "status": "solving",
                 "error_code": "CAPTCHA_SOLVING_IN_PROGRESS",
-                "message": "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Playwright Solver...",
+                "message": "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Puppeteer Mouse Solver...",
                 "platform": plat,
                 "order_book": []
             }
 
-    data = get_latest_snapshot(plat, item_name)
+    data = get_latest_snapshot(plat, item_name, max_age_seconds=900)
     last_updated_at = data[0]["timestamp"] if data else None
 
-    if plat == "dd373" and not data:
-        from server.engines.dd373_engine import get_solving_state
-        state = get_solving_state()
-        if state.get("last_status") == "failed":
-            return {
-                "status": "failed",
-                "error_code": state.get("error_code") or "CAPTCHA_SOLVE_FAILED",
-                "message": state.get("message") or "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373",
-                "platform": plat,
-                "order_book": []
-            }
+    if not data:
+        if plat == "dd373":
+            from server.engines.dd373_engine import get_solving_state
+            state = get_solving_state()
+            if state.get("last_status") == "failed":
+                return {
+                    "status": "failed",
+                    "error_code": state.get("error_code") or "CAPTCHA_SOLVE_FAILED",
+                    "message": state.get("message") or "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373",
+                    "platform": plat,
+                    "order_book": []
+                }
+        
+        return {
+            "status": "pending",
+            "error_code": "DATA_NOT_YET_FETCHED",
+            "message": "Chưa lấy được dữ liệu mới nhất (đang chờ đợt quét mới)",
+            "platform": plat,
+            "last_updated_at": None,
+            "total_items": 0,
+            "order_book": []
+        }
 
     return {
         "status": "success",
