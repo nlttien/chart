@@ -57,4 +57,9 @@ export DISPLAY="${DISPLAY:-:0}"
 fuser -k 8000/tcp >/dev/null 2>&1 || true
 sleep 1
 
-exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+if command -v xvfb-run &> /dev/null && [ -z "$DISPLAY_ALREADY_ACTIVE" ]; then
+    echo "[INFO] Running inside headless/service environment. Using xvfb-run for virtual display..."
+    exec xvfb-run -a uvicorn server.main:app --host 0.0.0.0 --port 8000
+else
+    exec uvicorn server.main:app --host 0.0.0.0 --port 8000
+fi
