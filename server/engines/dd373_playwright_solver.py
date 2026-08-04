@@ -419,7 +419,8 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                         "--disable-infobars",
                         "--no-first-run",
                         "--no-default-browser-check",
-                        "--window-size=1920,1080",
+                        "--window-size=960,1040",
+                        "--window-position=0,0",
                         "--lang=zh-CN,zh",
                         "--disable-web-security",
                         "--disable-ipc-flooding-protection",
@@ -427,16 +428,14 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                         "--disable-features=IsolateOrigins,site-per-process"
                     ],
                     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-                    viewport={"width": 1920, "height": 1080},
+                    viewport={"width": 940, "height": 960},
                     device_scale_factor=1,
                     locale="zh-CN",
                     timezone_id="Asia/Shanghai",
                     has_touch=False,
                     is_mobile=False,
                     java_script_enabled=True,
-                    ignore_https_errors=True,
-                    record_video_dir=video_dir,
-                    record_video_size={"width": 1280, "height": 720}
+                    ignore_https_errors=True
                 )
 
                 try:
