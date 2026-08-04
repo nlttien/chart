@@ -80,6 +80,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
                 else:
                     logger.warning(f"[Eldorado Engine] Page {page} status {resp.status_code}")
                     break
+                time.sleep(0.5)
             except Exception as e:
                 logger.error(f"[Eldorado Engine] Error fetching page {page}: {e}")
                 break

@@ -50,6 +50,7 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
                 else:
                     logger.warning(f"[G2G Engine] Page {page} returned status {resp.status_code}")
                     break
+                time.sleep(0.5)
             except Exception as e:
                 logger.error(f"[G2G Engine] Error fetching page {page}: {e}")
                 break
