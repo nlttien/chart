@@ -160,7 +160,7 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    slide_distance = 258.0
+    slide_distance = 268.0
     btn_width = box["width"] if box and box["width"] > 0 else 40.0
 
     track_selectors = [
@@ -180,8 +180,8 @@ async def solve_aliyun_slider(page: Page) -> bool:
                 if t_box and t_box["width"] > btn_width:
                     measured = t_box["width"] - btn_width
                     if measured > 270:
-                        measured = measured - 62.0
-                    if 240 < measured < 275:
+                        measured = measured - 52.0
+                    if 240 < measured < 290:
                         slide_distance = measured
                     logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px (selector: {t_sel}, t_box_w: {t_box['width']:.1f}px, btn_w: {btn_width:.1f}px)")
                     break
