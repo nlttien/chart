@@ -1,4 +1,12 @@
-const puppeteer = require('puppeteer');
+let puppeteer;
+try {
+    const puppeteerExtra = require('puppeteer-extra');
+    const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+    puppeteerExtra.use(StealthPlugin());
+    puppeteer = puppeteerExtra;
+} catch (e) {
+    puppeteer = require('puppeteer');
+}
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -175,72 +183,81 @@ async function main() {
                 '.btn_slide'
             ];
 
-            let sliderHandle = null;
-            for (const sel of selectors) {
-                sliderHandle = await page.$(sel);
-                if (sliderHandle) break;
-            }
+            for (let attempt = 1; attempt <= 2; attempt++) {
+                let sliderHandle = null;
+                for (const sel of selectors) {
+                    sliderHandle = await page.$(sel);
+                    if (sliderHandle) break;
+                }
 
-            if (sliderHandle) {
-                const box = await sliderHandle.boundingBox();
-                if (box) {
-                    let slideDistance = 320.0;
-                    const trackSelectors = [
-                        '#aliyunCaptcha-sliding-body',
-                        '.sliding',
-                        '#aliyunCaptcha-sliding-wrapper',
-                        '.aliyunCaptcha-sliding-wrapper'
-                    ];
+                if (sliderHandle) {
+                    const box = await sliderHandle.boundingBox();
+                    if (box) {
+                        let slideDistance = 320.0;
+                        const trackSelectors = [
+                            '#aliyunCaptcha-sliding-body',
+                            '.sliding',
+                            '#aliyunCaptcha-sliding-wrapper',
+                            '.aliyunCaptcha-sliding-wrapper'
+                        ];
 
-                    for (const tSel of trackSelectors) {
-                        const trackHandle = await page.$(tSel);
-                        if (trackHandle) {
-                            const tBox = await trackHandle.boundingBox();
-                            if (tBox && tBox.width > box.width) {
-                                const measured = tBox.width - box.width;
-                                if (measured > 250 && measured < 380) {
-                                    slideDistance = measured;
+                        for (const tSel of trackSelectors) {
+                            const trackHandle = await page.$(tSel);
+                            if (trackHandle) {
+                                const tBox = await trackHandle.boundingBox();
+                                if (tBox && tBox.width > box.width) {
+                                    const measured = tBox.width - box.width;
+                                    if (measured > 250 && measured < 380) {
+                                        slideDistance = measured;
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
-                    }
 
-                    const startX = box.x + box.width / 2;
-                    const startY = box.y + box.height / 2;
+                        const startX = box.x + box.width / 2;
+                        const startY = box.y + box.height / 2;
 
-                    await page.mouse.move(startX, startY);
-                    await sleep(150);
-                    await page.mouse.down();
-                    await sleep(250);
+                        await page.mouse.move(startX, startY);
+                        await sleep(150);
+                        await page.mouse.down();
+                        await sleep(250);
 
-                    let currX = startX;
-                    let currY = startY;
-                    const steps = generateHumanSteps(slideDistance);
+                        let currX = startX;
+                        let currY = startY;
+                        const steps = generateHumanSteps(slideDistance);
 
-                    for (const step of steps) {
-                        currX += step.dx;
-                        currY += step.dy;
-                        await page.mouse.move(currX, currY);
-                        await sleep(15 + Math.random() * 15);
-                    }
+                        for (const step of steps) {
+                            currX += step.dx;
+                            currY += step.dy;
+                            await page.mouse.move(currX, currY);
+                            await sleep(15 + Math.random() * 15);
+                        }
 
-                    await sleep(400);
-                    await page.mouse.up();
-                    await sleep(2500);
+                        await sleep(450);
+                        await page.mouse.up();
+                        await sleep(2500);
 
-                    content = await page.content();
-                    if (content.includes('aliyunCaptcha') || content.includes('sliding-slider')) {
-                        errorCode = 'CAPTCHA_RECHALLENGED_AFTER_DRAG';
-                        errorMessage = 'Đã trượt slider 320px nhưng Aliyun Captcha WAF vẫn yêu cầu xác minh lại lượt mới';
+                        content = await page.content();
+                        if (!content.includes('aliyunCaptcha') && !content.includes('sliding-slider')) {
+                            errorCode = null;
+                            errorMessage = null;
+                            break;
+                        } else {
+                            errorCode = 'CAPTCHA_RECHALLENGED_AFTER_DRAG';
+                            errorMessage = `Đã trượt slider (Lần ${attempt}/2) nhưng Aliyun Captcha WAF vẫn yêu cầu xác minh lại`;
+                            await sleep(1000);
+                        }
+                    } else {
+                        errorCode = 'CAPTCHA_SLIDER_BOX_NULL';
+                        errorMessage = 'Nút trượt slider có trong DOM nhưng không lấy được tọa độ hiển thị (bounding_box is null)';
+                        break;
                     }
                 } else {
-                    errorCode = 'CAPTCHA_SLIDER_BOX_NULL';
-                    errorMessage = 'Nút trượt slider có trong DOM nhưng không lấy được tọa độ hiển thị (bounding_box is null)';
+                    errorCode = 'CAPTCHA_SLIDER_NOT_FOUND';
+                    errorMessage = 'Phát hiện WAF Captcha nhưng không tìm thấy selector nút trượt slider trong DOM';
+                    break;
                 }
-            } else {
-                errorCode = 'CAPTCHA_SLIDER_NOT_FOUND';
-                errorMessage = 'Phát hiện WAF Captcha nhưng không tìm thấy selector nút trượt slider trong DOM';
             }
         } else {
             solved = true;
