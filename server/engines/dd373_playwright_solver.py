@@ -399,11 +399,19 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                 video_dir = os.path.join(DATA_DIR, "videos", "dd373")
                 os.makedirs(video_dir, exist_ok=True)
 
+                DEFAULT_COOKIES = [
+                    {"name": "_c_WBKFRo", "value": "00f00qFLqkrt0CSYGjQrJElEkP7dyK7D3yf6GErK", "domain": ".dd373.com", "path": "/"},
+                    {"name": "acw_tc", "value": "a3b58c9d17858312098557763ee4e3e096cb78d45c666914afc35543b8", "domain": ".dd373.com", "path": "/"},
+                    {"name": "cdn_sec_tc", "value": "a3b58c9d17858312098557763ee4e3e096cb78d45c666914afc35543b8", "domain": ".dd373.com", "path": "/"}
+                ]
+
                 context = await p.chromium.launch_persistent_context(
                     user_data_dir=PROFILE_DIR,
                     headless=True,
                     channel="chromium",
                     args=[
+                        "--ignore-gpu-blocklist",
+                        "--enable-webgl",
                         "--no-sandbox",
                         "--disable-setuid-sandbox",
                         "--disable-blink-features=AutomationControlled",
@@ -431,7 +439,17 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     record_video_size={"width": 1280, "height": 720}
                 )
 
+                try:
+                    await context.add_cookies(DEFAULT_COOKIES)
+                except Exception:
+                    pass
+
                 page = context.pages[0] if context.pages else await context.new_page()
+                try:
+                    from playwright_stealth import stealth_async
+                    await stealth_async(page)
+                except ImportError:
+                    pass
                 await page.add_init_script(STEALTH_JS)
 
                 response = await page.goto(url, wait_until="domcontentloaded", timeout=25000)
