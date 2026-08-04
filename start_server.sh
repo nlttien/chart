@@ -60,12 +60,19 @@ echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
 fuser -k 8000/tcp >/dev/null 2>&1 || true
 sleep 1
 
-# Check if real XServer is accessible, otherwise use xvfb-run for systemd background service
-if command -v xset &>/dev/null && xset q &>/dev/null; then
-    echo "[INFO] Active XServer detected ($DISPLAY). Launching with real GUI display..."
+# 3. Start FastAPI Server with Graphical Display
+echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
+
+# Free port 8000 if occupied by old process
+fuser -k 8000/tcp >/dev/null 2>&1 || true
+sleep 1
+
+# If DISPLAY is active (e.g., inside RDP/Desktop terminal session), launch Chrome directly on screen
+if [ -n "$DISPLAY" ] && [ "$FORCE_XVFB" != "1" ]; then
+    echo "[INFO] Active Display detected ($DISPLAY). Launching Chrome directly on screen..."
     exec uvicorn server.main:app --host 0.0.0.0 --port 8000
 elif command -v xvfb-run &> /dev/null; then
-    echo "[INFO] Systemd background service environment (No XServer). Launching with xvfb-run..."
+    echo "[INFO] No DISPLAY detected. Falling back to xvfb-run..."
     exec xvfb-run -a uvicorn server.main:app --host 0.0.0.0 --port 8000
 else
     exec uvicorn server.main:app --host 0.0.0.0 --port 8000
