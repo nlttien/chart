@@ -84,56 +84,27 @@ def clean_stale_singleton_lock():
 
 def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
     """
-    Generate realistic human mouse movement steps with Ease-in-out (~1.0s total duration).
+    Generate realistic human mouse movement steps with Ease-out (~0.8s - 1.2s duration).
+    Strictly avoids overshooting track boundaries for Aliyun Captcha WAF.
     """
     steps = []
     current_x = 0.0
     current_y = 0.0
     
-    # 1. Giả lập hiệu ứng tay người kéo quá đà (Overshoot) 3-8px
-    overshoot = random.uniform(3.0, 8.0) if distance > 100 else random.uniform(2.0, 5.0)
-    target_overshoot_x = distance + overshoot
-    
-    # Phase 1: Kéo chính (22 - 30 bước, mỗi bước ~25ms -> ~0.7s)
-    main_steps_count = random.randint(22, 30)
+    main_steps_count = random.randint(25, 35)
     for i in range(1, main_steps_count + 1):
         t = i / main_steps_count
-        if t < 0.5:
-            ease = 4 * t * t * t
-        else:
-            ease = 1 - math.pow(-2 * t + 2, 3) / 2
-            
-        next_x = target_overshoot_x * ease
+        # Cubic Ease-Out curve for realistic deceleration
+        ease = 1 - math.pow(1 - t, 3)
+        next_x = distance * ease
         dx = next_x - current_x
         
-        dx_jitter = dx + random.uniform(-0.3, 0.3) if 0.1 < t < 0.9 else dx
-        dy = math.sin(t * math.pi) * random.uniform(0.2, 1.0) + random.uniform(-0.3, 0.3)
-        
-        current_x += dx_jitter
-        current_y += dy
-        steps.append((dx_jitter, dy))
-        
-    # Phase 2: Kéo lùi hiệu chỉnh về đúng điểm đích (5 - 8 bước -> ~0.2s)
-    correction_steps_count = random.randint(5, 8)
-    start_corr_x = current_x
-    delta_back = distance - start_corr_x
-    
-    for j in range(1, correction_steps_count + 1):
-        t = j / correction_steps_count
-        ease = math.sin(t * math.pi / 2)
-        next_x = start_corr_x + delta_back * ease
-        dx = next_x - current_x
-        dy = random.uniform(-0.2, 0.2)
+        # Subtle organic Y jitter (sinusoidal human hand micro-tremor)
+        dy = math.sin(t * math.pi) * random.uniform(0.1, 0.4) + random.uniform(-0.15, 0.15)
         
         current_x = next_x
         current_y += dy
         steps.append((dx, dy))
-        
-    total_dx = sum(s[0] for s in steps)
-    diff = distance - total_dx
-    if abs(diff) > 0.0001 and len(steps) > 0:
-        last_dx, last_dy = steps[-1]
-        steps[-1] = (last_dx + diff, last_dy)
         
     return steps
 
@@ -143,10 +114,6 @@ async def solve_aliyun_slider(page: Page) -> bool:
     """
     selectors = [
         '#aliyunCaptcha-sliding-slider',
-        '.aliyunCaptcha-sliding-slider',
-        '.aliyunCaptcha-sliding-btn',
-        'div[class*="sliding-btn"]',
-        'div[class*="sliding-slider"]',
         '#nc_1_n1z',
         '.nc_iconfont.btn_slide',
         '.btn_slide',
@@ -193,27 +160,33 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    slide_distance = 320.0
+    slide_distance = 278.0
+    btn_width = box["width"] if box and box["width"] > 0 else 40.0
+
     track_selectors = [
+        '.aliyunCaptcha-sliding-track',
+        'div[class*="sliding-track"]',
+        '#nc_1_scale',
+        '.nc_scale',
+        '.nc-bg',
         '#aliyunCaptcha-sliding-body',
-        '.sliding',
-        '#aliyunCaptcha-sliding-wrapper',
-        '.aliyunCaptcha-sliding-wrapper',
-        'div[class*="sliding-wrapper"]',
-        '#nc_1_wrapper',
-        '.nc-container'
+        '.sliding'
     ]
     for t_sel in track_selectors:
         try:
             track_el = page.locator(t_sel).first
             if await track_el.count() > 0:
                 t_box = await track_el.bounding_box()
-                if t_box and t_box["width"] > box["width"]:
-                    measured = t_box["width"] - box["width"]
-                    if 250 < measured < 380:
+                if t_box and t_box["width"] > btn_width:
+                    measured = t_box["width"] - btn_width
+                    if measured > 290:
+                        measured = measured - 38.0
+                    if 240 < measured < 310:
                         slide_distance = measured
-                    logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px (selector: {t_sel})")
+                    logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px (selector: {t_sel}, t_box_w: {t_box['width']:.1f}px, btn_w: {btn_width:.1f}px)")
                     break
+        except Exception:
+            pass
         except Exception:
             pass
 
