@@ -16,8 +16,15 @@ logger = logging.getLogger("dd373_engine")
 DEFAULT_COOKIE = "clientId=a6676ef252c56a2a9f60c09998c13f82; dpushPC=true; Hm_lvt_b1609ca2c0a77d0130ec3cf8396eb4d5=1783669374; HMACCOUNT=2067EC5DCB8D2AE5; firstOpen_cc=true; imagestylewebp=1; headhistorySelectGame=%5B%7B%22Id%22%3A%2246e6971b94044ae3881dfaeb6993abb8%22%7D%5D; AutoSelectHistory=false; _c_WBKFRo=SdND9MOoObdOOBEaFuBUAF0wcGGE0fnmhEUbzpiZ; _nb_ioWEgULi=; acw_tc=6b9b3e2017836767239266076e72366b0fe422b914da8e36d261d7d316; cdn_sec_tc=6b9b3e2017836767239266076e72366b0fe422b914da8e36d261d7d316; acw_sc__v3=6a50bf378bc4cef54169f278582099aa5bca4c7c; Hm_lpvt_b1609ca2c0a77d0130ec3cf8396eb4d5=1783676689"
 DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 
-# In-memory cached dynamic cookie
+# In-memory cached dynamic cookie & solving status
 _LIVE_COOKIE: str = DEFAULT_COOKIE
+_SOLVING_STATE: Dict[str, Any] = {
+    "is_solving": False,
+    "last_status": "idle",  # "idle", "solving", "success", "failed"
+    "error_code": None,
+    "message": None,
+    "last_updated_at": None
+}
 
 def parse_number(text: str) -> float:
     if not text:
@@ -30,6 +37,9 @@ def update_live_cookie(new_cookie: str):
     if new_cookie and len(new_cookie) > 10:
         _LIVE_COOKIE = new_cookie
         logger.info("[DD373 Engine] Live dynamic cookie updated!")
+
+def get_solving_state() -> Dict[str, Any]:
+    return _SOLVING_STATE
 
 def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = None) -> List[Dict[str, Any]]:
     global _LIVE_COOKIE
@@ -197,26 +207,21 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
         )
         return clean_results
 
-    # FALLBACK: Trigger Puppeteer Mouse Solver when cURL encounters Captcha WAF or 0 items
-    logger.warning(f"[DD373 Engine] cURL returned 0 items or hit WAF Captcha for {name}. Triggering Puppeteer Mouse Solver...")
+    # FALLBACK: Trigger Playwright Auto Solver directly when cURL hits Captcha WAF
+    logger.warning(f"[DD373 Engine] cURL hit WAF Captcha or returned 0 items for {name}. Triggering Playwright Auto Solver...")
+    _SOLVING_STATE["is_solving"] = True
+    _SOLVING_STATE["last_status"] = "solving"
+    _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVING_IN_PROGRESS"
+    _SOLVING_STATE["message"] = "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Playwright Solver..."
+
     SmartLogger.log_event(
         platform="dd373",
         level="WARNING",
         error_code="WAF_CAPTCHA_DETECTED" if is_waf_captcha else "CURL_PARSED_EMPTY",
-        message=f"Triggering Puppeteer Mouse Solver for {name} (is_waf_captcha={is_waf_captcha})",
+        message=f"Triggering Playwright Auto Solver for {name} (is_waf_captcha={is_waf_captcha})",
         details={"url": url, "http_status": status_code}
     )
 
-    p_results, p_cookie = fetch_dd373_with_puppeteer(url)
-    if p_cookie:
-        update_live_cookie(p_cookie)
-
-    if len(p_results) > 0:
-        logger.info(f"[DD373 Engine] Puppeteer Mouse Solver successfully retrieved {len(p_results)} items for {name}")
-        return p_results
-
-    # Secondary Fallback to Playwright
-    logger.warning(f"[DD373 Engine] Puppeteer returned 0 items for {name}. Trying Playwright Solver...")
     try:
         from server.engines.dd373_playwright_solver import fetch_dd373_with_playwright
         loop = asyncio.new_event_loop()
@@ -226,17 +231,41 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
 
         if updated_cookie:
             update_live_cookie(updated_cookie)
-        return pw_results
+            
+        if len(pw_results) > 0:
+            _SOLVING_STATE["is_solving"] = False
+            _SOLVING_STATE["last_status"] = "success"
+            _SOLVING_STATE["error_code"] = None
+            _SOLVING_STATE["message"] = "Giải mã Captcha WAF thành công"
+            logger.info(f"[DD373 Engine] Playwright Auto Solver successfully solved Captcha & retrieved {len(pw_results)} items for {name}")
+            SmartLogger.log_event(
+                platform="dd373",
+                level="INFO",
+                error_code="CAPTCHA_SOLVE_SUCCESS",
+                message=f"Playwright Auto Solver successfully bypassed Captcha & retrieved {len(pw_results)} items for {name}",
+                details={"url": url, "items_count": len(pw_results)}
+            )
+            return pw_results
+        else:
+            _SOLVING_STATE["is_solving"] = False
+            _SOLVING_STATE["last_status"] = "failed"
+            _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
+            _SOLVING_STATE["message"] = "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373"
     except Exception as e:
-        logger.error(f"[DD373 Engine] Playwright Fallback Exception: {e}")
+        _SOLVING_STATE["is_solving"] = False
+        _SOLVING_STATE["last_status"] = "failed"
+        _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
+        _SOLVING_STATE["message"] = f"Lỗi trong quá trình giải mã Captcha: {str(e)}"
+        logger.error(f"[DD373 Engine] Playwright Auto Solver Exception: {e}")
         SmartLogger.log_event(
             platform="dd373",
             level="ERROR",
             error_code="PLAYWRIGHT_FALLBACK_FAILED",
-            message=f"Playwright Fallback exception: {str(e)}",
+            message=f"Playwright Auto Solver exception: {str(e)}",
             details={"url": url, "exception": str(e)}
         )
-        return []
+
+    return []
 
 def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:
     """Execute Puppeteer Node.js mouse solver script to bypass Captcha and scrape DD373."""

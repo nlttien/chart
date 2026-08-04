@@ -200,8 +200,42 @@ async def api_platform_lowest(platform: str, item_name: Optional[str] = Query(No
 
 @app.get("/api/v1/{platform}/snapshot")
 async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(None)):
-    data = get_latest_snapshot(platform.lower(), item_name)
-    return {"status": "success", "platform": platform, "order_book": data}
+    plat = platform.lower()
+    
+    if plat == "dd373":
+        from server.engines.dd373_engine import get_solving_state
+        state = get_solving_state()
+        if state.get("is_solving"):
+            return {
+                "status": "solving",
+                "error_code": "CAPTCHA_SOLVING_IN_PROGRESS",
+                "message": "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Playwright Solver...",
+                "platform": plat,
+                "order_book": []
+            }
+
+    data = get_latest_snapshot(plat, item_name)
+    last_updated_at = data[0]["timestamp"] if data else None
+
+    if plat == "dd373" and not data:
+        from server.engines.dd373_engine import get_solving_state
+        state = get_solving_state()
+        if state.get("last_status") == "failed":
+            return {
+                "status": "failed",
+                "error_code": state.get("error_code") or "CAPTCHA_SOLVE_FAILED",
+                "message": state.get("message") or "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373",
+                "platform": plat,
+                "order_book": []
+            }
+
+    return {
+        "status": "success",
+        "platform": plat,
+        "last_updated_at": last_updated_at,
+        "total_items": len(data),
+        "order_book": data
+    }
 
 @app.get("/api/v1/{platform}/history")
 async def api_platform_history(platform: str, item_name: str = Query(...)):
