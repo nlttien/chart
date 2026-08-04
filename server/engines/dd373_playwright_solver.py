@@ -399,7 +399,7 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
 
                 context = await p.chromium.launch_persistent_context(
                     user_data_dir=PROFILE_DIR,
-                    headless=False,
+                    headless=True,
                     channel="chromium",
                     args=[
                         "--no-sandbox",
@@ -412,7 +412,9 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                         "--window-size=1920,1080",
                         "--lang=zh-CN,zh",
                         "--disable-web-security",
-                        "--disable-ipc-flooding-protection"
+                        "--disable-ipc-flooding-protection",
+                        "--enable-features=NetworkService,NetworkServiceInProcess",
+                        "--disable-features=IsolateOrigins,site-per-process"
                     ],
                     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
                     viewport={"width": 1920, "height": 1080},
