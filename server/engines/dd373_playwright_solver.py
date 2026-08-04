@@ -409,6 +409,9 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     user_data_dir=PROFILE_DIR,
                     headless=False,
                     args=[
+                        "--js-flags=--max-old-space-size=256",
+                        "--disable-software-rasterizer",
+                        "--disable-extensions",
                         "--disable-gpu",
                         "--disable-dev-shm-usage",
                         "--disable-gpu-sandbox",
