@@ -207,64 +207,44 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
         )
         return clean_results
 
-    # FALLBACK: Trigger Playwright Auto Solver directly when cURL hits Captcha WAF
-    logger.warning(f"[DD373 Engine] cURL hit WAF Captcha or returned 0 items for {name}. Triggering Playwright Auto Solver...")
+    # FALLBACK: Trigger Puppeteer Mouse Solver directly when cURL hits Captcha WAF
+    logger.warning(f"[DD373 Engine] cURL hit WAF Captcha or returned 0 items for {name}. Triggering Puppeteer Mouse Solver...")
     _SOLVING_STATE["is_solving"] = True
     _SOLVING_STATE["last_status"] = "solving"
     _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVING_IN_PROGRESS"
-    _SOLVING_STATE["message"] = "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Playwright Solver..."
+    _SOLVING_STATE["message"] = "Đang trong quá trình tự động giải mã Aliyun Captcha bằng Puppeteer Mouse Solver..."
 
     SmartLogger.log_event(
         platform="dd373",
         level="WARNING",
         error_code="WAF_CAPTCHA_DETECTED" if is_waf_captcha else "CURL_PARSED_EMPTY",
-        message=f"Triggering Playwright Auto Solver for {name} (is_waf_captcha={is_waf_captcha})",
+        message=f"Triggering Puppeteer Mouse Solver for {name} (is_waf_captcha={is_waf_captcha})",
         details={"url": url, "http_status": status_code}
     )
 
-    try:
-        from server.engines.dd373_playwright_solver import fetch_dd373_with_playwright
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        pw_results, updated_cookie = loop.run_until_complete(fetch_dd373_with_playwright(url))
-        loop.close()
+    p_results, p_cookie = fetch_dd373_with_puppeteer(url)
+    if p_cookie:
+        update_live_cookie(p_cookie)
 
-        if updated_cookie:
-            update_live_cookie(updated_cookie)
-            
-        if len(pw_results) > 0:
-            _SOLVING_STATE["is_solving"] = False
-            _SOLVING_STATE["last_status"] = "success"
-            _SOLVING_STATE["error_code"] = None
-            _SOLVING_STATE["message"] = "Giải mã Captcha WAF thành công"
-            logger.info(f"[DD373 Engine] Playwright Auto Solver successfully solved Captcha & retrieved {len(pw_results)} items for {name}")
-            SmartLogger.log_event(
-                platform="dd373",
-                level="INFO",
-                error_code="CAPTCHA_SOLVE_SUCCESS",
-                message=f"Playwright Auto Solver successfully bypassed Captcha & retrieved {len(pw_results)} items for {name}",
-                details={"url": url, "items_count": len(pw_results)}
-            )
-            return pw_results
-        else:
-            _SOLVING_STATE["is_solving"] = False
-            _SOLVING_STATE["last_status"] = "failed"
-            _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
-            _SOLVING_STATE["message"] = "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373"
-    except Exception as e:
+    if len(p_results) > 0:
         _SOLVING_STATE["is_solving"] = False
-        _SOLVING_STATE["last_status"] = "failed"
-        _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
-        _SOLVING_STATE["message"] = f"Lỗi trong quá trình giải mã Captcha: {str(e)}"
-        logger.error(f"[DD373 Engine] Playwright Auto Solver Exception: {e}")
+        _SOLVING_STATE["last_status"] = "success"
+        _SOLVING_STATE["error_code"] = None
+        _SOLVING_STATE["message"] = "Giải mã Captcha WAF bằng Puppeteer Mouse Solver thành công"
+        logger.info(f"[DD373 Engine] Puppeteer Mouse Solver successfully retrieved {len(p_results)} items for {name}")
         SmartLogger.log_event(
             platform="dd373",
-            level="ERROR",
-            error_code="PLAYWRIGHT_FALLBACK_FAILED",
-            message=f"Playwright Auto Solver exception: {str(e)}",
-            details={"url": url, "exception": str(e)}
+            level="INFO",
+            error_code="PUPPETEER_SOLVE_SUCCESS",
+            message=f"Puppeteer Mouse Solver successfully bypassed Captcha & retrieved {len(p_results)} items for {name}",
+            details={"url": url, "items_count": len(p_results)}
         )
+        return p_results
 
+    _SOLVING_STATE["is_solving"] = False
+    _SOLVING_STATE["last_status"] = "failed"
+    _SOLVING_STATE["error_code"] = "CAPTCHA_SOLVE_FAILED"
+    _SOLVING_STATE["message"] = "Không thể tự động giải mã Aliyun Captcha WAF trên trang DD373 bằng Puppeteer Mouse Solver"
     return []
 
 def fetch_dd373_with_puppeteer(url: str) -> Tuple[List[Dict[str, Any]], str]:

@@ -158,7 +158,7 @@ async function main() {
             if (sliderHandle) {
                 const box = await sliderHandle.boundingBox();
                 if (box) {
-                    let slideDistance = 345.0 + Math.random() * 20.0;
+                    let slideDistance = 320.0;
                     const trackSelectors = [
                         '#aliyunCaptcha-sliding-body',
                         '.sliding',
@@ -172,7 +172,7 @@ async function main() {
                             const tBox = await trackHandle.boundingBox();
                             if (tBox && tBox.width > box.width) {
                                 const measured = tBox.width - box.width;
-                                if (measured > 200) {
+                                if (measured > 250 && measured < 380) {
                                     slideDistance = measured;
                                 }
                                 break;
