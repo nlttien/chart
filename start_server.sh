@@ -33,20 +33,19 @@ echo "[2/3] Installing Python dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# 2. Build Unified Web UI if NVM/Node is available and dist/ missing
+# 2. Build Unified Web UI if NVM/Node is available (Requires Node >= 18 for Vite 5)
 if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
-    echo "[INFO] Building Web UI Dashboard (unified-chart)..."
     export NVM_DIR="$HOME/.nvm"
     if [ -s "$NVM_DIR/nvm.sh" ]; then
         \. "$NVM_DIR/nvm.sh"
         nvm use 20 2>/dev/null || nvm use 18 2>/dev/null || nvm use --lts 2>/dev/null || true
     fi
-    # Ensure NVM Node bin is prioritized in PATH
-    if [ -n "$NODE_PATH" ]; then
-        export PATH="$(dirname "$NODE_PATH"):$PATH"
-    fi
-    if command -v npm &> /dev/null; then
+    NODE_MAJOR=$(node -v 2>/dev/null | cut -d'.' -f1 | sed 's/v//')
+    if [ -n "$NODE_MAJOR" ] && [ "$NODE_MAJOR" -ge 18 ] 2>/dev/null; then
+        echo "[INFO] Building Web UI Dashboard (Node $NODE_MAJOR)..."
         (cd unified-chart && npm install && npm run build) || echo "[WARN] Web UI build failed, proceeding..."
+    else
+        echo "[INFO] Skipping Web UI build (Node.js version is older than 18). FastAPI Server starting directly..."
     fi
 fi
 
