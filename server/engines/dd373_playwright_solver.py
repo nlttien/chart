@@ -82,44 +82,65 @@ def clean_stale_singleton_lock():
         except Exception as e:
             logger.warning(f"[Playwright Solver] Could not remove SingletonLock: {e}")
 
-def generate_human_steps(distance: float) -> List[Tuple[float, float]]:
+def generate_human_steps(distance: float) -> List[Tuple[float, float, float]]:
     """
-    Generate realistic human mouse movement steps with Ease-out (~0.8s - 1.2s duration).
-    Strictly avoids overshooting track boundaries for Aliyun Captcha WAF.
+    Quỹ đạo chuột kéo văng quá đà lề phải (+15px đến +25px) & rút nhẹ về đích từ chart-dd373-test:
+    - Gia tốc Ease-In-Out tự nhiên.
+    - Kéo văng quá đà lề phải (Overshoot) dứt khoát (~0.3s).
+    - Rút nhẹ chuột về vị trí đích (Bounce Back).
     """
     steps = []
     current_x = 0.0
     current_y = 0.0
-    
-    main_steps_count = random.randint(25, 35)
-    for i in range(1, main_steps_count + 1):
-        t = i / main_steps_count
-        # Cubic Ease-Out curve for realistic deceleration
-        ease = 1 - math.pow(1 - t, 3)
-        next_x = distance * ease
+
+    overshoot = random.uniform(15.0, 25.0)
+    target_overshoot_x = distance + overshoot
+
+    # Giai đoạn 1: Kéo văng vượt qua lề phải (Dứt khoát: 14 - 20 bước)
+    main_steps = random.randint(14, 20)
+    for i in range(1, main_steps + 1):
+        t = i / main_steps
+        ease = 4 * t * t * t if t < 0.5 else 1 - math.pow(-2 * t + 2, 3) / 2
+        next_x = target_overshoot_x * ease
         dx = next_x - current_x
-        
-        # Subtle organic Y jitter (sinusoidal human hand micro-tremor)
-        dy = math.sin(t * math.pi) * random.uniform(0.1, 0.4) + random.uniform(-0.15, 0.15)
-        
+        dy = math.sin(t * math.pi) * random.uniform(0.2, 0.6) + random.uniform(-0.3, 0.3)
+
         current_x = next_x
         current_y += dy
-        steps.append((dx, dy))
-        
+        delay = random.uniform(0.005, 0.015)
+        steps.append((dx, dy, delay))
+
+    # Giai đoạn 2: Rút nhẹ chuột trở lại sát lề đích
+    correction_steps = random.randint(4, 7)
+    final_target_x = distance + 4.0
+    start_corr_x = current_x
+
+    for j in range(1, correction_steps + 1):
+        t = j / correction_steps
+        ease = math.sin(t * math.pi / 2)
+        next_x = start_corr_x + (final_target_x - start_corr_x) * ease
+        dx = next_x - current_x
+        dy = random.uniform(-0.2, 0.2)
+        current_x = next_x
+        current_y += dy
+        delay = random.uniform(0.005, 0.012)
+        steps.append((dx, dy, delay))
+
     return steps
 
 async def solve_aliyun_slider(page: Page) -> bool:
     """
-    Detect and slide Aliyun Captcha slider using realistic human mouse trajectory.
+    Detect and slide Aliyun Captcha slider using realistic human mouse trajectory from chart-dd373-test.
     """
     selectors = [
         '#aliyunCaptcha-sliding-slider',
         '#nc_1_n1z',
         '.nc_iconfont.btn_slide',
+        'span[id*="sliding"]',
         '.btn_slide',
-        'span[class*="btn"]'
+        'div[class*="sliding"] span'
     ]
-    
+
     slider_btn = None
     for sel in selectors:
         try:
@@ -160,46 +181,31 @@ async def solve_aliyun_slider(page: Page) -> bool:
     if not box:
         return False
 
-    slide_distance = 268.0
-    btn_width = box["width"] if box and box["width"] > 0 else 40.0
-
+    slide_distance = 345.0
     track_selectors = [
-        '.aliyunCaptcha-sliding-track',
-        'div[class*="sliding-track"]',
-        '#nc_1_scale',
-        '.nc_scale',
-        '.nc-bg',
         '#aliyunCaptcha-sliding-body',
-        '.sliding'
+        '.sliding',
+        '#aliyunCaptcha-sliding-wrapper',
+        '.aliyunCaptcha-sliding-wrapper',
+        'div[class*="sliding-wrapper"]',
+        'div[class*="nc-container"]'
     ]
+
     for t_sel in track_selectors:
         try:
             track_el = page.locator(t_sel).first
             if await track_el.count() > 0:
                 t_box = await track_el.bounding_box()
-                if t_box and t_box["width"] > btn_width:
-                    measured = t_box["width"] - btn_width
-                    if measured > 270:
-                        measured = measured - 52.0
-                    if 240 < measured < 290:
+                if t_box and t_box["width"] > box["width"]:
+                    measured = t_box["width"] - box["width"]
+                    if 250 < measured < 400:
                         slide_distance = measured
-                    logger.info(f"[Playwright Solver] Dynamic track width measured: {slide_distance:.1f}px (selector: {t_sel}, t_box_w: {t_box['width']:.1f}px, btn_w: {btn_width:.1f}px)")
-                    break
-        except Exception:
-            pass
+                        break
         except Exception:
             pass
 
-    # Ensure precise mouse focus via hover
-    try:
-        await slider_btn.hover()
-        await asyncio.sleep(random.uniform(0.08, 0.15))
-        box = await slider_btn.bounding_box() or box
-    except Exception:
-        pass
-
-    start_x = box["x"] + box["width"] / 2
-    start_y = box["y"] + box["height"] / 2
+    start_x = box['x'] + box['width'] / 2
+    start_y = box['y'] + box['height'] / 2
 
     SmartLogger.log_event(
         platform="dd373",
@@ -209,29 +215,21 @@ async def solve_aliyun_slider(page: Page) -> bool:
         details={"start_x": start_x, "start_y": start_y, "distance": slide_distance}
     )
 
-    # Smooth approach to slider button & mouse down with human hold delay (200-300ms)
-    await page.mouse.move(start_x - random.uniform(20, 40), start_y - random.uniform(10, 20))
-    await asyncio.sleep(random.uniform(0.08, 0.15))
     await page.mouse.move(start_x, start_y)
-    await asyncio.sleep(random.uniform(0.1, 0.2))
-    
     await page.mouse.down()
-    await asyncio.sleep(random.uniform(0.2, 0.35))
-    
+    await asyncio.sleep(random.uniform(0.15, 0.3))
+
     curr_x, curr_y = start_x, start_y
-    trajectory = generate_human_steps(slide_distance)
-    
-    for dx, dy in trajectory:
+    steps = generate_human_steps(slide_distance)
+    for dx, dy, delay in steps:
         curr_x += dx
         curr_y += dy
         await page.mouse.move(curr_x, curr_y)
-        # Variable micro-delays between mouse moves to emulate human muscle inertia
-        await asyncio.sleep(random.uniform(0.012, 0.028))
+        await asyncio.sleep(delay)
 
-    # Hold mouse down at target endpoint to simulate human confirmation before releasing
-    await asyncio.sleep(random.uniform(0.3, 0.55))
+    await asyncio.sleep(0.35)
     await page.mouse.up()
-    await asyncio.sleep(2.0)
+    await asyncio.sleep(3.0)
 
     page_content = await page.content()
     is_success = False
