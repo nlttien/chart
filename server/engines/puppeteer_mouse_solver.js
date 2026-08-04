@@ -185,8 +185,23 @@ async function main() {
 
             for (let attempt = 1; attempt <= 2; attempt++) {
                 let sliderHandle = null;
-                for (const sel of selectors) {
-                    sliderHandle = await page.$(sel);
+                let activeFrame = page;
+                const frames = [page, ...page.frames()];
+
+                for (const frame of frames) {
+                    for (const sel of selectors) {
+                        try {
+                            const handle = await frame.waitForSelector(sel, { visible: true, timeout: 2000 });
+                            if (handle) {
+                                const b = await handle.boundingBox();
+                                if (b && b.width > 0 && b.height > 0) {
+                                    sliderHandle = handle;
+                                    activeFrame = frame;
+                                    break;
+                                }
+                            }
+                        } catch (e) {}
+                    }
                     if (sliderHandle) break;
                 }
 
@@ -202,17 +217,19 @@ async function main() {
                         ];
 
                         for (const tSel of trackSelectors) {
-                            const trackHandle = await page.$(tSel);
-                            if (trackHandle) {
-                                const tBox = await trackHandle.boundingBox();
-                                if (tBox && tBox.width > box.width) {
-                                    const measured = tBox.width - box.width;
-                                    if (measured > 250 && measured < 380) {
-                                        slideDistance = measured;
+                            try {
+                                const trackHandle = await activeFrame.$(tSel);
+                                if (trackHandle) {
+                                    const tBox = await trackHandle.boundingBox();
+                                    if (tBox && tBox.width > box.width) {
+                                        const measured = tBox.width - box.width;
+                                        if (measured > 250 && measured < 380) {
+                                            slideDistance = measured;
+                                        }
+                                        break;
                                     }
-                                    break;
                                 }
-                            }
+                            } catch (e) {}
                         }
 
                         const startX = box.x + box.width / 2;
