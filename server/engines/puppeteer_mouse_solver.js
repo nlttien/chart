@@ -153,8 +153,12 @@ async function main() {
             });
         });
 
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 25000 });
-        await sleep(500);
+        try {
+            await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+        } catch (e) {
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+        }
+        await sleep(2000);
 
         let content = await page.content();
         let solved = false;
@@ -204,9 +208,9 @@ async function main() {
                     const startY = box.y + box.height / 2;
 
                     await page.mouse.move(startX, startY);
-                    await sleep(100);
+                    await sleep(150);
                     await page.mouse.down();
-                    await sleep(100);
+                    await sleep(250);
 
                     let currX = startX;
                     let currY = startY;
@@ -216,17 +220,29 @@ async function main() {
                         currX += step.dx;
                         currY += step.dy;
                         await page.mouse.move(currX, currY);
-                        await sleep(20 + Math.random() * 12); // ~1s total drag
+                        await sleep(15 + Math.random() * 15);
                     }
 
-                    await sleep(150);
+                    await sleep(400);
                     await page.mouse.up();
-                    await sleep(1500);
+                    await sleep(2500);
 
                     content = await page.content();
-                    if (!content.includes('aliyunCaptcha') || content.includes('verified')) {
-                        solved = true;
-                    }
+                }
+            }
+        } else {
+            solved = true;
+        }
+
+        // Additional sleep & DOM verification for AJAX price table
+        if (!content.includes('aliyunCaptcha')) {
+            if (content.includes('元/个') || content.includes('1元=') || content.includes('1元 =')) {
+                solved = true;
+            } else {
+                await sleep(2000);
+                content = await page.content();
+                if (content.includes('元/个') || content.includes('1元=') || content.includes('1元 =')) {
+                    solved = true;
                 }
             }
         }
