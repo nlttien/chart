@@ -39,6 +39,7 @@ if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     export NVM_DIR="$HOME/.nvm"
     if [ -s "$NVM_DIR/nvm.sh" ]; then
         \. "$NVM_DIR/nvm.sh"
+        nvm use 20 2>/dev/null || nvm use 18 2>/dev/null || nvm use --lts 2>/dev/null || true
     fi
     if command -v npm &> /dev/null; then
         (cd unified-chart && npm install && npm run build) || echo "[WARN] Web UI build failed, proceeding..."
