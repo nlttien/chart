@@ -7,7 +7,7 @@ import requests
 logger = logging.getLogger("eldo_engine")
 
 API_BASE = "https://www.eldorado.gg/api/predefinedOffers/augmentedGame/offers"
-PAGE_SIZE = 150
+PAGE_SIZE = 30
 
 MY_COOKIE = 'eldoradogg_currencyPreference=USD; cr-homepage-usp=1; p-checkout-test=1; cr-currency-aa=0; cr-homepage-aa=0; cr-top-up-aa=1; p-primer-update=1; curr-homepage-trending-games=1; cr-smaller-other-sellers-list=1; or-non-instant-redesign=1; p-c-badges=1; cr-top-up-swipeable=1; cr-homepage-popular-products=0; curr-offer-head-check=1; cr-tally-roblox-survey=1; it-product-aa=1; cr-topup-discount=0; p-billing-descriptor=0; it-abc=0; ac-gs-aa=1; cr-global-sec-button=0; cr-top-up-seller-reviews=0; pseudoId=14ea29d1-5f9d-42dd-bb2c-4d6b8aeb135f; cr-offer-sorting-v2=0; ac-score-p-g=1; cr-dark-theme=1; ac-more-like-v3=0; it-offer-listing-aa=0; ac-offer-listing-aa=1; ac-offer-p-aa=1; ac-price-mb=1; __Host-XSRF-TOKEN=d02a33864d608bcbfa8b55f5e9add2dd308fce976898937ffe8c4f8be751b098; eldoradogg_locale=en-US'
 
@@ -66,7 +66,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
 
     all_raw_results = []
     try:
-        for page in range(1, 4):
+        for page in range(1, 3):
             p = params.copy()
             p['pageIndex'] = str(page)
             try:

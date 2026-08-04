@@ -26,7 +26,7 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
         'brand_id': item_config.get('brand_id', ''),
         'filter_attr': item_config.get('filter_attr', ''),
         'sort': 'lowest_price',
-        'page_size': '48',
+        'page_size': '24',
         'group': '0',
         'currency': 'USD',
         'country': 'VN',
@@ -35,7 +35,7 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
 
     all_raw_results = []
     try:
-        for page in range(1, 4):
+        for page in range(1, 3):
             p = params.copy()
             p['page'] = str(page)
             try:
