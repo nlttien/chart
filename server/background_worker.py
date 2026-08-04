@@ -15,9 +15,9 @@ from server.engines.dd373_engine import scan_dd373_item
 
 logger = logging.getLogger("background_worker")
 
-# Giới hạn max_workers=2 để tiết kiệm bộ nhớ RAM trên Linux Server
-executor = ThreadPoolExecutor(max_workers=2)
-_SEMAPHORE = asyncio.Semaphore(2)
+# Giới hạn tối đa max_workers=1 & Semaphore(1) tối ưu bộ nhớ RAM cho môi trường máy ảo LXC Container
+executor = ThreadPoolExecutor(max_workers=1)
+_SEMAPHORE = asyncio.Semaphore(1)
 
 class BackgroundWorker:
     def __init__(self, ws_manager=None):
@@ -64,14 +64,17 @@ class BackgroundWorker:
             now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
 
             results = []
-            if platform == "g2g":
-                results = await loop.run_in_executor(executor, scan_g2g_item, item)
-            elif platform == "eldorado":
-                results = await loop.run_in_executor(executor, scan_eldo_item, item)
-            elif platform == "qiandao":
-                results = await loop.run_in_executor(executor, scan_qiandao_item, item)
-            elif platform == "dd373":
-                results = await loop.run_in_executor(executor, scan_dd373_item, item)
+            try:
+                if platform == "g2g":
+                    results = await loop.run_in_executor(executor, scan_g2g_item, item)
+                elif platform == "eldorado":
+                    results = await loop.run_in_executor(executor, scan_eldo_item, item)
+                elif platform == "qiandao":
+                    results = await loop.run_in_executor(executor, scan_qiandao_item, item)
+                elif platform == "dd373":
+                    results = await loop.run_in_executor(executor, scan_dd373_item, item)
+            finally:
+                gc.collect()
 
             if results:
                 save_market_batch(platform, name, results, now_str)
@@ -84,11 +87,13 @@ class BackgroundWorker:
                 }
                 if self.ws_manager:
                     await self.ws_manager.broadcast(payload)
+
+            await asyncio.sleep(1.0)
             return results
 
     async def scrape_all_platforms(self):
         config = load_config()
-        # Chạy nối tiếp từng sàn & từng sản phẩm 1-by-1 để tránh mở nhiều trình duyệt Chrome song song gây tràn RAM
+        # Chạy nối tiếp đơn luồng 1-by-1 để tiết kiệm RAM tối đa trên LXC Container
         for platform in ["g2g", "eldorado", "qiandao", "dd373"]:
             items = config.get(platform, [])
             for item in items:
@@ -97,4 +102,4 @@ class BackgroundWorker:
                         await self.scrape_platform_item(platform, item)
                     except Exception as e:
                         logger.error(f"Error scraping {platform} item {item.get('name')}: {e}")
-            gc.collect()
+                    gc.collect()
