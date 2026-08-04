@@ -173,25 +173,44 @@ async function main() {
         let errorCode = null;
         let errorMessage = null;
 
-        if (content.includes('aliyunCaptcha') || content.includes('sliding-slider') || content.includes('verify that you are a real person')) {
-            const selectors = [
-                '#aliyunCaptcha-sliding-slider',
-                '.aliyunCaptcha-sliding-slider',
-                '.aliyunCaptcha-sliding-btn',
-                'div[class*="sliding-btn"]',
-                '#nc_1_n1z',
-                '.btn_slide'
-            ];
+        const selectors = [
+            '#aliyunCaptcha-sliding-slider',
+            '.aliyunCaptcha-sliding-slider',
+            '.aliyunCaptcha-sliding-btn',
+            'div[class*="sliding-btn"]',
+            '#nc_1_n1z',
+            '.btn_slide'
+        ];
 
+        // 1. Scan for visible captcha slider handle across all frames
+        let initialSlider = null;
+        const frames = [page, ...page.frames()];
+        for (const frame of frames) {
+            for (const sel of selectors) {
+                try {
+                    const handle = await frame.waitForSelector(sel, { visible: true, timeout: 1500 });
+                    if (handle) {
+                        const b = await handle.boundingBox();
+                        if (b && b.width > 0 && b.height > 0) {
+                            initialSlider = handle;
+                            break;
+                        }
+                    }
+                } catch (e) {}
+            }
+            if (initialSlider) break;
+        }
+
+        // 2. Only attempt drag if slider popup actually exists on screen
+        if (initialSlider) {
             for (let attempt = 1; attempt <= 2; attempt++) {
                 let sliderHandle = null;
                 let activeFrame = page;
-                const frames = [page, ...page.frames()];
 
                 for (const frame of frames) {
                     for (const sel of selectors) {
                         try {
-                            const handle = await frame.waitForSelector(sel, { visible: true, timeout: 2000 });
+                            const handle = await frame.waitForSelector(sel, { visible: true, timeout: 1500 });
                             if (handle) {
                                 const b = await handle.boundingBox();
                                 if (b && b.width > 0 && b.height > 0) {
