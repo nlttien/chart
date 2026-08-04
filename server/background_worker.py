@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import time
+import gc
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 from concurrent.futures import ThreadPoolExecutor
@@ -14,7 +15,9 @@ from server.engines.dd373_engine import scan_dd373_item
 
 logger = logging.getLogger("background_worker")
 
-executor = ThreadPoolExecutor(max_workers=8)
+# Giới hạn max_workers=2 để tiết kiệm bộ nhớ RAM trên Linux Server
+executor = ThreadPoolExecutor(max_workers=2)
+_SEMAPHORE = asyncio.Semaphore(2)
 
 class BackgroundWorker:
     def __init__(self, ws_manager=None):
@@ -46,6 +49,7 @@ class BackgroundWorker:
 
                 interval = config.get("scrape_interval_seconds", 60)
                 await self.scrape_all_platforms()
+                gc.collect()
                 await asyncio.sleep(interval)
             except asyncio.CancelledError:
                 break
@@ -54,40 +58,43 @@ class BackgroundWorker:
                 await asyncio.sleep(10)
 
     async def scrape_platform_item(self, platform: str, item: Dict[str, Any]):
-        loop = asyncio.get_running_loop()
-        name = item.get("name", "Unknown")
-        now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+        async with _SEMAPHORE:
+            loop = asyncio.get_running_loop()
+            name = item.get("name", "Unknown")
+            now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
 
-        results = []
-        if platform == "g2g":
-            results = await loop.run_in_executor(executor, scan_g2g_item, item)
-        elif platform == "eldorado":
-            results = await loop.run_in_executor(executor, scan_eldo_item, item)
-        elif platform == "qiandao":
-            results = await loop.run_in_executor(executor, scan_qiandao_item, item)
-        elif platform == "dd373":
-            results = await loop.run_in_executor(executor, scan_dd373_item, item)
+            results = []
+            if platform == "g2g":
+                results = await loop.run_in_executor(executor, scan_g2g_item, item)
+            elif platform == "eldorado":
+                results = await loop.run_in_executor(executor, scan_eldo_item, item)
+            elif platform == "qiandao":
+                results = await loop.run_in_executor(executor, scan_qiandao_item, item)
+            elif platform == "dd373":
+                results = await loop.run_in_executor(executor, scan_dd373_item, item)
 
-        if results:
-            save_market_batch(platform, name, results, now_str)
-            payload = {
-                "type": "market_update",
-                "platform": platform,
-                "item_name": name,
-                "timestamp": now_str,
-                "data": results
-            }
-            if self.ws_manager:
-                await self.ws_manager.broadcast(payload)
-        return results
+            if results:
+                save_market_batch(platform, name, results, now_str)
+                payload = {
+                    "type": "market_update",
+                    "platform": platform,
+                    "item_name": name,
+                    "timestamp": now_str,
+                    "data": results
+                }
+                if self.ws_manager:
+                    await self.ws_manager.broadcast(payload)
+            return results
 
     async def scrape_all_platforms(self):
         config = load_config()
-        tasks = []
+        # Chạy từng sàn nối tiếp nhau để đảm bảo RAM luôn ổn định không bị OOM Killed
         for platform in ["g2g", "eldorado", "qiandao", "dd373"]:
             items = config.get(platform, [])
+            tasks = []
             for item in items:
                 if item.get("enabled", True):
                     tasks.append(self.scrape_platform_item(platform, item))
-        if tasks:
-            await asyncio.gather(*tasks, return_exceptions=True)
+            if tasks:
+                await asyncio.gather(*tasks, return_exceptions=True)
+            gc.collect()
