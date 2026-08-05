@@ -367,12 +367,6 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
 
         async with async_playwright() as p:
             try:
-                DEFAULT_COOKIES = [
-                    {"name": "_c_WBKFRo", "value": "00f00qFLqkrt0CSYGjQrJElEkP7dyK7D3yf6GErK", "domain": ".dd373.com", "path": "/"},
-                    {"name": "acw_tc", "value": "a3b58c9d17858312098557763ee4e3e096cb78d45c666914afc35543b8", "domain": ".dd373.com", "path": "/"},
-                    {"name": "cdn_sec_tc", "value": "a3b58c9d17858312098557763ee4e3e096cb78d45c666914afc35543b8", "domain": ".dd373.com", "path": "/"}
-                ]
-
                 context = await p.chromium.launch_persistent_context(
                     user_data_dir=PROFILE_DIR,
                     headless=False,
@@ -401,16 +395,6 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     ignore_https_errors=True
                 )
 
-                existing_cookies = await context.cookies()
-                if not existing_cookies:
-                    try:
-                        await context.add_cookies(DEFAULT_COOKIES)
-                        logger.info("[Playwright Solver] Injected fallback cookies into context.")
-                    except Exception:
-                        pass
-                else:
-                    logger.info(f"[Playwright Solver] Using {len(existing_cookies)} fresh persistent cookies from profile.")
-
                 page = context.pages[0] if context.pages else await context.new_page()
                 try:
                     from playwright_stealth import stealth_async
@@ -419,24 +403,24 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     pass
                 await page.add_init_script(STEALTH_JS)
 
+                # Nạp trang bằng Profile duy nhất hiện tại
                 response = await page.goto(url, wait_until="domcontentloaded", timeout=25000)
                 status_code = response.status if response else 0
-
                 await asyncio.sleep(0.5)
 
-                for attempt in range(1, max_retries + 1):
-                    content = await page.content()
-                    if "aliyunCaptcha" in content or "verify that you are a real person" in content or "sliding-slider" in content:
+                content = await page.content()
+                if "aliyunCaptcha" in content or "verify that you are a real person" in content or "sliding-slider" in content:
+                    for attempt in range(1, max_retries + 1):
                         solved = await solve_aliyun_slider(page)
                         if solved:
                             await asyncio.sleep(1.5)
                             break
                         else:
-                            logger.warning(f"[Playwright Solver] Captcha solve attempt {attempt}/{max_retries} failed. Refreshing page...")
+                            logger.warning(f"[Playwright Solver] Captcha solve attempt {attempt}/{max_retries} failed. Reloading page...")
                             await page.reload(wait_until="domcontentloaded")
                             await asyncio.sleep(1.0)
-                    else:
-                        break
+                else:
+                    logger.info("[Playwright Solver] Trang nạp trực tiếp thành công với Profile hiện tại (không dính Captcha)!")
 
                 html_content = await page.content()
                 cookies = await context.cookies()
