@@ -57,6 +57,20 @@ def init_db(db_file: str = DB_PATH):
                   value TEXT,
                   updated_at TEXT)''')
 
+    c.execute('''CREATE TABLE IF NOT EXISTS chart_history_summary
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  platform TEXT,
+                  item_name TEXT,
+                  min_price REAL,
+                  avg_top5_price REAL,
+                  avg_price REAL,
+                  max_price REAL,
+                  timestamp TEXT,
+                  UNIQUE(platform, item_name, timestamp))''')
+
+    c.execute('''CREATE INDEX IF NOT EXISTS idx_summary_platform_item_time 
+                 ON chart_history_summary (platform, item_name, timestamp)''')
+
     # Dọn dẹp dữ liệu cũ bị gán Unknown seller nếu có
     try:
         c.execute("UPDATE market_logs SET seller = 'G2G Trader' WHERE platform = 'g2g' AND (seller IS NULL OR seller = 'Unknown')")
@@ -153,8 +167,70 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
     finally:
         conn.close()
 
+def cleanup_and_aggregate_old_logs(days: int = 3) -> Dict[str, Any]:
+    """
+    1. Trích xuất mốc giá min_price, avg_top5_price, avg_price theo từng giờ đối với log cũ hơn 'days' ngày.
+    2. Lưu vào bảng chart_history_summary.
+    3. Xóa các dòng gian hàng chi tiết cũ hơn 'days' ngày trong market_logs để tiết kiệm dung lượng đĩa.
+    """
+    conn = get_connection()
+    c = conn.cursor()
+    try:
+        cutoff_date = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%d %H:%M:%SZ")
+        
+        c.execute('''
+            SELECT DISTINCT platform, item_name, strftime('%Y-%m-%d %H:00:00Z', timestamp) as hourly_ts
+            FROM market_logs
+            WHERE timestamp < ? AND price > 0
+        ''', (cutoff_date,))
+        
+        old_groups = c.fetchall()
+        summaries_inserted = 0
+        
+        for g in old_groups:
+            plat, item, hourly_ts = g[0], g[1], g[2]
+            
+            c.execute('''
+                SELECT price FROM market_logs
+                WHERE platform = ? AND item_name = ? 
+                  AND strftime('%Y-%m-%d %H:00:00Z', timestamp) = ?
+                  AND price > 0
+                ORDER BY price ASC
+            ''', (plat, item, hourly_ts))
+            
+            prices = [r[0] for r in c.fetchall()]
+            if not prices:
+                continue
+                
+            min_p = prices[0]
+            max_p = prices[-1]
+            avg_p = sum(prices) / len(prices)
+            
+            top5_prices = prices[:5]
+            avg_top5_p = sum(top5_prices) / len(top5_prices)
+            
+            c.execute('''
+                INSERT OR REPLACE INTO chart_history_summary 
+                (platform, item_name, min_price, avg_top5_price, avg_price, max_price, timestamp)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (plat, item, round(min_p, 4), round(avg_top5_p, 4), round(avg_p, 4), round(max_p, 4), hourly_ts))
+            summaries_inserted += 1
+
+        c.execute('DELETE FROM market_logs WHERE timestamp < ?', (cutoff_date,))
+        deleted_rows = c.rowcount
+        conn.commit()
+        
+        if deleted_rows > 0:
+            logger.info(f"[DB Cleanup] Aggregated {summaries_inserted} hourly summaries and deleted {deleted_rows} detailed market log rows older than {days} days.")
+        return {"deleted_rows": deleted_rows, "summaries_inserted": summaries_inserted}
+    except Exception as e:
+        logger.error(f"[DB Cleanup Error] {e}")
+        return {"error": str(e)}
+    finally:
+        conn.close()
+
 def get_lowest_prices(platform: Optional[str] = None, item_name: Optional[str] = None) -> List[Dict[str, Any]]:
-    """Lấy giá thấp nhất (Lowest/Floor Price) từ ĐỢT QUÉT MỚI NHẤT của mỗi item"""
+    """Lấy giá thấp nhất (Lowest/Floor Price) và giá trung bình Top 5 gian hàng thấp nhất từ đợt quét mới nhất"""
     conn = get_connection()
     c = conn.cursor()
     try:
@@ -185,7 +261,25 @@ def get_lowest_prices(platform: Optional[str] = None, item_name: Optional[str] =
         
         c.execute(query, params)
         rows = [dict(row) for row in c.fetchall()]
-        return rows
+        
+        # Thêm tính toán avg_top5_price
+        result_rows = []
+        for r in rows:
+            plat = r['platform']
+            iname = r['item_name']
+            ts = r['timestamp']
+            
+            c.execute('''SELECT price FROM market_logs 
+                         WHERE platform = ? AND item_name = ? AND timestamp = ? AND price > 0 
+                         ORDER BY price ASC LIMIT 5''', (plat, iname, ts))
+            top5_prices = [pr[0] for pr in c.fetchall()]
+            avg_top5 = sum(top5_prices) / len(top5_prices) if top5_prices else r['lowest_price']
+            
+            row_dict = dict(r)
+            row_dict['avg_top5_price'] = round(avg_top5, 4)
+            result_rows.append(row_dict)
+            
+        return result_rows
     finally:
         conn.close()
 
@@ -193,21 +287,66 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
     conn = get_connection()
     c = conn.cursor()
     try:
+        results = []
+        
+        # 1. Lấy dữ liệu tổng hợp lịch sử (> 3 ngày) từ chart_history_summary
+        summary_query = '''
+            SELECT timestamp, platform, item_name, min_price as price, avg_top5_price, avg_price, 'Historical Summary' as seller
+            FROM chart_history_summary
+        '''
+        sum_params = []
         if platform and item_name:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         WHERE platform = ? AND item_name = ? 
-                         ORDER BY timestamp ASC LIMIT ?''', (platform, item_name, limit))
+            summary_query += " WHERE platform = ? AND item_name = ?"
+            sum_params.extend([platform.lower(), item_name])
         elif item_name:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         WHERE item_name = ? 
-                         ORDER BY timestamp ASC LIMIT ?''', (item_name, limit))
-        else:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         ORDER BY timestamp ASC LIMIT ?''', (limit,))
-        return [dict(row) for row in c.fetchall()]
+            summary_query += " WHERE item_name = ?"
+            sum_params.append(item_name)
+            
+        summary_query += " ORDER BY timestamp ASC LIMIT ?"
+        sum_params.append(limit)
+        
+        c.execute(summary_query, sum_params)
+        summary_rows = [dict(r) for r in c.fetchall()]
+        results.extend(summary_rows)
+        
+        # 2. Lấy dữ liệu chi tiết trong 3 ngày gần đây từ market_logs
+        raw_query = '''
+            SELECT timestamp, platform, item_name, seller, price, stock, sold, online, min_qty, ratio, delivery
+            FROM market_logs
+        '''
+        raw_params = []
+        if platform and item_name:
+            raw_query += " WHERE platform = ? AND item_name = ?"
+            raw_params.extend([platform.lower(), item_name])
+        elif item_name:
+            raw_query += " WHERE item_name = ?"
+            raw_params.append(item_name)
+            
+        raw_query += " ORDER BY timestamp ASC LIMIT ?"
+        raw_params.append(limit)
+        
+        c.execute(raw_query, raw_params)
+        raw_rows = [dict(r) for r in c.fetchall()]
+        
+        # Tính toán avg_top5_price theo từng đợt scan
+        scans = {}
+        for r in raw_rows:
+            key = (r['platform'], r['item_name'], r['timestamp'])
+            if key not in scans:
+                scans[key] = []
+            scans[key].append(r)
+            
+        for key, rows_list in scans.items():
+            sorted_prices = sorted([x['price'] for x in rows_list if x['price'] > 0])
+            top5 = sorted_prices[:5] if sorted_prices else [0.0]
+            avg_top5 = sum(top5) / len(top5) if top5 else 0.0
+            
+            for item_dict in rows_list:
+                item_dict['avg_top5_price'] = round(avg_top5, 4)
+                results.append(item_dict)
+                
+        results.sort(key=lambda x: x.get('timestamp', ''))
+        return results[:limit]
     finally:
         conn.close()
 

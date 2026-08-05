@@ -7,7 +7,7 @@ from typing import Dict, List, Any, Optional
 from concurrent.futures import ThreadPoolExecutor
 
 from server.config import load_config
-from server.database import save_market_batch
+from server.database import save_market_batch, cleanup_and_aggregate_old_logs
 from server.engines.g2g_engine import scan_g2g_item
 from server.engines.eldo_engine import scan_eldo_item
 from server.engines.qiandao_engine import scan_qiandao_item
@@ -49,6 +49,12 @@ class BackgroundWorker:
 
                 interval = config.get("scrape_interval_seconds", 60)
                 await self.scrape_all_platforms()
+                
+                try:
+                    cleanup_and_aggregate_old_logs(days=3)
+                except Exception as ex:
+                    logger.warning(f"Cleanup note: {ex}")
+                    
                 gc.collect()
                 await asyncio.sleep(interval)
             except asyncio.CancelledError:
