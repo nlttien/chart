@@ -249,10 +249,19 @@ async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(
         "order_book": data
     }
 
+@app.get("/api/v1/history")
+async def api_global_history(
+    platform: Optional[str] = Query(None),
+    item_name: Optional[str] = Query(None),
+    limit: int = Query(1000)
+):
+    logs = get_history_logs(platform.lower() if platform else None, item_name, limit=limit)
+    return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs, "data": logs}
+
 @app.get("/api/v1/{platform}/history")
-async def api_platform_history(platform: str, item_name: str = Query(...)):
-    logs = get_history_logs(platform.lower(), item_name)
-    return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs}
+async def api_platform_history(platform: str, item_name: Optional[str] = Query(None), limit: int = Query(1000)):
+    logs = get_history_logs(platform.lower(), item_name, limit=limit)
+    return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs, "data": logs}
 
 @app.get("/api/v1/{platform}/competitor_history")
 async def api_platform_competitor_history(
