@@ -327,7 +327,7 @@ def parse_dd373_html(html_content: str) -> List[Dict[str, Any]]:
                 else:
                     min_qty = int(num)
 
-            if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟']):
+            if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟', '交易', '均', '时', '发货', '平均', '秒', '响应', '保障', '赔', '账号', '游戏', '区']):
                 if len(p) > 1 and len(p) < 30:
                     seller_found = p
 
@@ -336,6 +336,9 @@ def parse_dd373_html(html_content: str) -> List[Dict[str, Any]]:
                 price = round(1.0 / float(ratio), 4)
             except Exception:
                 pass
+
+        if seller_found and any(k in seller_found for k in ['交易', '均时', '平均', '分钟', '发货']):
+            seller_found = ""
 
         seller = seller_found if seller_found else (f"Trader (1¥={ratio})" if ratio else "DD373 Trader")
         

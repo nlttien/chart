@@ -283,7 +283,7 @@ def get_lowest_prices(platform: Optional[str] = None, item_name: Optional[str] =
     finally:
         conn.close()
 
-def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = None, limit: int = 1000) -> List[Dict[str, Any]]:
+def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = None, limit: int = 2000) -> List[Dict[str, Any]]:
     conn = get_connection()
     c = conn.cursor()
     try:
@@ -299,8 +299,11 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             summary_query += " WHERE platform = ? AND item_name = ?"
             sum_params.extend([platform.lower(), item_name])
         elif item_name:
-            summary_query += " WHERE item_name = ?"
-            sum_params.append(item_name)
+            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").strip()
+            tokens = [t for t in re.split(r'[\s\_]+', clean_kw) if t]
+            where_clauses = ["LOWER(item_name) LIKE ?"] * len(tokens)
+            sum_params.extend([f"%{t}%" for t in tokens])
+            summary_query += " WHERE " + " AND ".join(where_clauses)
             
         summary_query += " ORDER BY timestamp ASC LIMIT ?"
         sum_params.append(limit)
@@ -319,8 +322,11 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             raw_query += " WHERE platform = ? AND item_name = ?"
             raw_params.extend([platform.lower(), item_name])
         elif item_name:
-            raw_query += " WHERE item_name = ?"
-            raw_params.append(item_name)
+            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").strip()
+            tokens = [t for t in re.split(r'[\s\_]+', clean_kw) if t]
+            where_clauses = ["LOWER(item_name) LIKE ?"] * len(tokens)
+            raw_params.extend([f"%{t}%" for t in tokens])
+            raw_query += " WHERE " + " AND ".join(where_clauses)
             
         raw_query += " ORDER BY timestamp ASC LIMIT ?"
         raw_params.append(limit)

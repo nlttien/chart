@@ -88,10 +88,10 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
         clean_results = []
         for item in all_raw_results:
             offer = item.get('offer', {})
-            seller = item.get('seller', {})
+            seller_obj = item.get('seller') or item.get('user') or offer.get('seller') or offer.get('user') or {}
             seller_name = (
-                seller.get('username') if isinstance(seller, dict) else seller
-            ) or item.get('sellerName') or item.get('userName') or "Eldorado Seller"
+                (seller_obj.get('username') or seller_obj.get('userName')) if isinstance(seller_obj, dict) else seller_obj
+            ) or item.get('sellerName') or item.get('userName') or item.get('sellerUsername') or offer.get('sellerName') or "Eldorado Seller"
             
             price_info = offer.get('pricePerUnit', {})
             unit_price = float(price_info.get('amount', 0))
