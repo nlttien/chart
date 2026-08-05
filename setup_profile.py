@@ -69,10 +69,13 @@ def main():
                 ignore_https_errors=True
             )
 
+            page = context.pages[0] if context.pages else context.new_page()
+            page.add_init_script(STEALTH_JS)
+
             target_url = "https://www.dd373.com/s-3hcpqw-bwgvrk-fj6p5a-0-0-0-8rknmp-0-0-receive-0-0-1-0-0-0.html"
             print(f"🌐 Đang mở trang sản phẩm DD373 ({target_url})...")
             try:
-                page.goto(target_url, wait_until="domcontentloaded", timeout=25000)
+                page.goto(target_url, wait_until="commit", timeout=25000)
             except Exception as e:
                 logger.warning(f"Page load note: {e}")
 
