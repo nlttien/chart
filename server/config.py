@@ -9,7 +9,7 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 CONFIG_FILE = os.path.join(DATA_DIR, "platform_configs.json")
 
 DEFAULT_CONFIG = {
-    "scrape_interval_seconds": 60,
+    "scrape_interval_seconds": 15,
     "auto_scrape_enabled": True,
     "dd373": [
         {
