@@ -367,9 +367,6 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
 
         async with async_playwright() as p:
             try:
-                video_dir = os.path.join(DATA_DIR, "videos", "dd373")
-                os.makedirs(video_dir, exist_ok=True)
-
                 DEFAULT_COOKIES = [
                     {"name": "_c_WBKFRo", "value": "00f00qFLqkrt0CSYGjQrJElEkP7dyK7D3yf6GErK", "domain": ".dd373.com", "path": "/"},
                     {"name": "acw_tc", "value": "a3b58c9d17858312098557763ee4e3e096cb78d45c666914afc35543b8", "domain": ".dd373.com", "path": "/"},
@@ -413,10 +410,15 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
                     ignore_https_errors=True
                 )
 
-                try:
-                    await context.add_cookies(DEFAULT_COOKIES)
-                except Exception:
-                    pass
+                existing_cookies = await context.cookies()
+                if not existing_cookies:
+                    try:
+                        await context.add_cookies(DEFAULT_COOKIES)
+                        logger.info("[Playwright Solver] Injected fallback cookies into context.")
+                    except Exception:
+                        pass
+                else:
+                    logger.info(f"[Playwright Solver] Using {len(existing_cookies)} fresh persistent cookies from profile.")
 
                 page = context.pages[0] if context.pages else await context.new_page()
                 try:
