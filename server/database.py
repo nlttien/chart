@@ -299,7 +299,7 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             summary_query += " WHERE platform = ? AND item_name = ?"
             sum_params.extend([platform.lower(), item_name])
         elif item_name:
-            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").strip()
+            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").replace("poe2", "poe 2").replace("poe1", "poe 1").strip()
             tokens = [t for t in re.split(r'[\s\_]+', clean_kw) if t]
             where_clauses = ["LOWER(item_name) LIKE ?"] * len(tokens)
             sum_params.extend([f"%{t}%" for t in tokens])
@@ -322,7 +322,7 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             raw_query += " WHERE platform = ? AND item_name = ?"
             raw_params.extend([platform.lower(), item_name])
         elif item_name:
-            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").strip()
+            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").replace("poe2", "poe 2").replace("poe1", "poe 1").strip()
             tokens = [t for t in re.split(r'[\s\_]+', clean_kw) if t]
             where_clauses = ["LOWER(item_name) LIKE ?"] * len(tokens)
             raw_params.extend([f"%{t}%" for t in tokens])
