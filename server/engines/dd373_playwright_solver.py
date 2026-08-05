@@ -14,7 +14,8 @@ from server.smart_logger import SmartLogger, LAST_ERROR_SCREENSHOT
 
 logger = logging.getLogger("dd373_playwright_solver")
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data")
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+DATA_DIR = os.path.join(BASE_DIR, "data")
 PROFILE_DIR = os.path.join(DATA_DIR, "dd373_playwright_profile")
 os.makedirs(PROFILE_DIR, exist_ok=True)
 
@@ -362,7 +363,7 @@ async def fetch_dd373_with_playwright(url: str, max_retries: int = 3) -> Tuple[L
     start_time = time.time()
     
     with _BROWSER_LOCK:
-        logger.info(f"[Playwright Solver] Lock acquired for {url}. Launching browser...")
+        logger.info(f"[Playwright Solver] Lock acquired for {url}. Using profile at: {PROFILE_DIR}")
         clean_stale_singleton_lock()
 
         async with async_playwright() as p:
