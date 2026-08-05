@@ -2,6 +2,7 @@ import os
 import json
 import logging
 import asyncio
+import time
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional
 
@@ -151,9 +152,31 @@ async def legacy_items(platform: Optional[str] = Query("g2g")):
     items = get_distinct_items(platform.lower() if platform else None)
     return {"status": "success", "platform": platform, "items": items}
 
+cached_usd_vnd = {"value": 25400.0, "time": 0}
+
 @app.get("/api/exchange_rate")
 async def exchange_rate():
-    return {"status": "success", "rate": 25400.0}
+    global cached_usd_vnd
+    now = time.time()
+    if now - cached_usd_vnd["time"] > 300:  # Cache 5 mins
+        api_key = os.environ.get("EXCHANGERATE_API_KEY")
+        if not api_key:
+            logger.warning("EXCHANGERATE_API_KEY is not set, using fallback rate")
+        else:
+            try:
+                import urllib.request
+                import json
+                url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/USD"
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    if data.get("result") == "success" and "conversion_rates" in data:
+                        rate = data["conversion_rates"].get("VND")
+                        if rate:
+                            cached_usd_vnd = {"value": float(rate), "time": now}
+            except Exception as e:
+                logger.warning(f"Exchange rate fetch error: {e}")
+    return {"status": "success", "rate": cached_usd_vnd["value"]}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
