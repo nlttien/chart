@@ -60,6 +60,14 @@ echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
 fuser -k 8000/tcp >/dev/null 2>&1 || true
 sleep 1
 
+# Auto-detect active X11 socket in /tmp/.X11-unix if DISPLAY is empty
+if [ -z "$DISPLAY" ]; then
+    ACTIVE_X_SOCKET=$(ls -1 /tmp/.X11-unix/X* 2>/dev/null | tail -n 1 | sed 's/.*\/X/:/')
+    if [ -n "$ACTIVE_X_SOCKET" ]; then
+        export DISPLAY="$ACTIVE_X_SOCKET"
+    fi
+fi
+
 # If DISPLAY is active (e.g., inside RDP/Desktop terminal session), launch Chrome directly on screen
 if [ -n "$DISPLAY" ] && [ "$FORCE_XVFB" != "1" ]; then
     echo "[INFO] Active Display detected ($DISPLAY). Launching Chrome directly on screen..."
