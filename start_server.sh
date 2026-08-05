@@ -53,13 +53,6 @@ if [ -d "unified-chart" ] && [ ! -d "unified-chart/dist" ]; then
     fi
 fi
 
-# 3. Start FastAPI Server with Graphical Display or Virtual Framebuffer
-echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
-
-# Free port 8000 if occupied by old process
-fuser -k 8000/tcp >/dev/null 2>&1 || true
-sleep 1
-
 # 3. Start FastAPI Server with Graphical Display
 echo "[3/3] Launching FastAPI Unified Server on http://0.0.0.0:8000..."
 
