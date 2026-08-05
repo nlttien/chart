@@ -46,18 +46,27 @@ def main():
                 user_data_dir=PROFILE_DIR,
                 headless=False,
                 args=[
+                    "--js-flags=--max-old-space-size=256",
                     "--disable-software-rasterizer",
                     "--disable-extensions",
                     "--disable-dev-shm-usage",
                     "--no-sandbox",
+                    "--disable-setuid-sandbox",
                     "--disable-blink-features=AutomationControlled",
+                    "--disable-infobars",
+                    "--no-first-run",
+                    "--no-default-browser-check",
                     "--window-size=1280,900",
                     "--lang=zh-CN,zh"
                 ],
+                ignore_default_args=["--enable-automation"],
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
                 viewport={"width": 1280, "height": 900},
+                device_scale_factor=1,
                 locale="zh-CN",
-                timezone_id="Asia/Shanghai"
+                timezone_id="Asia/Shanghai",
+                java_script_enabled=True,
+                ignore_https_errors=True
             )
 
             page = context.pages[0] if context.pages else context.new_page()
