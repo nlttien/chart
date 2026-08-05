@@ -152,16 +152,16 @@ async def legacy_items(platform: Optional[str] = Query("g2g")):
     items = get_distinct_items(platform.lower() if platform else None)
     return {"status": "success", "platform": platform, "items": items}
 
-cached_usd_vnd = {"value": 25400.0, "time": 0}
+cached_rates = {"USD": 25400.0, "CNY": 3850.0, "time": 0}
 
 @app.get("/api/exchange_rate")
 async def exchange_rate():
-    global cached_usd_vnd
+    global cached_rates
     now = time.time()
-    if now - cached_usd_vnd["time"] > 300:  # Cache 5 mins
+    if now - cached_rates["time"] > 300:  # Cache 5 mins
         api_key = os.environ.get("EXCHANGERATE_API_KEY")
         if not api_key:
-            logger.warning("EXCHANGERATE_API_KEY is not set, using fallback rate")
+            logger.warning("EXCHANGERATE_API_KEY is not set, using fallback rates")
         else:
             try:
                 import urllib.request
@@ -171,12 +171,16 @@ async def exchange_rate():
                 with urllib.request.urlopen(req, timeout=10) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
                     if data.get("result") == "success" and "conversion_rates" in data:
-                        rate = data["conversion_rates"].get("VND")
-                        if rate:
-                            cached_usd_vnd = {"value": float(rate), "time": now}
+                        usd_vnd = data["conversion_rates"].get("VND")
+                        usd_cny = data["conversion_rates"].get("CNY")
+                        if usd_vnd:
+                            cached_rates["USD"] = float(usd_vnd)
+                        if usd_vnd and usd_cny:
+                            cached_rates["CNY"] = float(usd_vnd) / float(usd_cny)
+                        cached_rates["time"] = now
             except Exception as e:
                 logger.warning(f"Exchange rate fetch error: {e}")
-    return {"status": "success", "rate": cached_usd_vnd["value"]}
+    return {"status": "success", "rate_usd_vnd": cached_rates["USD"], "rate_cny_vnd": cached_rates["CNY"]}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
