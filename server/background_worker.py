@@ -94,7 +94,7 @@ class BackgroundWorker:
     async def scrape_all_platforms(self):
         config = load_config()
         # Chạy nối tiếp đơn luồng 1-by-1 để tiết kiệm RAM tối đa trên LXC Container
-        for platform in ["g2g", "eldorado", "qiandao", "dd373"]:
+        for platform in ["dd373", "g2g", "eldorado", "qiandao"]:
             items = config.get(platform, [])
             for item in items:
                 if item.get("enabled", True):
