@@ -300,11 +300,28 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             summary_query += " WHERE platform = ? AND item_name = ?"
             sum_params.extend([platform.lower(), item_name])
         elif item_name:
-            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").replace("poe2", "poe 2").replace("poe1", "poe 1").strip()
-            tokens = [t for t in re.split(r'[\s\_]+', clean_kw) if t]
-            where_clauses = ["LOWER(item_name) LIKE ?"] * len(tokens)
-            sum_params.extend([f"%{t}%" for t in tokens])
-            summary_query += " WHERE " + " AND ".join(where_clauses)
+            sel_lower = item_name.lower()
+            is_poe1 = "poe 1" in sel_lower or "poe1" in sel_lower
+            is_poe2 = "poe 2" in sel_lower or "poe2" in sel_lower
+            is_divine = "divine" in sel_lower or "div" in sel_lower
+            is_chaos = "chaos" in sel_lower
+            is_mirror = "mirror" in sel_lower
+
+            where_clauses = []
+            if is_poe1:
+                where_clauses.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
+            elif is_poe2:
+                where_clauses.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
+
+            if is_divine:
+                where_clauses.append("(LOWER(item_name) LIKE '%divine%' OR LOWER(item_name) LIKE '%div%')")
+            elif is_chaos:
+                where_clauses.append("LOWER(item_name) LIKE '%chaos%'")
+            elif is_mirror:
+                where_clauses.append("LOWER(item_name) LIKE '%mirror%'")
+
+            if where_clauses:
+                summary_query += " WHERE " + " AND ".join(where_clauses)
             
         summary_query += " ORDER BY timestamp ASC LIMIT ?"
         sum_params.append(limit)
@@ -323,11 +340,28 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             raw_query += " WHERE platform = ? AND item_name = ?"
             raw_params.extend([platform.lower(), item_name])
         elif item_name:
-            clean_kw = item_name.lower().replace("dd373", "").replace("qiandao", "").replace("eldorado", "").replace("g2g", "").replace("poe2", "poe 2").replace("poe1", "poe 1").strip()
-            tokens = [t for t in re.split(r'[\s\_]+', clean_kw) if t]
-            where_clauses = ["LOWER(item_name) LIKE ?"] * len(tokens)
-            raw_params.extend([f"%{t}%" for t in tokens])
-            raw_query += " WHERE " + " AND ".join(where_clauses)
+            sel_lower = item_name.lower()
+            is_poe1 = "poe 1" in sel_lower or "poe1" in sel_lower
+            is_poe2 = "poe 2" in sel_lower or "poe2" in sel_lower
+            is_divine = "divine" in sel_lower or "div" in sel_lower
+            is_chaos = "chaos" in sel_lower
+            is_mirror = "mirror" in sel_lower
+
+            where_clauses = []
+            if is_poe1:
+                where_clauses.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
+            elif is_poe2:
+                where_clauses.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
+
+            if is_divine:
+                where_clauses.append("(LOWER(item_name) LIKE '%divine%' OR LOWER(item_name) LIKE '%div%')")
+            elif is_chaos:
+                where_clauses.append("LOWER(item_name) LIKE '%chaos%'")
+            elif is_mirror:
+                where_clauses.append("LOWER(item_name) LIKE '%mirror%'")
+
+            if where_clauses:
+                raw_query += " WHERE " + " AND ".join(where_clauses)
             
         raw_query += " ORDER BY timestamp ASC LIMIT ?"
         raw_params.append(limit)
