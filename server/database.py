@@ -266,8 +266,24 @@ def get_lowest_prices(platform: Optional[str] = None, item_name: Optional[str] =
             query += " AND m.platform = ?"
             params.append(platform.lower())
         if item_name:
-            query += " AND m.item_name = ?"
-            params.append(item_name)
+            sel_lower = item_name.lower()
+            is_poe1 = "poe 1" in sel_lower or "poe1" in sel_lower
+            is_poe2 = "poe 2" in sel_lower or "poe2" in sel_lower
+            is_divine = "divine" in sel_lower or "div" in sel_lower
+            is_chaos = "chaos" in sel_lower
+            is_mirror = "mirror" in sel_lower
+
+            if is_poe1:
+                query += " AND (LOWER(m.item_name) NOT LIKE '%poe2%' AND LOWER(m.item_name) NOT LIKE '%poe 2%')"
+            elif is_poe2:
+                query += " AND (LOWER(m.item_name) LIKE '%poe2%' OR LOWER(m.item_name) LIKE '%poe 2%')"
+
+            if is_divine:
+                query += " AND (LOWER(m.item_name) LIKE '%divine%' OR LOWER(m.item_name) LIKE '%div%')"
+            elif is_chaos:
+                query += " AND LOWER(m.item_name) LIKE '%chaos%'"
+            elif is_mirror:
+                query += " AND LOWER(m.item_name) LIKE '%mirror%'"
             
         query += " GROUP BY m.platform, m.item_name ORDER BY lowest_price ASC"
         
