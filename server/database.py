@@ -284,22 +284,37 @@ def get_lowest_prices(platform: Optional[str] = None, item_name: Optional[str] =
     finally:
         conn.close()
 
-def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = None, limit: int = 2000) -> List[Dict[str, Any]]:
+def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = None, range_param: Optional[str] = '1d', limit: int = 5000) -> List[Dict[str, Any]]:
     conn = get_connection()
     c = conn.cursor()
     try:
         results = []
         
+        # Calculate cutoff timestamp based on range_param
+        cutoff_ts = None
+        now_utc = datetime.now(timezone.utc)
+        if range_param == '3h':
+            cutoff_ts = (now_utc - timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '1d':
+            cutoff_ts = (now_utc - timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '5d':
+            cutoff_ts = (now_utc - timedelta(days=5)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '1m':
+            cutoff_ts = (now_utc - timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '1y':
+            cutoff_ts = (now_utc - timedelta(days=365)).strftime("%Y-%m-%d %H:%M:%SZ")
+
         # 1. Lấy dữ liệu tổng hợp lịch sử (> 3 ngày) từ chart_history_summary
         summary_query = '''
             SELECT timestamp, platform, item_name, min_price as price, avg_top5_price, avg_price, 'Historical Summary' as seller
             FROM chart_history_summary
         '''
+        where_clauses = []
         sum_params = []
-        if platform and item_name:
-            summary_query += " WHERE platform = ? AND item_name = ?"
-            sum_params.extend([platform.lower(), item_name])
-        elif item_name:
+        if platform:
+            where_clauses.append("platform = ?")
+            sum_params.append(platform.lower())
+        if item_name:
             sel_lower = item_name.lower()
             is_poe1 = "poe 1" in sel_lower or "poe1" in sel_lower
             is_poe2 = "poe 2" in sel_lower or "poe2" in sel_lower
@@ -307,7 +322,6 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             is_chaos = "chaos" in sel_lower
             is_mirror = "mirror" in sel_lower
 
-            where_clauses = []
             if is_poe1:
                 where_clauses.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
             elif is_poe2:
@@ -320,8 +334,12 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             elif is_mirror:
                 where_clauses.append("LOWER(item_name) LIKE '%mirror%'")
 
-            if where_clauses:
-                summary_query += " WHERE " + " AND ".join(where_clauses)
+        if cutoff_ts:
+            where_clauses.append("timestamp >= ?")
+            sum_params.append(cutoff_ts)
+
+        if where_clauses:
+            summary_query += " WHERE " + " AND ".join(where_clauses)
             
         summary_query += " ORDER BY timestamp ASC LIMIT ?"
         sum_params.append(limit)
@@ -330,16 +348,17 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
         summary_rows = [dict(r) for r in c.fetchall()]
         results.extend(summary_rows)
         
-        # 2. Lấy dữ liệu chi tiết trong 3 ngày gần đây từ market_logs
+        # 2. Lấy dữ liệu chi tiết trong market_logs
         raw_query = '''
             SELECT timestamp, platform, item_name, seller, price, stock, sold, online, min_qty, ratio, delivery
             FROM market_logs
         '''
+        raw_where = []
         raw_params = []
-        if platform and item_name:
-            raw_query += " WHERE platform = ? AND item_name = ?"
-            raw_params.extend([platform.lower(), item_name])
-        elif item_name:
+        if platform:
+            raw_where.append("platform = ?")
+            raw_params.append(platform.lower())
+        if item_name:
             sel_lower = item_name.lower()
             is_poe1 = "poe 1" in sel_lower or "poe1" in sel_lower
             is_poe2 = "poe 2" in sel_lower or "poe2" in sel_lower
@@ -347,21 +366,24 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             is_chaos = "chaos" in sel_lower
             is_mirror = "mirror" in sel_lower
 
-            where_clauses = []
             if is_poe1:
-                where_clauses.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
+                raw_where.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
             elif is_poe2:
-                where_clauses.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
+                raw_where.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
 
             if is_divine:
-                where_clauses.append("(LOWER(item_name) LIKE '%divine%' OR LOWER(item_name) LIKE '%div%')")
+                raw_where.append("(LOWER(item_name) LIKE '%divine%' OR LOWER(item_name) LIKE '%div%')")
             elif is_chaos:
-                where_clauses.append("LOWER(item_name) LIKE '%chaos%'")
+                raw_where.append("LOWER(item_name) LIKE '%chaos%'")
             elif is_mirror:
-                where_clauses.append("LOWER(item_name) LIKE '%mirror%'")
+                raw_where.append("LOWER(item_name) LIKE '%mirror%'")
 
-            if where_clauses:
-                raw_query += " WHERE " + " AND ".join(where_clauses)
+        if cutoff_ts:
+            raw_where.append("timestamp >= ?")
+            raw_params.append(cutoff_ts)
+
+        if raw_where:
+            raw_query += " WHERE " + " AND ".join(raw_where)
             
         raw_query += " ORDER BY timestamp ASC LIMIT ?"
         raw_params.append(limit)
