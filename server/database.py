@@ -91,7 +91,14 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
     conn = get_connection()
     c = conn.cursor()
     try:
-        for item in records:
+        # Only keep top 10 lowest price listings per scan to keep DB lightweight
+        sorted_records = sorted(
+            records,
+            key=lambda x: float(x.get("unit_price", x.get("price", 0.0))) if (x.get("unit_price") is not None or x.get("price") is not None) else 999999.0
+        )
+        top_10_records = sorted_records[:10]
+
+        for item in top_10_records:
             c.execute('''INSERT INTO market_logs 
                          (timestamp, platform, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery)
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
@@ -116,6 +123,7 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
 def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str] = None, max_age_seconds: int = 900) -> List[Dict[str, Any]]:
     """
     Lấy danh sách gian hàng từ duy nhất ĐỢT CÀO MỚI NHẤT (MAX timestamp).
+    Giới hạn tối đa 10 gian hàng có giá thấp nhất.
     Bỏ qua nếu dữ liệu đã cũ quá max_age_seconds (mặc định 15 phút).
     """
     conn = get_connection()
@@ -127,21 +135,21 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
                          WHERE platform = ? AND item_name = ? AND timestamp = (
                              SELECT MAX(timestamp) FROM market_logs WHERE platform = ? AND item_name = ?
                          )
-                         ORDER BY price ASC''', (platform, item_name, platform, item_name))
+                         ORDER BY price ASC LIMIT 10''', (platform, item_name, platform, item_name))
         elif item_name:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
                          WHERE item_name = ? AND timestamp = (
                              SELECT MAX(timestamp) FROM market_logs WHERE item_name = ?
                          )
-                         ORDER BY price ASC''', (item_name, item_name))
+                         ORDER BY price ASC LIMIT 10''', (item_name, item_name))
         elif platform:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
                          WHERE platform = ? AND (item_name, timestamp) IN (
                              SELECT item_name, MAX(timestamp) FROM market_logs WHERE platform = ? GROUP BY item_name
                          )
-                         ORDER BY item_name ASC, price ASC''', (platform, platform))
+                         ORDER BY item_name ASC, price ASC LIMIT 10''', (platform, platform))
         else:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
