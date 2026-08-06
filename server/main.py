@@ -33,9 +33,23 @@ app = FastAPI(
     description="REST API Server & Scraper Engine for DD373, Eldorado, G2G, Qiandao"
 )
 
+ALLOWED_ORIGINS = [
+    "http://192.168.2.113",
+    "http://192.168.2.113:80",
+    "http://192.168.2.113:8000",
+    "http://192.168.2.113:5173",
+    "http://localhost",
+    "http://localhost:5173",
+    "http://localhost:8000",
+    "http://127.0.0.1",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:8000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"https?://.*",
+    allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=r"https?://(192\.168\.2\.113|localhost|127\.0\.0\.1)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,18 +58,20 @@ app.add_middleware(
 
 @app.middleware("http")
 async def custom_cors_header_middleware(request, call_next):
-    origin = request.headers.get("origin") or "*"
+    origin = request.headers.get("origin")
+    allowed_origin = origin if origin and ("192.168.2.113" in origin or "localhost" in origin or "127.0.0.1" in origin) else "http://192.168.2.113"
+    
     if request.method == "OPTIONS":
         from fastapi.responses import Response
         response = Response(status_code=204)
-        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Origin"] = allowed_origin
         response.headers["Access-Control-Allow-Credentials"] = "true"
         response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
         response.headers["Access-Control-Allow-Headers"] = "*"
         return response
 
     response = await call_next(request)
-    response.headers["Access-Control-Allow-Origin"] = origin
+    response.headers["Access-Control-Allow-Origin"] = allowed_origin
     response.headers["Access-Control-Allow-Credentials"] = "true"
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
     response.headers["Access-Control-Allow-Headers"] = "*"
