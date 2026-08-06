@@ -394,7 +394,9 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             raw_query += " WHERE " + " AND ".join(raw_where)
             
         raw_query += " ORDER BY timestamp ASC LIMIT ?"
-            c.execute(raw_query, raw_params)
+        raw_params.append(limit)
+        
+        c.execute(raw_query, raw_params)
         raw_rows = [dict(r) for r in c.fetchall()]
         
         # Aggregate each scan batch into ONE lightweight history point (min_price & avg_top5_price)
