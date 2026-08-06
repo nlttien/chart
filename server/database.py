@@ -120,7 +120,7 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
     finally:
         conn.close()
 
-def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str] = None, max_age_seconds: int = 900) -> List[Dict[str, Any]]:
+def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str] = None, max_age_seconds: int = 86400 * 30) -> List[Dict[str, Any]]:
     """
     Lấy danh sách gian hàng từ duy nhất ĐỢT CÀO MỚI NHẤT (MAX timestamp).
     Giới hạn tối đa 10 gian hàng có giá thấp nhất.
