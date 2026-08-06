@@ -247,7 +247,7 @@ async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(
                 "order_book": []
             }
 
-    data = get_latest_snapshot(plat, item_name, max_age_seconds=900)
+    data = get_latest_snapshot(plat, item_name, max_age_seconds=86400 * 360)
     last_updated_at = data[0]["timestamp"] if data else None
 
     if not data:
