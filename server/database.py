@@ -314,7 +314,7 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
 
         # 1. Lấy dữ liệu tổng hợp lịch sử (> 3 ngày) từ chart_history_summary
         summary_query = '''
-            SELECT timestamp, platform, item_name, min_price as price, avg_top5_price, avg_price, 'Historical Summary' as seller
+            SELECT timestamp, platform, item_name, min_price as price
             FROM chart_history_summary
         '''
         where_clauses = []
@@ -399,7 +399,7 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
         c.execute(raw_query, raw_params)
         raw_rows = [dict(r) for r in c.fetchall()]
         
-        # Aggregate each scan batch into ONE lightweight history point (min_price & avg_top5_price)
+        # Aggregate each scan batch into ONE lightweight history point (min_price only)
         scans = {}
         for r in raw_rows:
             key = (r['platform'], r['item_name'], r['timestamp'])
@@ -412,16 +412,12 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             if not valid_prices:
                 continue
             min_price = valid_prices[0]
-            top5 = valid_prices[:5]
-            avg_top5 = sum(top5) / len(top5)
             
             results.append({
                 "timestamp": ts,
                 "platform": plat,
                 "item_name": iname,
-                "price": round(min_price, 4),
-                "lowest_price": round(min_price, 4),
-                "avg_top5_price": round(avg_top5, 4)
+                "price": round(min_price, 4)
             })
             
         results.sort(key=lambda x: x.get('timestamp', ''))
