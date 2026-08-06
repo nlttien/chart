@@ -78,15 +78,6 @@ def init_db(db_file: str = DB_PATH):
     c.execute('''CREATE INDEX IF NOT EXISTS idx_market_logs_ts 
                  ON market_logs (timestamp)''')
 
-    # Dọn dẹp dữ liệu cũ bị gán Unknown seller nếu có
-    try:
-        c.execute("UPDATE market_logs SET seller = 'G2G Trader' WHERE platform = 'g2g' AND (seller IS NULL OR seller = 'Unknown')")
-        c.execute("UPDATE market_logs SET seller = 'Eldorado Trader' WHERE platform = 'eldorado' AND (seller IS NULL OR seller = 'Unknown')")
-        c.execute("UPDATE market_logs SET seller = 'Qiandao Merchant' WHERE platform = 'qiandao' AND (seller IS NULL OR seller = 'Unknown')")
-        c.execute("UPDATE market_logs SET seller = 'DD373 Trader' WHERE platform = 'dd373' AND (seller IS NULL OR seller = 'Unknown')")
-    except Exception as e:
-        logger.warning(f"Cleanup legacy Unknown seller error: {e}")
-
     conn.commit()
     conn.close()
     logger.info(f"Database initialized at {db_file}")
