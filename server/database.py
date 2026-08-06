@@ -157,6 +157,15 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
                          ORDER BY timestamp DESC, price ASC LIMIT 10''')
             
         rows = [dict(row) for row in c.fetchall()]
+        
+        # Fallback: if no rows returned for MAX timestamp match, fetch latest available rows
+        if not rows and plat_lower:
+            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
+                         FROM market_logs 
+                         WHERE LOWER(platform) = ?
+                         ORDER BY timestamp DESC, price ASC LIMIT 10''', (plat_lower,))
+            rows = [dict(row) for row in c.fetchall()]
+
         return rows
     finally:
         conn.close()
