@@ -120,50 +120,62 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
     finally:
         conn.close()
 
-def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str] = None, max_age_seconds: int = 86400 * 30) -> List[Dict[str, Any]]:
+def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str] = None, max_age_seconds: int = 86400 * 360) -> List[Dict[str, Any]]:
     """
     Lấy danh sách gian hàng từ duy nhất ĐỢT CÀO MỚI NHẤT (MAX timestamp).
-    Giới hạn tối đa 10 gian hàng có giá thấp nhất.
+    Lọc chính xác theo Tên Game và Loại Tiền (Divine / Chaos / Mirror).
     """
     conn = get_connection()
     c = conn.cursor()
     try:
         plat_lower = platform.lower() if platform else None
 
-        if plat_lower and item_name:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         WHERE LOWER(platform) = ? AND timestamp = (
-                             SELECT MAX(timestamp) FROM market_logs WHERE LOWER(platform) = ?
-                         )
-                         ORDER BY price ASC LIMIT 10''', (plat_lower, plat_lower))
-        elif item_name:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         WHERE timestamp = (
-                             SELECT MAX(timestamp) FROM market_logs
-                         )
-                         ORDER BY price ASC LIMIT 10''')
-        elif plat_lower:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         WHERE LOWER(platform) = ? AND timestamp = (
-                             SELECT MAX(timestamp) FROM market_logs WHERE LOWER(platform) = ?
-                         )
-                         ORDER BY price ASC LIMIT 10''', (plat_lower, plat_lower))
-        else:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         ORDER BY timestamp DESC, price ASC LIMIT 10''')
-            
-        rows = [dict(row) for row in c.fetchall()]
+        where_clauses = []
+        params = []
+
+        if plat_lower:
+            where_clauses.append("LOWER(platform) = ?")
+            params.append(plat_lower)
+
+        if item_name:
+            sel_lower = item_name.lower()
+            is_poe1 = "poe 1" in sel_lower or "poe1" in sel_lower
+            is_poe2 = "poe 2" in sel_lower or "poe2" in sel_lower
+            is_divine = "divine" in sel_lower or "div" in sel_lower
+            is_chaos = "chaos" in sel_lower
+            is_mirror = "mirror" in sel_lower
+
+            if is_poe1:
+                where_clauses.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
+            elif is_poe2:
+                where_clauses.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
+
+            if is_divine:
+                where_clauses.append("(LOWER(item_name) LIKE '%divine%' OR LOWER(item_name) LIKE '%div%')")
+            elif is_chaos:
+                where_clauses.append("LOWER(item_name) LIKE '%chaos%'")
+            elif is_mirror:
+                where_clauses.append("LOWER(item_name) LIKE '%mirror%'")
+
+        where_str = (" WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
+
+        query = f'''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
+                     FROM market_logs 
+                     {where_str} {"AND" if where_str else "WHERE"} timestamp = (
+                         SELECT MAX(timestamp) FROM market_logs {where_str}
+                     )
+                     ORDER BY price ASC LIMIT 10'''
         
-        # Fallback: if no rows returned for MAX timestamp match, fetch latest available rows
-        if not rows and plat_lower:
-            c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
-                         FROM market_logs 
-                         WHERE LOWER(platform) = ?
-                         ORDER BY timestamp DESC, price ASC LIMIT 10''', (plat_lower,))
+        c.execute(query, params + params)
+        rows = [dict(row) for row in c.fetchall()]
+
+        # Fallback if no exact MAX timestamp match
+        if not rows:
+            fallback_query = f'''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
+                                FROM market_logs 
+                                {where_str}
+                                ORDER BY timestamp DESC, price ASC LIMIT 10'''
+            c.execute(fallback_query, params)
             rows = [dict(row) for row in c.fetchall()]
 
         return rows
