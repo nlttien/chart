@@ -1,0 +1,42 @@
+### ============================================================
+### CURRENCY EXCHANGE RATE & MARKET CONVERSION HTTP TEST SUITE
+### Server IP: 192.168.2.114:8000
+### ============================================================
+
+@baseUrl = http://192.168.2.114:8000
+
+### 1. Get Live USD/VND & CNY/VND Exchange Rates
+GET {{baseUrl}}/api/exchange_rate
+Accept: application/json
+
+### 2. Get API System Health & Server Status
+GET {{baseUrl}}/api/v1/health
+Accept: application/json
+
+### 3. Get Lowest Price Floor Across All 4 Platforms
+GET {{baseUrl}}/api/v1/lowest
+Accept: application/json
+
+### 4. Get Historical Price Logs (POE 2 Divine Orb)
+GET {{baseUrl}}/api/v1/history?item_name=POE%202%20Divine%20Orb
+Accept: application/json
+
+### 5. Get Historical Price Logs (POE 1 Divine Orb)
+GET {{baseUrl}}/api/v1/history?item_name=POE%201%20Divine%20Orb
+Accept: application/json
+
+### 6. Get G2G Snapshot Order Book (USD Prices)
+GET {{baseUrl}}/api/v1/g2g/snapshot
+Accept: application/json
+
+### 7. Get Eldorado Snapshot Order Book (USD Prices)
+GET {{baseUrl}}/api/v1/eldorado/snapshot
+Accept: application/json
+
+### 8. Get DD373 Snapshot Order Book (RMB Prices)
+GET {{baseUrl}}/api/v1/dd373/snapshot
+Accept: application/json
+
+### 9. Get Qiandao Snapshot Order Book (RMB Prices)
+GET {{baseUrl}}/api/v1/qiandao/snapshot
+Accept: application/json

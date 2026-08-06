@@ -155,6 +155,7 @@ async def legacy_items(platform: Optional[str] = Query("g2g")):
 cached_rates = {"USD": 25400.0, "CNY": 3850.0, "time": 0}
 
 @app.get("/api/exchange_rate")
+@app.get("/api/v1/exchange_rate")
 async def exchange_rate():
     global cached_rates
     now = time.time()
@@ -180,7 +181,12 @@ async def exchange_rate():
                         cached_rates["time"] = now
             except Exception as e:
                 logger.warning(f"Exchange rate fetch error: {e}")
-    return {"status": "success", "rate_usd_vnd": cached_rates["USD"], "rate_cny_vnd": cached_rates["CNY"]}
+    return {
+        "status": "success",
+        "rate_usd_vnd": cached_rates["USD"],
+        "rate_cny_vnd": cached_rates["CNY"],
+        "rate": cached_rates["USD"]
+    }
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
