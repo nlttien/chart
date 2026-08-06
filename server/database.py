@@ -72,6 +72,12 @@ def init_db(db_file: str = DB_PATH):
     c.execute('''CREATE INDEX IF NOT EXISTS idx_summary_platform_item_time 
                  ON chart_history_summary (platform, item_name, timestamp)''')
 
+    c.execute('''CREATE INDEX IF NOT EXISTS idx_market_logs_platform_item_ts 
+                 ON market_logs (platform, item_name, timestamp)''')
+
+    c.execute('''CREATE INDEX IF NOT EXISTS idx_market_logs_ts 
+                 ON market_logs (timestamp)''')
+
     # Dọn dẹp dữ liệu cũ bị gán Unknown seller nếu có
     try:
         c.execute("UPDATE market_logs SET seller = 'G2G Trader' WHERE platform = 'g2g' AND (seller IS NULL OR seller = 'Unknown')")
