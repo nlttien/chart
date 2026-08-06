@@ -386,28 +386,34 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             raw_query += " WHERE " + " AND ".join(raw_where)
             
         raw_query += " ORDER BY timestamp ASC LIMIT ?"
-        raw_params.append(limit)
-        
-        c.execute(raw_query, raw_params)
+            c.execute(raw_query, raw_params)
         raw_rows = [dict(r) for r in c.fetchall()]
         
-        # Tính toán avg_top5_price theo từng đợt scan
+        # Aggregate each scan batch into ONE lightweight history point (min_price & avg_top5_price)
         scans = {}
         for r in raw_rows:
             key = (r['platform'], r['item_name'], r['timestamp'])
             if key not in scans:
                 scans[key] = []
-            scans[key].append(r)
+            scans[key].append(r['price'])
             
-        for key, rows_list in scans.items():
-            sorted_prices = sorted([x['price'] for x in rows_list if x['price'] > 0])
-            top5 = sorted_prices[:5] if sorted_prices else [0.0]
-            avg_top5 = sum(top5) / len(top5) if top5 else 0.0
+        for (plat, iname, ts), prices in scans.items():
+            valid_prices = sorted([p for p in prices if p > 0])
+            if not valid_prices:
+                continue
+            min_price = valid_prices[0]
+            top5 = valid_prices[:5]
+            avg_top5 = sum(top5) / len(top5)
             
-            for item_dict in rows_list:
-                item_dict['avg_top5_price'] = round(avg_top5, 4)
-                results.append(item_dict)
-                
+            results.append({
+                "timestamp": ts,
+                "platform": plat,
+                "item_name": iname,
+                "price": round(min_price, 4),
+                "lowest_price": round(min_price, 4),
+                "avg_top5_price": round(avg_top5, 4)
+            })
+            
         results.sort(key=lambda x: x.get('timestamp', ''))
         return results[:limit]
     finally:
