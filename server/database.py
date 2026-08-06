@@ -124,54 +124,39 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
     """
     Lấy danh sách gian hàng từ duy nhất ĐỢT CÀO MỚI NHẤT (MAX timestamp).
     Giới hạn tối đa 10 gian hàng có giá thấp nhất.
-    Bỏ qua nếu dữ liệu đã cũ quá max_age_seconds (mặc định 15 phút).
     """
     conn = get_connection()
     c = conn.cursor()
     try:
-        if platform and item_name:
+        plat_lower = platform.lower() if platform else None
+
+        if plat_lower and item_name:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         WHERE platform = ? AND item_name = ? AND timestamp = (
-                             SELECT MAX(timestamp) FROM market_logs WHERE platform = ? AND item_name = ?
+                         WHERE LOWER(platform) = ? AND timestamp = (
+                             SELECT MAX(timestamp) FROM market_logs WHERE LOWER(platform) = ?
                          )
-                         ORDER BY price ASC LIMIT 10''', (platform, item_name, platform, item_name))
+                         ORDER BY price ASC LIMIT 10''', (plat_lower, plat_lower))
         elif item_name:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         WHERE item_name = ? AND timestamp = (
-                             SELECT MAX(timestamp) FROM market_logs WHERE item_name = ?
+                         WHERE timestamp = (
+                             SELECT MAX(timestamp) FROM market_logs
                          )
-                         ORDER BY price ASC LIMIT 10''', (item_name, item_name))
-        elif platform:
+                         ORDER BY price ASC LIMIT 10''')
+        elif plat_lower:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         WHERE platform = ? AND (item_name, timestamp) IN (
-                             SELECT item_name, MAX(timestamp) FROM market_logs WHERE platform = ? GROUP BY item_name
+                         WHERE LOWER(platform) = ? AND timestamp = (
+                             SELECT MAX(timestamp) FROM market_logs WHERE LOWER(platform) = ?
                          )
-                         ORDER BY item_name ASC, price ASC LIMIT 10''', (platform, platform))
+                         ORDER BY price ASC LIMIT 10''', (plat_lower, plat_lower))
         else:
             c.execute('''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
                          FROM market_logs 
-                         WHERE (platform, item_name, timestamp) IN (
-                             SELECT platform, item_name, MAX(timestamp) FROM market_logs GROUP BY platform, item_name
-                         )
-                         ORDER BY platform ASC, item_name ASC, price ASC''')
+                         ORDER BY timestamp DESC, price ASC LIMIT 10''')
             
         rows = [dict(row) for row in c.fetchall()]
-        
-        # Verify freshness: if latest timestamp is older than max_age_seconds, return empty list
-        if rows:
-            latest_ts_str = rows[0].get("timestamp", "")
-            try:
-                # Parse timestamp "YYYY-MM-DD HH:MM:SZ"
-                dt = datetime.strptime(latest_ts_str.replace("Z", ""), "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
-                age = (datetime.now(timezone.utc) - dt).total_seconds()
-                if age > max_age_seconds:
-                    return []
-            except Exception:
-                pass
-
         return rows
     finally:
         conn.close()
