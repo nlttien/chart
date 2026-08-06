@@ -152,7 +152,7 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
             is_mirror = "mirror" in sel_lower
 
             if is_poe1:
-                where_clauses.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
+                where_clauses.append("(LOWER(item_name) NOT LIKE '%poe2%' AND LOWER(item_name) NOT LIKE '%poe 2%')")
             elif is_poe2:
                 where_clauses.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
 
@@ -343,7 +343,7 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             is_mirror = "mirror" in sel_lower
 
             if is_poe1:
-                where_clauses.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
+                where_clauses.append("(LOWER(item_name) NOT LIKE '%poe2%' AND LOWER(item_name) NOT LIKE '%poe 2%')")
             elif is_poe2:
                 where_clauses.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
 
@@ -387,7 +387,7 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
             is_mirror = "mirror" in sel_lower
 
             if is_poe1:
-                raw_where.append("(LOWER(item_name) LIKE '%poe1%' OR LOWER(item_name) LIKE '%poe 1%')")
+                raw_where.append("(LOWER(item_name) NOT LIKE '%poe2%' AND LOWER(item_name) NOT LIKE '%poe 2%')")
             elif is_poe2:
                 raw_where.append("(LOWER(item_name) LIKE '%poe2%' OR LOWER(item_name) LIKE '%poe 2%')")
 
