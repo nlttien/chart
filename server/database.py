@@ -339,8 +339,18 @@ def get_history_logs(platform: Optional[str] = None, item_name: Optional[str] = 
         # Calculate cutoff timestamp based on range_param
         cutoff_ts = None
         now_utc = datetime.now(timezone.utc)
-        if range_param == '3h':
+        if range_param == '5m':
+            cutoff_ts = (now_utc - timedelta(minutes=5)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '30m':
+            cutoff_ts = (now_utc - timedelta(minutes=30)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '1h':
+            cutoff_ts = (now_utc - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '3h':
             cutoff_ts = (now_utc - timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '6h':
+            cutoff_ts = (now_utc - timedelta(hours=6)).strftime("%Y-%m-%d %H:%M:%SZ")
+        elif range_param == '12h':
+            cutoff_ts = (now_utc - timedelta(hours=12)).strftime("%Y-%m-%d %H:%M:%SZ")
         elif range_param == '1d':
             cutoff_ts = (now_utc - timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%SZ")
         elif range_param == '5d':
