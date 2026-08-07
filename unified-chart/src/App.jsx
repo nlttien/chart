@@ -164,8 +164,8 @@ const padOrderBook = (book, targetLength = 10) => {
     return padded.slice(0, targetLength);
 };
 
-const Pagination = ({ currentPage, totalItems, onPageChange }) => {
-    const totalPages = Math.max(1, Math.ceil(Math.min(40, totalItems) / 10));
+const Pagination = ({ currentPage, totalItems, onPageChange, pageSize = 20 }) => {
+    const totalPages = Math.max(1, Math.ceil(Math.min(40, totalItems) / pageSize));
     return (
         <div style={{ display: 'flex', justifyContent: 'center', padding: '10px', gap: '8px', borderTop: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#141825' }}>
             {[...Array(totalPages)].map((_, i) => (
@@ -1445,8 +1445,8 @@ const App = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dd373SortedBook.slice((dd373Page - 1) * 10, dd373Page * 10).map((row, index) => {
-                                        const i = (dd373Page - 1) * 10 + index;
+                                    {dd373SortedBook.slice((dd373Page - 1) * 20, dd373Page * 20).map((row, index) => {
+                                        const i = (dd373Page - 1) * 20 + index;
                                         const isHighlight = highlightDD373Text && row.seller.toLowerCase().includes(highlightDD373Text.toLowerCase());
                                         const bg = isHighlight ? 'rgba(0, 230, 118, 0.15)' : (index % 2 === 0 ? 'transparent' : theme.tableOdd);
 
@@ -1493,8 +1493,8 @@ const App = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {padOrderBook(g2gSortedBook.slice((g2gPage - 1) * 10, g2gPage * 10), 10).map((row, index) => {
-                                        const i = (g2gPage - 1) * 10 + index;
+                                    {padOrderBook(g2gSortedBook.slice((g2gPage - 1) * 20, g2gPage * 20), 20).map((row, index) => {
+                                        const i = (g2gPage - 1) * 20 + index;
                                         if (!row) {
                                             return (
                                                 <tr key={i} style={{ backgroundColor: index % 2 === 0 ? 'transparent' : theme.tableOdd }}>
@@ -1569,8 +1569,8 @@ const App = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {padOrderBook(eldoradoSortedBook.slice((eldoradoPage - 1) * 10, eldoradoPage * 10), 10).map((row, index) => {
-                                        const i = (eldoradoPage - 1) * 10 + index;
+                                    {padOrderBook(eldoradoSortedBook.slice((eldoradoPage - 1) * 20, eldoradoPage * 20), 20).map((row, index) => {
+                                        const i = (eldoradoPage - 1) * 20 + index;
                                         if (!row) {
                                             return (
                                                 <tr key={i} style={{ backgroundColor: index % 2 === 0 ? 'transparent' : theme.tableOdd }}>
@@ -1634,8 +1634,8 @@ const App = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {padOrderBook((qiandaoMarketData.order_book || []).slice((qiandaoPage - 1) * 10, qiandaoPage * 10), 10).map((row, index) => {
-                                        const i = (qiandaoPage - 1) * 10 + index;
+                                    {padOrderBook((qiandaoMarketData.order_book || []).slice((qiandaoPage - 1) * 20, qiandaoPage * 20), 20).map((row, index) => {
+                                        const i = (qiandaoPage - 1) * 20 + index;
                                         if (!row) {
                                             return (
                                                 <tr key={index} style={{ backgroundColor: index % 2 === 0 ? 'transparent' : theme.tableOdd }}>
