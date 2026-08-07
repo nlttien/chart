@@ -94,14 +94,14 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
     conn = get_connection()
     c = conn.cursor()
     try:
-        # Only keep top 10 lowest price listings per scan to keep DB lightweight
+        # Only keep top 20 lowest price listings per scan
         sorted_records = sorted(
             records,
             key=lambda x: float(x.get("unit_price", x.get("price", 0.0))) if (x.get("unit_price") is not None or x.get("price") is not None) else 999999.0
         )
-        top_10_records = sorted_records[:10]
+        top_20_records = sorted_records[:20]
 
-        for item in top_10_records:
+        for item in top_20_records:
             seller_name = str(item.get("seller", "Seller"))
             raw_avatar = str(item.get("avatar", ""))
             
@@ -180,7 +180,7 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
                      {where_str} {"AND" if where_str else "WHERE"} timestamp = (
                          SELECT MAX(timestamp) FROM market_logs {where_str}
                      )
-                     ORDER BY price ASC LIMIT 10'''
+                     ORDER BY price ASC LIMIT 20'''
         
         c.execute(query, params + params)
         rows = [dict(row) for row in c.fetchall()]
@@ -190,7 +190,7 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
             fallback_query = f'''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery, avatar 
                                 FROM market_logs 
                                 {where_str}
-                                ORDER BY timestamp DESC, price ASC LIMIT 10'''
+                                ORDER BY timestamp DESC, price ASC LIMIT 20'''
             c.execute(fallback_query, params)
             rows = [dict(row) for row in c.fetchall()]
 
