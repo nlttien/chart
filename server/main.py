@@ -258,7 +258,7 @@ async def api_platforms():
 @app.get("/api/v1/avatar/{seller_name}")
 async def get_seller_avatar(seller_name: str, remote_url: Optional[str] = Query(None)):
     """API Phục vụ ảnh Avatar đã cào & lưu đệm cục bộ từ G2G / Eldorado"""
-    from server.avatar_manager import get_avatar_file_path, download_and_cache_avatar
+    from server.avatar_manager import get_avatar_file_path, download_and_cache_avatar, generate_fallback_svg_avatar
     
     file_path = get_avatar_file_path(seller_name)
     
@@ -268,7 +268,8 @@ async def get_seller_avatar(seller_name: str, remote_url: Optional[str] = Query(
     if os.path.exists(file_path) and os.path.getsize(file_path) > 200:
         return FileResponse(file_path, media_type="image/png")
         
-    raise HTTPException(status_code=404, detail="Avatar not found")
+    svg_content = generate_fallback_svg_avatar(seller_name)
+    return Response(content=svg_content, media_type="image/svg+xml")
 
 @app.get("/api/v1/lowest")
 async def api_global_lowest(item_name: Optional[str] = Query(None)):

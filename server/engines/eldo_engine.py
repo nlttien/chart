@@ -100,8 +100,23 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
             
             avatar_url = ""
             if isinstance(seller_obj, dict):
-                avatar_url = seller_obj.get('avatarUrl') or seller_obj.get('profilePictureUrl') or seller_obj.get('avatar') or ""
-                
+                pic_obj = seller_obj.get('picture')
+                pic_file = ""
+                if isinstance(pic_obj, dict):
+                    pic_file = pic_obj.get('smallPicture') or pic_obj.get('mediumPicture') or pic_obj.get('largePicture') or ""
+                elif isinstance(pic_obj, str):
+                    pic_file = pic_obj
+
+                if not pic_file:
+                    pic_file = seller_obj.get('avatarUrl') or seller_obj.get('profilePictureUrl') or seller_obj.get('avatar') or ""
+
+                if pic_file:
+                    if str(pic_file).startswith("http"):
+                        avatar_url = str(pic_file)
+                    else:
+                        import urllib.parse
+                        avatar_url = f"https://assetsdelivery.eldorado.gg/v7/_user_photos_/{urllib.parse.quote(str(pic_file))}"
+
             if unit_price > 0:
                 clean_results.append({
                     'seller': str(seller_name),
