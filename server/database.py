@@ -33,7 +33,13 @@ def init_db(db_file: str = DB_PATH):
                   item_name TEXT,
                   min_qty INTEGER DEFAULT 0,
                   ratio TEXT DEFAULT '',
-                  delivery TEXT DEFAULT '')''')
+                  delivery TEXT DEFAULT '',
+                  avatar TEXT DEFAULT '')''')
+
+    try:
+        c.execute("ALTER TABLE market_logs ADD COLUMN avatar TEXT DEFAULT ''")
+    except Exception:
+        pass
                   
     c.execute('''CREATE INDEX IF NOT EXISTS idx_logs_platform_item_time 
                  ON market_logs (platform, item_name, timestamp)''')
@@ -96,12 +102,15 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
         top_10_records = sorted_records[:10]
 
         for item in top_10_records:
+            seller_name = str(item.get("seller", "Seller"))
+            raw_avatar = str(item.get("avatar", ""))
+            
             c.execute('''INSERT INTO market_logs 
-                         (timestamp, platform, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery)
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                         (timestamp, platform, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery, avatar)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                       (timestamp,
                        platform,
-                       item.get("seller", "Seller"),
+                       seller_name,
                        float(item.get("unit_price", item.get("price", 0.0))),
                        int(item.get("stock", 0)),
                        int(item.get("sold_total", item.get("sold", 0))),
@@ -109,7 +118,17 @@ def save_market_batch(platform: str, item_name: str, records: List[Dict[str, Any
                        item_name,
                        int(item.get("min_qty", 0)),
                        str(item.get("ratio", "")),
-                       str(item.get("delivery", ""))))
+                       str(item.get("delivery", "")),
+                       raw_avatar))
+                       
+            # Trigger background avatar caching if remote URL provided
+            if raw_avatar and raw_avatar.startswith("http"):
+                try:
+                    from server.avatar_manager import download_and_cache_avatar
+                    download_and_cache_avatar(seller_name, raw_avatar)
+                except Exception:
+                    pass
+
         conn.commit()
     except Exception as e:
         conn.rollback()
@@ -156,7 +175,7 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
 
         where_str = (" WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
-        query = f'''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
+        query = f'''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery, avatar 
                      FROM market_logs 
                      {where_str} {"AND" if where_str else "WHERE"} timestamp = (
                          SELECT MAX(timestamp) FROM market_logs {where_str}
@@ -168,7 +187,7 @@ def get_latest_snapshot(platform: Optional[str] = None, item_name: Optional[str]
 
         # Fallback if no exact MAX timestamp match
         if not rows:
-            fallback_query = f'''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery 
+            fallback_query = f'''SELECT timestamp, seller, price, stock, sold, online, item_name, min_qty, ratio, delivery, avatar 
                                 FROM market_logs 
                                 {where_str}
                                 ORDER BY timestamp DESC, price ASC LIMIT 10'''
