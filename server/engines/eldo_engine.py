@@ -98,6 +98,10 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
             quantity = int(offer.get('quantity', 0))
             delivery_time = offer.get('deliveryTime', 'Instant')
             
+            avatar_url = ""
+            if isinstance(seller_obj, dict):
+                avatar_url = seller_obj.get('avatarUrl') or seller_obj.get('profilePictureUrl') or seller_obj.get('avatar') or ""
+                
             if unit_price > 0:
                 clean_results.append({
                     'seller': str(seller_name),
@@ -105,6 +109,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
                     'stock': quantity,
                     'sold_total': 0,
                     'online': str(delivery_time),
+                    'avatar': str(avatar_url),
                     'source': 'eldorado'
                 })
 

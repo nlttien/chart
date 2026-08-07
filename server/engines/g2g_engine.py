@@ -82,6 +82,8 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
             sold_total = int(item.get('total_success_order') or item.get('total_completed_orders') or item.get('sold_qty') or 0)
             online_status = "Online" if item.get('is_online') == 1 or item.get('is_online') is True else "Offline"
             
+            avatar_url = item.get('user_avatar') or item.get('avatar') or ''
+            
             if converted_unit_price > 0:
                 clean_results.append({
                     'seller': str(display_name),
@@ -89,6 +91,7 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
                     'stock': available_qty,
                     'sold_total': sold_total,
                     'online': online_status,
+                    'avatar': str(avatar_url),
                     'source': 'g2g'
                 })
             
