@@ -1456,8 +1456,15 @@ const App = () => {
                                                 <td style={styles.td}>
                                                     <div style={{ fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '160px' }}>{row.seller}</div>
                                                 </td>
-                                                <td style={{ ...styles.td, textAlign: 'right', color: theme.gold, fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                                                    {formatDD373Price(row.unit_price, showVND)}
+                                                <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
+                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(255, 215, 0, 0.15)', border: '1px solid rgba(255, 215, 0, 0.3)', color: theme.gold, fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                            {formatDD373Price(row.unit_price, true)}
+                                                        </div>
+                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                            {formatDD373Price(row.unit_price, false)}
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right' }}>{row.stock}</td>
                                             </tr>
@@ -1481,7 +1488,7 @@ const App = () => {
                                     <tr>
                                         <th style={{ ...styles.th, width: '40px' }}>#</th>
                                         <th style={styles.th}>Seller</th>
-                                        <th style={{ ...styles.th, textAlign: 'right' }}>Price ({g2gCurrencySymbol})</th>
+                                        <th style={{ ...styles.th, textAlign: 'right' }}>Price (VND / USD)</th>
                                         <th style={{ ...styles.th, textAlign: 'right' }}>Stock</th>
                                     </tr>
                                 </thead>
@@ -1525,8 +1532,15 @@ const App = () => {
                                                         <span>{row.seller}</span>
                                                     </div>
                                                 </td>
-                                                <td style={{ ...styles.td, textAlign: 'right', color: theme.cyan, fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                                                    {formatG2GPrice(row.unit_price, showVND)}
+                                                <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
+                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(0, 229, 255, 0.15)', border: '1px solid rgba(0, 229, 255, 0.3)', color: theme.cyan, fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                            {formatG2GPrice(row.unit_price, true)}
+                                                        </div>
+                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                            {formatG2GPrice(row.unit_price, false)}
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right' }}>{row.stock}</td>
                                             </tr>
@@ -1550,7 +1564,7 @@ const App = () => {
                                     <tr>
                                         <th style={{ ...styles.th, width: '30px' }}>#</th>
                                         <th style={styles.th}>Seller</th>
-                                        <th style={{ ...styles.th, textAlign: 'right' }}>Price ({showVND ? '₫' : '$'})</th>
+                                        <th style={{ ...styles.th, textAlign: 'right' }}>Price (VND / USD)</th>
                                         <th style={{ ...styles.th, textAlign: 'right' }}>Stock</th>
                                     </tr>
                                 </thead>
@@ -1583,8 +1597,15 @@ const App = () => {
                                                         <span>{row.seller}</span>
                                                     </div>
                                                 </td>
-                                                <td style={{ ...styles.td, textAlign: 'right', color: '#fbc02d', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                                                    {formatEldoradoPrice(row.unit_price, showVND)}
+                                                <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
+                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(251, 192, 45, 0.15)', border: '1px solid rgba(251, 192, 45, 0.3)', color: '#fbc02d', fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                            {formatEldoradoPrice(row.unit_price, true)}
+                                                        </div>
+                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                            {formatEldoradoPrice(row.unit_price, false)}
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right' }}>{row.stock?.toLocaleString() || 0}</td>
                                             </tr>
@@ -1608,7 +1629,7 @@ const App = () => {
                                     <tr>
                                         <th style={{ ...styles.th, width: '30px' }}>#</th>
                                         <th style={styles.th}>Buyer</th>
-                                        <th style={{ ...styles.th, textAlign: 'right' }}>Price ({showVND ? '₫' : '¥'})</th>
+                                        <th style={{ ...styles.th, textAlign: 'right' }}>Price (VND / RMB)</th>
                                         <th style={{ ...styles.th, textAlign: 'right' }}>Stock</th>
                                     </tr>
                                 </thead>
@@ -1637,8 +1658,15 @@ const App = () => {
                                                         <span>{row.seller}</span>
                                                     </div>
                                                 </td>
-                                                <td style={{ ...styles.td, textAlign: 'right', color: theme.qiandao, fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                                                    {formatDD373Price(row.unit_price, showVND)}
+                                                <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
+                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(0, 230, 118, 0.15)', border: '1px solid rgba(0, 230, 118, 0.3)', color: theme.qiandao, fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                            {formatDD373Price(row.unit_price, true)}
+                                                        </div>
+                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                            {formatDD373Price(row.unit_price, false)}
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right' }}>{row.stock?.toLocaleString() || 0}</td>
                                             </tr>
