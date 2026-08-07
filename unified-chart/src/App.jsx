@@ -1457,11 +1457,11 @@ const App = () => {
                                                     <div style={{ fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '160px' }}>{row.seller}</div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
-                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
-                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(255, 215, 0, 0.15)', border: '1px solid rgba(255, 215, 0, 0.3)', color: theme.gold, fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
+                                                        <div style={{ padding: '2px 6px', borderRadius: '4px', background: 'rgba(255, 215, 0, 0.15)', border: '1px solid rgba(255, 215, 0, 0.3)', color: theme.gold, fontWeight: '900', fontSize: '0.9rem', lineHeight: '1.2' }}>
                                                             {formatDD373Price(row.unit_price, true)}
                                                         </div>
-                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                        <div style={{ padding: '2px 5px', borderRadius: '4px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.75rem', lineHeight: '1.2' }}>
                                                             {formatDD373Price(row.unit_price, false)}
                                                         </div>
                                                     </div>
@@ -1533,11 +1533,11 @@ const App = () => {
                                                     </div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
-                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
-                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(0, 229, 255, 0.15)', border: '1px solid rgba(0, 229, 255, 0.3)', color: theme.cyan, fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
+                                                        <div style={{ padding: '2px 6px', borderRadius: '4px', background: 'rgba(0, 229, 255, 0.15)', border: '1px solid rgba(0, 229, 255, 0.3)', color: theme.cyan, fontWeight: '900', fontSize: '0.9rem', lineHeight: '1.2' }}>
                                                             {formatG2GPrice(row.unit_price, true)}
                                                         </div>
-                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                        <div style={{ padding: '2px 5px', borderRadius: '4px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.75rem', lineHeight: '1.2' }}>
                                                             {formatG2GPrice(row.unit_price, false)}
                                                         </div>
                                                     </div>
@@ -1598,11 +1598,11 @@ const App = () => {
                                                     </div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
-                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
-                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(251, 192, 45, 0.15)', border: '1px solid rgba(251, 192, 45, 0.3)', color: '#fbc02d', fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
+                                                        <div style={{ padding: '2px 6px', borderRadius: '4px', background: 'rgba(251, 192, 45, 0.15)', border: '1px solid rgba(251, 192, 45, 0.3)', color: '#fbc02d', fontWeight: '900', fontSize: '0.9rem', lineHeight: '1.2' }}>
                                                             {formatEldoradoPrice(row.unit_price, true)}
                                                         </div>
-                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                        <div style={{ padding: '2px 5px', borderRadius: '4px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.75rem', lineHeight: '1.2' }}>
                                                             {formatEldoradoPrice(row.unit_price, false)}
                                                         </div>
                                                     </div>
@@ -1659,11 +1659,11 @@ const App = () => {
                                                     </div>
                                                 </td>
                                                 <td style={{ ...styles.td, textAlign: 'right', whiteSpace: 'nowrap' }}>
-                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
-                                                        <div style={{ padding: '3px 8px', borderRadius: '6px', background: 'rgba(0, 230, 118, 0.15)', border: '1px solid rgba(0, 230, 118, 0.3)', color: theme.qiandao, fontWeight: '900', fontSize: '1.2rem', lineHeight: '1.2' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
+                                                        <div style={{ padding: '2px 6px', borderRadius: '4px', background: 'rgba(0, 230, 118, 0.15)', border: '1px solid rgba(0, 230, 118, 0.3)', color: theme.qiandao, fontWeight: '900', fontSize: '0.9rem', lineHeight: '1.2' }}>
                                                             {formatDD373Price(row.unit_price, true)}
                                                         </div>
-                                                        <div style={{ padding: '3px 6px', borderRadius: '6px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.95rem', lineHeight: '1.2' }}>
+                                                        <div style={{ padding: '2px 5px', borderRadius: '4px', background: '#252932', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontWeight: 'bold', fontSize: '0.75rem', lineHeight: '1.2' }}>
                                                             {formatDD373Price(row.unit_price, false)}
                                                         </div>
                                                     </div>
