@@ -510,3 +510,42 @@ def get_distinct_items(platform: Optional[str] = None) -> List[str]:
         return [row[0] for row in c.fetchall() if row[0]]
     finally:
         conn.close()
+
+def get_market_rates_config() -> Dict[str, float]:
+    conn = get_connection()
+    c = conn.cursor()
+    try:
+        c.execute("SELECT key, value FROM system_config WHERE key IN ('usd_rate', 'rmb_rate', 'g2g_fee_rate', 'eldo_fee_rate')")
+        rows = dict(c.fetchall())
+        return {
+            "usd_rate": float(rows.get("usd_rate", 26330)),
+            "rmb_rate": float(rows.get("rmb_rate", 3850)),
+            "g2g_fee_rate": float(rows.get("g2g_fee_rate", 94.05)),
+            "eldo_fee_rate": float(rows.get("eldo_fee_rate", 91.2))
+        }
+    except Exception as e:
+        logger.error(f"Error fetching market rates config: {e}")
+        return {"usd_rate": 26330.0, "rmb_rate": 3850.0, "g2g_fee_rate": 94.05, "eldo_fee_rate": 91.2}
+    finally:
+        conn.close()
+
+def save_market_rates_config(usd_rate: float, rmb_rate: float, g2g_fee_rate: float, eldo_fee_rate: float) -> Dict[str, float]:
+    conn = get_connection()
+    c = conn.cursor()
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+    rates = {
+        "usd_rate": str(usd_rate),
+        "rmb_rate": str(rmb_rate),
+        "g2g_fee_rate": str(g2g_fee_rate),
+        "eldo_fee_rate": str(eldo_fee_rate)
+    }
+    try:
+        for k, v in rates.items():
+            c.execute("INSERT OR REPLACE INTO system_config (key, value, updated_at) VALUES (?, ?, ?)", (k, v, now))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        logger.error(f"Error saving market rates config: {e}")
+    finally:
+        conn.close()
+    return get_market_rates_config()

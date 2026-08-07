@@ -255,6 +255,31 @@ async def api_platforms():
         ]
     }
 
+class MarketRatesModel(BaseModel):
+    usd_rate: Optional[float] = 26330.0
+    rmb_rate: Optional[float] = 3850.0
+    g2g_fee_rate: Optional[float] = 94.05
+    eldo_fee_rate: Optional[float] = 91.2
+
+@app.get("/api/v1/config/rates")
+async def get_rates():
+    """API lấy cấu hình tỉ giá USD, RMB và phí sàn G2G, Eldorado từ DB"""
+    from server.database import get_market_rates_config
+    rates = get_market_rates_config()
+    return {"status": "success", "rates": rates}
+
+@app.post("/api/v1/config/rates")
+async def update_rates(payload: MarketRatesModel = Body(...)):
+    """API lưu tỉ giá & phí sàn vào SQLite DB central"""
+    from server.database import save_market_rates_config
+    rates = save_market_rates_config(
+        usd_rate=payload.usd_rate or 26330.0,
+        rmb_rate=payload.rmb_rate or 3850.0,
+        g2g_fee_rate=payload.g2g_fee_rate or 94.05,
+        eldo_fee_rate=payload.eldo_fee_rate or 91.2
+    )
+    return {"status": "success", "rates": rates}
+
 @app.get("/api/v1/avatar/{seller_name}")
 async def get_seller_avatar(seller_name: str, remote_url: Optional[str] = Query(None)):
     """API Phục vụ ảnh Avatar đã cào & lưu đệm cục bộ từ G2G / Eldorado"""
