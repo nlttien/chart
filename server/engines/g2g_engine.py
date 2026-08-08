@@ -78,7 +78,7 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
                 item.get('unit_price') or 
                 item.get('display_price') or 0
             )
-            available_qty = int(item.get('available_qty', 0))
+            available_qty = int(item.get('available_qty') or item.get('qty') or item.get('stock') or 0)
             sold_total = int(item.get('total_success_order') or item.get('total_completed_orders') or item.get('sold_qty') or 0)
             online_status = "Online" if item.get('is_online') == 1 or item.get('is_online') is True else "Offline"
             
