@@ -1,4 +1,4 @@
-  import sqlite3
+import sqlite3
 import os
 import re
 import logging
@@ -12,7 +12,8 @@ DB_PATH = os.path.join(DB_DIR, "unified_market.db")
 
 def get_connection(db_file: str = DB_PATH):
     os.makedirs(os.path.dirname(db_file), exist_ok=True)
-    conn = sqlite3.connect(db_file, check_same_thread=False)
+    conn = sqlite3.connect(db_file, check_same_thread=False, timeout=30.0)
+    conn.execute('PRAGMA busy_timeout = 30000;')
     conn.row_factory = sqlite3.Row
     return conn
 

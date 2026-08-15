@@ -265,18 +265,19 @@ class MarketRatesModel(BaseModel):
 async def get_rates():
     """API lấy cấu hình tỉ giá USD, RMB và phí sàn G2G, Eldorado từ DB"""
     from server.database import get_market_rates_config
-    rates = get_market_rates_config()
+    rates = await asyncio.to_thread(get_market_rates_config)
     return {"status": "success", "rates": rates}
 
 @app.post("/api/v1/config/rates")
 async def update_rates(payload: MarketRatesModel = Body(...)):
     """API lưu tỉ giá & phí sàn vào SQLite DB central"""
     from server.database import save_market_rates_config
-    rates = save_market_rates_config(
-        usd_rate=payload.usd_rate or 26330.0,
-        rmb_rate=payload.rmb_rate or 3850.0,
-        g2g_fee_rate=payload.g2g_fee_rate or 94.05,
-        eldo_fee_rate=payload.eldo_fee_rate or 91.2
+    rates = await asyncio.to_thread(
+        save_market_rates_config,
+        payload.usd_rate or 26330.0,
+        payload.rmb_rate or 3850.0,
+        payload.g2g_fee_rate or 94.05,
+        payload.eldo_fee_rate or 91.2
     )
     return {"status": "success", "rates": rates}
 
@@ -288,7 +289,7 @@ async def get_seller_avatar(seller_name: str, remote_url: Optional[str] = Query(
     file_path = get_avatar_file_path(seller_name)
     
     if not os.path.exists(file_path) and remote_url:
-        download_and_cache_avatar(seller_name, remote_url)
+        await asyncio.to_thread(download_and_cache_avatar, seller_name, remote_url)
         
     if os.path.exists(file_path) and os.path.getsize(file_path) > 200:
         return FileResponse(file_path, media_type="image/png")
@@ -299,13 +300,13 @@ async def get_seller_avatar(seller_name: str, remote_url: Optional[str] = Query(
 @app.get("/api/v1/lowest")
 async def api_global_lowest(item_name: Optional[str] = Query(None)):
     """API lấy giá thấp nhất (Lowest/Floor Price) toàn hệ thống hoặc theo item"""
-    data = get_lowest_prices(platform=None, item_name=item_name)
+    data = await asyncio.to_thread(get_lowest_prices, None, item_name)
     return {"status": "success", "lowest_prices": data}
 
 @app.get("/api/v1/{platform}/lowest")
 async def api_platform_lowest(platform: str, item_name: Optional[str] = Query(None)):
     """API lấy giá thấp nhất của một sàn cụ thể"""
-    data = get_lowest_prices(platform=platform.lower(), item_name=item_name)
+    data = await asyncio.to_thread(get_lowest_prices, platform.lower(), item_name)
     return {"status": "success", "platform": platform, "lowest_prices": data}
 
 @app.get("/api/v1/{platform}/snapshot")
@@ -324,7 +325,7 @@ async def api_platform_snapshot(platform: str, item_name: Optional[str] = Query(
                 "order_book": []
             }
 
-    data = get_latest_snapshot(plat, item_name, max_age_seconds=86400 * 360)
+    data = await asyncio.to_thread(get_latest_snapshot, plat, item_name, 86400 * 360)
     last_updated_at = data[0]["timestamp"] if data else None
 
     if not data:
@@ -366,7 +367,7 @@ async def api_global_history(
     range: Optional[str] = Query('1d'),
     limit: int = Query(5000)
 ):
-    logs = get_history_logs(platform.lower() if platform else None, item_name, range_param=range, limit=limit)
+    logs = await asyncio.to_thread(get_history_logs, platform.lower() if platform else None, item_name, range, limit)
     return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs, "data": logs}
 
 @app.get("/api/v1/{platform}/history")
@@ -376,7 +377,7 @@ async def api_platform_history(
     range: Optional[str] = Query('1d'),
     limit: int = Query(5000)
 ):
-    logs = get_history_logs(platform.lower(), item_name, range_param=range, limit=limit)
+    logs = await asyncio.to_thread(get_history_logs, platform.lower(), item_name, range, limit)
     return {"status": "success", "platform": platform, "item_name": item_name, "logs": logs, "data": logs}
 
 @app.get("/api/v1/{platform}/competitor_history")
@@ -387,7 +388,7 @@ async def api_platform_competitor_history(
     hours: float = Query(24)
 ):
     seller_list = [s.strip() for s in sellers.split(',') if s.strip()]
-    data = get_competitor_history_logs(platform.lower(), item_name, seller_list, hours)
+    data = await asyncio.to_thread(get_competitor_history_logs, platform.lower(), item_name, seller_list, hours)
     return {"status": "success", "platform": platform, "data": data}
 
 @app.get("/api/v1/{platform}/items")
@@ -459,20 +460,21 @@ async def api_stop_scraper():
 
 @app.get("/api/v1/scraper/status")
 async def api_scraper_status():
-    return {"status": "success", "running": worker.is_running, "platform_stats": SmartLogger.get_status("dd373")}
+    stats = await asyncio.to_thread(SmartLogger.get_status, "dd373")
+    return {"status": "success", "running": worker.is_running, "platform_stats": stats}
 
 # --- SMART DIAGNOSTIC LOG & SCREENSHOT ENDPOINTS ---
 
 @app.get("/api/v1/logs")
 async def api_get_all_logs(limit: int = Query(50)):
     """Trả về danh sách log có cấu trúc (Structured JSON Logs) toàn hệ thống"""
-    logs = SmartLogger.get_logs(platform=None, limit=limit)
+    logs = await asyncio.to_thread(SmartLogger.get_logs, None, limit)
     return {"status": "success", "total_logs": len(logs), "logs": logs}
 
 @app.get("/api/v1/{platform}/logs")
 async def api_get_platform_logs(platform: str, limit: int = Query(50)):
     """Trả về log có cấu trúc cho một sàn cụ thể (VD: dd373)"""
-    logs = SmartLogger.get_logs(platform=platform.lower(), limit=limit)
+    logs = await asyncio.to_thread(SmartLogger.get_logs, platform.lower(), limit)
     return {"status": "success", "platform": platform, "total_logs": len(logs), "logs": logs}
 
 _DEBUG_MODE: Dict[str, bool] = {"dd373": True}
@@ -487,7 +489,8 @@ async def api_toggle_debug_mode(platform: str, payload: Dict[str, Any] = Body(..
     plat = platform.lower()
     debug_enabled = bool(payload.get("debug", False))
     _DEBUG_MODE[plat] = debug_enabled
-    SmartLogger.log_event(
+    await asyncio.to_thread(
+        SmartLogger.log_event,
         platform=plat,
         level="INFO",
         error_code="DEBUG_MODE_TOGGLED",
@@ -499,7 +502,7 @@ async def api_toggle_debug_mode(platform: str, payload: Dict[str, Any] = Body(..
 @app.get("/api/v1/{platform}/status")
 async def api_get_platform_status(platform: str):
     """Trả về chi tiết trạng thái Scraper, tỷ lệ vượt Captcha, Cookie status"""
-    status_info = SmartLogger.get_status(platform=platform.lower())
+    status_info = await asyncio.to_thread(SmartLogger.get_status, platform.lower())
     status_info["debug"] = _DEBUG_MODE.get(platform.lower(), False)
     return {"status": "success", "platform": platform, "details": status_info}
 
