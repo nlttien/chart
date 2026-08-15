@@ -6,6 +6,8 @@ import asyncio
 import logging
 import subprocess
 import threading
+from typing import List, Dict, Any, Tuple, Optional
+
 try:
     from bs4 import BeautifulSoup
 except ImportError:
