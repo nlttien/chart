@@ -39,6 +39,7 @@ class BackgroundWorker:
             logger.info("Background Scraper Worker stopped.")
 
     async def _run_loop(self):
+        last_cleanup_ts = 0
         while self.is_running:
             try:
                 config = load_config()
@@ -48,14 +49,18 @@ class BackgroundWorker:
 
                 raw_interval = config.get("scrape_interval_seconds", 5)
                 effective_interval = max(3, min(raw_interval, 15))
-                
+
                 await self.scrape_all_platforms()
-                
-                try:
-                    cleanup_and_aggregate_old_logs(days=3)
-                except Exception as ex:
-                    logger.warning(f"Cleanup note: {ex}")
-                    
+
+                now = time.time()
+                if now - last_cleanup_ts > 3600:  # Only clean up database once per hour
+                    last_cleanup_ts = now
+                    try:
+                        loop = asyncio.get_running_loop()
+                        await loop.run_in_executor(executor, cleanup_and_aggregate_old_logs, 3)
+                    except Exception as ex:
+                        logger.warning(f"Cleanup note: {ex}")
+
                 gc.collect()
                 await asyncio.sleep(effective_interval)
             except asyncio.CancelledError:
@@ -85,7 +90,7 @@ class BackgroundWorker:
             gc.collect()
 
         if results:
-            save_market_batch(platform, name, results, now_str)
+            await loop.run_in_executor(executor, save_market_batch, platform, name, results, now_str)
             payload = {
                 "type": "market_update",
                 "platform": platform,
