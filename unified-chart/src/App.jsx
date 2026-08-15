@@ -670,6 +670,15 @@ const App = () => {
                 let itemData;
                 if (valid) {
                     itemData = param.seriesData.get(series);
+                    if (!itemData) {
+                        const arr = series.data();
+                        if (arr && arr.length > 0) {
+                            const pastPoints = arr.filter(p => p.time <= param.time);
+                            if (pastPoints.length > 0) {
+                                itemData = pastPoints[pastPoints.length - 1];
+                            }
+                        }
+                    }
                 } else {
                     const arr = series.data();
                     itemData = arr && arr.length > 0 ? arr[arr.length - 1] : null;
