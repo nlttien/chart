@@ -7,7 +7,10 @@ import logging
 import asyncio
 import threading
 from typing import List, Dict, Any, Tuple, Optional
-from bs4 import BeautifulSoup
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    BeautifulSoup = None
 from playwright.async_api import async_playwright, Page, BrowserContext
 
 from server.smart_logger import SmartLogger, LAST_ERROR_SCREENSHOT

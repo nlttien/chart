@@ -5,7 +5,10 @@ import hashlib
 import hmac
 import base64
 from typing import List, Dict, Any, Optional
-from curl_cffi import requests as cffi_requests
+try:
+    from curl_cffi import requests as cffi_requests
+except ImportError:
+    import requests as cffi_requests
 
 logger = logging.getLogger("qiandao_engine")
 
@@ -16,6 +19,15 @@ def generate_sign(api_path: str, timestamp_ms: int) -> str:
     msg = api_path + str(timestamp_ms)
     hex_hash = hmac.new(SKEY.encode('utf-8'), msg.encode('utf-8'), hashlib.sha256).hexdigest()
     return base64.b64encode(hex_hash.encode('utf-8')).decode('utf-8')
+
+def make_qiandao_request(url: str, headers: dict, data_bytes: bytes, timeout: int = 25):
+    kwargs = {'headers': headers, 'data': data_bytes, 'timeout': timeout}
+    try:
+        from curl_cffi import requests as cffi_requests
+        return cffi_requests.post(url, impersonate="chrome120", **kwargs)
+    except Exception:
+        import requests
+        return requests.post(url, **kwargs)
 
 def scan_qiandao_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
     name = item_config.get('name', 'Unknown')
@@ -76,11 +88,10 @@ def scan_qiandao_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
         }
 
         try:
-            resp = cffi_requests.post(
+            resp = make_qiandao_request(
                 api_url, 
-                headers=headers, 
-                data=json.dumps(body, ensure_ascii=False).encode('utf-8'),
-                impersonate="chrome120", 
+                headers, 
+                json.dumps(body, ensure_ascii=False).encode('utf-8'),
                 timeout=25
             )
             

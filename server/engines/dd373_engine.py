@@ -6,9 +6,15 @@ import asyncio
 import logging
 import subprocess
 import threading
-from typing import List, Dict, Any, Tuple, Optional
-from bs4 import BeautifulSoup
-from curl_cffi import requests
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    BeautifulSoup = None
+
+try:
+    from curl_cffi import requests
+except ImportError:
+    import requests
 
 from server.smart_logger import SmartLogger
 
@@ -58,37 +64,45 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
             message=f"Configuration error: URL is empty for item {name}"
         )
         return []
+def make_dd373_request(url: str, headers: dict):
+    try:
+        from curl_cffi import requests as cffi_requests
+        with cffi_requests.Session(impersonate="chrome120") as s:
+            return s.get(url, headers=headers, timeout=15)
+    except Exception:
+        import requests
+        with requests.Session() as s:
+            return s.get(url, headers=headers, timeout=15)
 
-    logger.info(f"[DD373 Engine] Scanning {name} (URL: {url})...")
-
-    cookie = custom_cookie or item_config.get('cookie', '').strip() or _LIVE_COOKIE
-    user_agent = item_config.get('user_agent', '').strip() or DEFAULT_USER_AGENT
-
+def fetch_dd373_html_fast(url: str, name: str) -> Tuple[str, int, bool]:
+    """Cào nhanh trang web DD373 dùng cURL cffi / requests với Cookie & User-Agent động"""
     headers = {
-        "User-Agent": user_agent,
-        "Cookie": cookie,
-        "Referer": "https://www.dd373.com/",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Language": "zh-CN,zh;q=0.9,vi;q=0.8,en;q=0.7"
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Cookie': _LIVE_COOKIE,
+        'Referer': 'https://www.dd373.com/',
+        'User-Agent': DEFAULT_USER_AGENT,
+        'Upgrade-Insecure-Requests': '1'
     }
 
     resp_text = ""
     status_code = 0
     try:
-        with requests.Session(impersonate="chrome120") as s:
-            resp = s.get(url, headers=headers, timeout=15)
-            status_code = resp.status_code
-            if status_code == 200:
-                resp_text = resp.text
-            else:
-                logger.warning(f"[DD373 Engine] Status {status_code} for {name}")
-                SmartLogger.log_event(
-                    platform="dd373",
-                    level="WARNING",
-                    error_code="HTTP_BLOCKED",
-                    message=f"DD373 cURL request received HTTP status {status_code}",
-                    details={"url": url, "http_status": status_code}
-                )
+        resp = make_dd373_request(url, headers)
+        status_code = resp.status_code
+        if status_code == 200:
+            resp_text = resp.text
+        else:
+            logger.warning(f"[DD373 Engine] Status {status_code} for {name}")
+            SmartLogger.log_event(
+                platform="dd373",
+                level="WARNING",
+                error_code="HTTP_BLOCKED",
+                message=f"DD373 cURL request received HTTP status {status_code}",
+                details={"url": url, "http_status": status_code}
+            )
 
     except Exception as e:
         logger.error(f"[DD373 Engine] cURL request exception: {e}")
@@ -225,8 +239,17 @@ def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = 
             details={"url": url, "http_status": status_code}
         )
 
-        from server.engines.dd373_playwright_solver import fetch_dd373_with_playwright
-        p_results, p_cookie = asyncio.run(fetch_dd373_with_playwright(url))
+        p_results, p_cookie = [], ""
+        try:
+            from server.engines.dd373_playwright_solver import fetch_dd373_with_playwright
+            new_loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(new_loop)
+            p_results, p_cookie = new_loop.run_until_complete(fetch_dd373_with_playwright(url))
+            new_loop.close()
+        except Exception as p_ex:
+            logger.warning(f"[DD373 Engine] Playwright solver exception: {p_ex}")
+            p_results, p_cookie = [], ""
+
         if p_cookie:
             update_live_cookie(p_cookie)
 
