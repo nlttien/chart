@@ -15,9 +15,8 @@ from server.engines.dd373_engine import scan_dd373_item
 
 logger = logging.getLogger("background_worker")
 
-# Giới hạn tối đa max_workers=1 & Semaphore(1) tối ưu bộ nhớ RAM cho môi trường máy ảo LXC Container
-executor = ThreadPoolExecutor(max_workers=1)
-_SEMAPHORE = asyncio.Semaphore(1)
+# ThreadPoolExecutor đa luồng max_workers=4 cho phép cào song song 4 sàn
+executor = ThreadPoolExecutor(max_workers=4)
 
 class BackgroundWorker:
     def __init__(self, ws_manager=None):
@@ -44,10 +43,12 @@ class BackgroundWorker:
             try:
                 config = load_config()
                 if not config.get("auto_scrape_enabled", True):
-                    await asyncio.sleep(5)
+                    await asyncio.sleep(3)
                     continue
 
-                interval = config.get("scrape_interval_seconds", 60)
+                raw_interval = config.get("scrape_interval_seconds", 5)
+                effective_interval = max(3, min(raw_interval, 15))
+                
                 await self.scrape_all_platforms()
                 
                 try:
@@ -56,56 +57,56 @@ class BackgroundWorker:
                     logger.warning(f"Cleanup note: {ex}")
                     
                 gc.collect()
-                await asyncio.sleep(interval)
+                await asyncio.sleep(effective_interval)
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Error in background worker loop: {e}")
-                await asyncio.sleep(10)
+                await asyncio.sleep(5)
 
     async def scrape_platform_item(self, platform: str, item: Dict[str, Any]):
-        async with _SEMAPHORE:
-            loop = asyncio.get_running_loop()
-            name = item.get("name", "Unknown")
-            now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+        loop = asyncio.get_running_loop()
+        name = item.get("name", "Unknown")
+        now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
 
-            results = []
-            try:
-                if platform == "g2g":
-                    results = await loop.run_in_executor(executor, scan_g2g_item, item)
-                elif platform == "eldorado":
-                    results = await loop.run_in_executor(executor, scan_eldo_item, item)
-                elif platform == "qiandao":
-                    results = await loop.run_in_executor(executor, scan_qiandao_item, item)
-                elif platform == "dd373":
-                    results = await loop.run_in_executor(executor, scan_dd373_item, item)
-            finally:
-                gc.collect()
+        results = []
+        try:
+            if platform == "g2g":
+                results = await loop.run_in_executor(executor, scan_g2g_item, item)
+            elif platform == "eldorado":
+                results = await loop.run_in_executor(executor, scan_eldo_item, item)
+            elif platform == "qiandao":
+                results = await loop.run_in_executor(executor, scan_qiandao_item, item)
+            elif platform == "dd373":
+                results = await loop.run_in_executor(executor, scan_dd373_item, item)
+        except Exception as e:
+            logger.error(f"Error scraping {platform} item {name}: {e}")
+        finally:
+            gc.collect()
 
-            if results:
-                save_market_batch(platform, name, results, now_str)
-                payload = {
-                    "type": "market_update",
-                    "platform": platform,
-                    "item_name": name,
-                    "timestamp": now_str,
-                    "data": results
-                }
-                if self.ws_manager:
-                    await self.ws_manager.broadcast(payload)
+        if results:
+            save_market_batch(platform, name, results, now_str)
+            payload = {
+                "type": "market_update",
+                "platform": platform,
+                "item_name": name,
+                "timestamp": now_str,
+                "data": results
+            }
+            if self.ws_manager:
+                await self.ws_manager.broadcast(payload)
 
-            await asyncio.sleep(1.0)
-            return results
+        return results
 
     async def scrape_all_platforms(self):
         config = load_config()
-        # Chạy nối tiếp đơn luồng 1-by-1 để tiết kiệm RAM tối đa trên LXC Container
+        tasks = []
+        
         for platform in ["dd373", "g2g", "eldorado", "qiandao"]:
             items = config.get(platform, [])
             for item in items:
                 if item.get("enabled", True):
-                    try:
-                        await self.scrape_platform_item(platform, item)
-                    except Exception as e:
-                        logger.error(f"Error scraping {platform} item {item.get('name')}: {e}")
-                    gc.collect()
+                    tasks.append(self.scrape_platform_item(platform, item))
+                    
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
