@@ -51,21 +51,6 @@ def update_live_cookie(new_cookie: str):
 def get_solving_state() -> Dict[str, Any]:
     return _SOLVING_STATE
 
-def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = None) -> List[Dict[str, Any]]:
-    global _LIVE_COOKIE
-    name = item_config.get('name', 'Unknown')
-    url = item_config.get('url', '').strip()
-    start_time = time.time()
-
-    if not url:
-        logger.warning(f"[DD373 Engine] URL is empty for {name}")
-        SmartLogger.log_event(
-            platform="dd373",
-            level="WARNING",
-            error_code="EMPTY_URL",
-            message=f"Configuration error: URL is empty for item {name}"
-        )
-        return []
 def make_dd373_request(url: str, headers: dict):
     try:
         from curl_cffi import requests as cffi_requests
@@ -76,8 +61,28 @@ def make_dd373_request(url: str, headers: dict):
         with requests.Session() as s:
             return s.get(url, headers=headers, timeout=15)
 
-def fetch_dd373_html_fast(url: str, name: str) -> Tuple[str, int, bool]:
+def scan_dd373_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = None) -> List[Dict[str, Any]]:
+    global _LIVE_COOKIE
+    name = item_config.get('name', 'Unknown')
+    url = item_config.get('url', '').strip()
+    if custom_cookie:
+        _LIVE_COOKIE = custom_cookie
+
+    if not url:
+        logger.warning(f"[DD373 Engine] URL is empty for {name}")
+        SmartLogger.log_event(
+            platform="dd373",
+            level="WARNING",
+            error_code="EMPTY_URL",
+            message=f"Configuration error: URL is empty for item {name}"
+        )
+        return []
+
+    return fetch_dd373_html_fast(url, name)
+
+def fetch_dd373_html_fast(url: str, name: str) -> List[Dict[str, Any]]:
     """Cào nhanh trang web DD373 dùng cURL cffi / requests với Cookie & User-Agent động"""
+    start_time = time.time()
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
@@ -125,90 +130,117 @@ def fetch_dd373_html_fast(url: str, name: str) -> Tuple[str, int, bool]:
     # If cURL succeeds and no WAF Captcha, attempt parsing HTML
     clean_results = []
     if resp_text and not is_waf_captcha:
-        soup = BeautifulSoup(resp_text, 'lxml')
+        if BeautifulSoup is not None:
+            try:
+                soup = BeautifulSoup(resp_text, 'html.parser')
 
-        def is_valid_row(tag):
-            if tag.name not in ['div', 'li', 'ul', 'tr']:
-                return False
-            text = tag.get_text()
-            if '元/个' not in text and '1元=' not in text:
-                return False
-            for child in tag.find_all(['div', 'li', 'ul', 'tr']):
-                child_text = child.get_text()
-                if '元/个' in child_text or '1元=' in child_text:
-                    return False
-            return True
+                def is_valid_row(tag):
+                    if tag.name not in ['div', 'li', 'ul', 'tr']:
+                        return False
+                    text = tag.get_text()
+                    if '元/个' not in text and '1元=' not in text:
+                        return False
+                    for child in tag.find_all(['div', 'li', 'ul', 'tr']):
+                        child_text = child.get_text()
+                        if '元/个' in child_text or '1元=' in child_text:
+                            return False
+                    return True
 
-        inner_items = soup.find_all(is_valid_row)
-        rows = []
-        for item in inner_items:
-            row = item
-            while row.parent:
-                count_in_parent = len([i for i in inner_items if i in row.parent.descendants or i == row.parent])
-                count_in_row = len([i for i in inner_items if i in row.descendants or i == row])
-                if count_in_parent > count_in_row:
-                    break
-                row = row.parent
-            if row not in rows:
-                rows.append(row)
+                inner_items = soup.find_all(is_valid_row)
+                rows = []
+                for item in inner_items:
+                    row = item
+                    while row.parent:
+                        count_in_parent = len([i for i in inner_items if i in row.parent.descendants or i == row.parent])
+                        count_in_row = len([i for i in inner_items if i in row.descendants or i == row])
+                        if count_in_parent > count_in_row:
+                            break
+                        row = row.parent
+                    if row not in rows:
+                        rows.append(row)
 
-        for r in rows:
-            text = r.get_text(separator=' | ', strip=True)
-            parts = [p.strip() for p in text.split('|') if p.strip()]
+                for r in rows:
+                    text = r.get_text(separator=' | ', strip=True)
+                    parts = [p.strip() for p in text.split('|') if p.strip()]
 
-            price = 0.0
-            stock = 0
-            min_qty = 0
-            ratio = ""
-            delivery = "Online"
-            seller_found = ""
+                    price = 0.0
+                    stock = 0
+                    min_qty = 0
+                    ratio = ""
+                    delivery = "Online"
+                    seller_found = ""
 
-            for p in parts:
-                if "极速收货" in p:
-                    delivery = "极速收货"
-                elif "分钟" in p:
-                    delivery = p
+                    for p in parts:
+                        if "极速收货" in p:
+                            delivery = "极速收货"
+                        elif "分钟" in p:
+                            delivery = p
 
-                if '1元=' in p or '1元 =' in p:
-                    ratio_match = re.search(r"1\s*元\s*=\s*([\d\.]+)", p)
-                    if ratio_match:
-                        ratio = ratio_match.group(1)
+                        if '1元=' in p or '1元 =' in p:
+                            ratio_match = re.search(r"1\s*元\s*=\s*([\d\.]+)", p)
+                            if ratio_match:
+                                ratio = ratio_match.group(1)
 
-                if '元/个' in p or '1元=' in p:
-                    price = parse_number(p)
-                elif '件' in p or '万' in p or '个' in p:
-                    num = parse_number(p)
-                    if '万' in p:
-                        num *= 10000
-                    if stock == 0:
-                        stock = int(num)
-                    else:
-                        min_qty = int(num)
+                        if '元/个' in p:
+                            price = parse_number(p)
+                        elif '件' in p or '万' in p or '个' in p:
+                            num = parse_number(p)
+                            if '万' in p:
+                                num *= 10000
+                            if stock == 0:
+                                stock = int(num)
+                            else:
+                                min_qty = int(num)
 
-                if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟']):
-                    if len(p) > 1 and len(p) < 30:
-                        seller_found = p
+                        if not seller_found and not any(c in p for c in ['元', '件', '个', '万', '收', '货', '分钟']):
+                            if len(p) > 1 and len(p) < 30:
+                                seller_found = p
 
-            if price == 0.0 and ratio:
+                    if (price == 0.0 or price > 1.0) and ratio:
+                        try:
+                            r_val = float(ratio)
+                            if r_val > 0:
+                                price = round(1.0 / r_val, 4)
+                        except Exception:
+                            pass
+
+                    seller = seller_found if seller_found else (f"Trader (1¥={ratio})" if ratio else "DD373 Trader")
+
+                    if price > 0:
+                        clean_results.append({
+                            'seller': seller,
+                            'unit_price': price,
+                            'stock': stock,
+                            'sold_total': 0,
+                            'online': delivery,
+                            'min_qty': min_qty,
+                            'ratio': ratio,
+                            'delivery': delivery,
+                            'source': 'dd373'
+                        })
+            except Exception as parse_err:
+                logger.warning(f"[DD373 Engine] bs4 parse error: {parse_err}")
+
+        if not clean_results:
+            # Fallback regex parser for DD373 HTML
+            ratios = re.findall(r"1\s*元\s*=\s*([\d\.]+)", resp_text)
+            for r_str in ratios:
                 try:
-                    price = round(1.0 / float(ratio), 4)
+                    r_val = float(r_str)
+                    if r_val > 0:
+                        clean_results.append({
+                            'seller': f"DD373 Trader (1¥={r_str})",
+                            'unit_price': round(1.0 / r_val, 4),
+                            'stock': 1000,
+                            'sold_total': 0,
+                            'online': 'Online',
+                            'min_qty': 1,
+                            'ratio': r_str,
+                            'delivery': 'Online',
+                            'source': 'dd373'
+                        })
                 except Exception:
                     pass
-
-            seller = seller_found if seller_found else (f"Trader (1¥={ratio})" if ratio else "DD373 Trader")
-
-            if price > 0:
-                clean_results.append({
-                    'seller': seller,
-                    'unit_price': price,
-                    'stock': stock,
-                    'sold_total': 0,
-                    'online': delivery,
-                    'min_qty': min_qty,
-                    'ratio': ratio,
-                    'delivery': delivery,
-                    'source': 'dd373'
-                })
 
         clean_results.sort(key=lambda x: x['unit_price'])
 
