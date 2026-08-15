@@ -607,7 +607,7 @@ const App = () => {
             width: unifiedChartContainerRef.current.clientWidth,
             rightPriceScale: {
                 borderVisible: false,
-                scaleMargins: { top: 0.25, bottom: 0.2 }
+                scaleMargins: { top: 0.08, bottom: 0.08 }
             }
         });
 
@@ -619,7 +619,7 @@ const App = () => {
             priceFormat: {
                 type: 'custom',
                 formatter: (price) => '₫ ' + price.toLocaleString('vi-VN', { maximumFractionDigits: 0 }),
-                minMove: 100
+                minMove: 1
             }
         });
 
@@ -631,7 +631,7 @@ const App = () => {
             priceFormat: {
                 type: 'custom',
                 formatter: (price) => '₫ ' + price.toLocaleString('vi-VN', { maximumFractionDigits: 0 }),
-                minMove: 100
+                minMove: 1
             }
         });
 
@@ -643,7 +643,7 @@ const App = () => {
             priceFormat: {
                 type: 'custom',
                 formatter: (price) => '₫ ' + price.toLocaleString('vi-VN', { maximumFractionDigits: 0 }),
-                minMove: 100
+                minMove: 1
             }
         });
 
@@ -655,7 +655,7 @@ const App = () => {
             priceFormat: {
                 type: 'custom',
                 formatter: (price) => '₫ ' + price.toLocaleString('vi-VN', { maximumFractionDigits: 0 }),
-                minMove: 100
+                minMove: 1
             }
         });
 
