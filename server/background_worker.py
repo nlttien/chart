@@ -15,8 +15,8 @@ from server.engines.dd373_engine import scan_dd373_item
 
 logger = logging.getLogger("background_worker")
 
-# ThreadPoolExecutor đa luồng max_workers=4 cho phép cào song song 4 sàn
-executor = ThreadPoolExecutor(max_workers=4)
+# ThreadPoolExecutor max_workers=2 tối ưu bộ nhớ RAM nhẹ dưới 50MB cho môi trường VPS/LXC Container
+executor = ThreadPoolExecutor(max_workers=2)
 
 class BackgroundWorker:
     def __init__(self, ws_manager=None):

@@ -225,7 +225,11 @@ def fetch_dd373_html_fast(url: str, name: str) -> Tuple[str, int, bool]:
         )
         return clean_results
 
-    # FALLBACK: Trigger Puppeteer Mouse Solver sequentially when cURL hits Captcha WAF
+    # If cURL returned 0 items and NO Captcha WAF, return [] directly to prevent launching heavy Chromium browser processes
+    if not is_waf_captcha:
+        return []
+
+    # FALLBACK: Trigger Puppeteer/Playwright Mouse Solver ONLY when Aliyun Captcha WAF page is explicitly detected
     with _ENGINE_SOLVER_LOCK:
         logger.warning(f"[DD373 Engine] Lock acquired for {name}. Triggering Puppeteer Mouse Solver...")
         _SOLVING_STATE["is_solving"] = True
