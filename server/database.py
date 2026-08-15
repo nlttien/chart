@@ -528,11 +528,20 @@ def get_market_rates_config() -> Dict[str, float]:
     try:
         c.execute("SELECT key, value FROM system_config WHERE key IN ('usd_rate', 'rmb_rate', 'g2g_fee_rate', 'eldo_fee_rate')")
         rows = dict(c.fetchall())
+
+        def safe_float(val, default):
+            if val is None:
+                return default
+            try:
+                return float(val)
+            except (ValueError, TypeError):
+                return default
+
         return {
-            "usd_rate": float(rows.get("usd_rate", 26330)),
-            "rmb_rate": float(rows.get("rmb_rate", 3850)),
-            "g2g_fee_rate": float(rows.get("g2g_fee_rate", 94.05)),
-            "eldo_fee_rate": float(rows.get("eldo_fee_rate", 91.2))
+            "usd_rate": safe_float(rows.get("usd_rate"), 26330.0),
+            "rmb_rate": safe_float(rows.get("rmb_rate"), 3850.0),
+            "g2g_fee_rate": safe_float(rows.get("g2g_fee_rate"), 94.05),
+            "eldo_fee_rate": safe_float(rows.get("eldo_fee_rate"), 91.2)
         }
     except Exception as e:
         logger.error(f"Error fetching market rates config: {e}")
