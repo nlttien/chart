@@ -50,7 +50,8 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
 
     if game_id == '2':
         params['tradeEnvironmentValue0'] = 'PC'
-        params['tradeEnvironmentValue1'] = server_name
+        if server_name:
+            params['tradeEnvironmentValue1'] = server_name
         if 'divine' in keyword:
             params['offerAttributeIdsCsv'] = '0-1'
         elif 'mirror' in keyword:

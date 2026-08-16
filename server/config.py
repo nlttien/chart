@@ -28,7 +28,7 @@ DEFAULT_CONFIG = {
             "name": "Eldorado PoE 1 Divine Orb",
             "keyword": "Divine Orb",
             "service_id": "2",
-            "brand_id": "Standard",
+            "brand_id": "Curse of The Allflames SC",
             "filter_attr": "Currency",
             "enabled": True
         },
@@ -44,7 +44,7 @@ DEFAULT_CONFIG = {
             "name": "Eldorado PoE 1 Chaos",
             "keyword": "Chaos Orb",
             "service_id": "2",
-            "brand_id": "Standard",
+            "brand_id": "Curse of The Allflames SC",
             "filter_attr": "Currency",
             "enabled": True
         },
@@ -52,7 +52,7 @@ DEFAULT_CONFIG = {
             "name": "Eldorado PoE 1 Mirror",
             "keyword": "Mirror of Kalandra",
             "service_id": "2",
-            "brand_id": "Standard",
+            "brand_id": "Curse of The Allflames SC",
             "filter_attr": "Currency",
             "enabled": True
         },
