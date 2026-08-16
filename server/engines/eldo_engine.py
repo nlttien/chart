@@ -117,7 +117,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
                         import urllib.parse
                         avatar_url = f"https://assetsdelivery.eldorado.gg/v7/_user_photos_/{urllib.parse.quote(str(pic_file))}"
 
-            if unit_price > 0:
+            if unit_price > 0 and quantity > 0:
                 clean_results.append({
                     'seller': str(seller_name),
                     'unit_price': unit_price,

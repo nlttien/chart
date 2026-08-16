@@ -84,7 +84,7 @@ def scan_g2g_item(item_config: Dict[str, Any]) -> List[Dict[str, Any]]:
             
             avatar_url = item.get('user_avatar') or item.get('avatar') or ''
             
-            if converted_unit_price > 0:
+            if converted_unit_price > 0 and available_qty > 0:
                 clean_results.append({
                     'seller': str(display_name),
                     'unit_price': converted_unit_price,
