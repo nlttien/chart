@@ -45,7 +45,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
         'gameId': game_id,
         'category': category,
         'pageSize': str(PAGE_SIZE),
-        'offerSortingCriterion': 'Price'
+        'offerSortingCriterion': 'UnitPriceAscending'
     }
 
     if game_id == '2':
