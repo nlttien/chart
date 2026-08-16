@@ -70,7 +70,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
             p = params.copy()
             p['pageIndex'] = str(page)
             try:
-                resp = requests.get(API_BASE, params=p, headers=headers, timeout=15)
+                resp = requests.get(API_BASE, params=p, headers=headers, timeout=(3.0, 5.0))
                 if resp.status_code == 200:
                     data = resp.json()
                     results = data.get('results', [])
@@ -88,10 +88,12 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
         clean_results = []
         for item in all_raw_results:
             offer = item.get('offer', {})
-            seller_obj = item.get('seller') or item.get('user') or offer.get('seller') or offer.get('user') or {}
-            seller_name = (
-                (seller_obj.get('username') or seller_obj.get('userName')) if isinstance(seller_obj, dict) else seller_obj
-            ) or item.get('sellerName') or item.get('userName') or item.get('sellerUsername') or offer.get('sellerName') or "Eldorado Seller"
+            user_obj = item.get('user') or item.get('seller') or offer.get('user') or offer.get('seller') or {}
+            seller_name = "Eldorado Seller"
+            if isinstance(user_obj, dict):
+                seller_name = user_obj.get('username') or user_obj.get('userName') or user_obj.get('name') or "Eldorado Seller"
+            elif user_obj:
+                seller_name = str(user_obj)
             
             price_info = offer.get('pricePerUnit', {})
             unit_price = float(price_info.get('amount', 0))
