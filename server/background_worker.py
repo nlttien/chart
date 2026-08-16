@@ -15,8 +15,8 @@ from server.engines.dd373_engine import scan_dd373_item
 
 logger = logging.getLogger("background_worker")
 
-# ThreadPoolExecutor max_workers=2 tối ưu bộ nhớ RAM nhẹ dưới 50MB cho môi trường VPS/LXC Container
-executor = ThreadPoolExecutor(max_workers=2)
+# ThreadPoolExecutor max_workers=10 cho phép các sàn cào song song không bị nghẽn luồng
+executor = ThreadPoolExecutor(max_workers=10)
 
 class BackgroundWorker:
     def __init__(self, ws_manager=None):
@@ -66,7 +66,7 @@ class BackgroundWorker:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.error(f"Error in background worker loop: {e}")
+                logger.error(f"Error in scraper main loop: {e}")
                 await asyncio.sleep(5)
 
     async def scrape_platform_item(self, platform: str, item: Dict[str, Any]):
@@ -77,13 +77,15 @@ class BackgroundWorker:
         results = []
         try:
             if platform == "g2g":
-                results = await loop.run_in_executor(executor, scan_g2g_item, item)
+                results = await asyncio.wait_for(loop.run_in_executor(executor, scan_g2g_item, item), timeout=15.0)
             elif platform == "eldorado":
-                results = await loop.run_in_executor(executor, scan_eldo_item, item)
+                results = await asyncio.wait_for(loop.run_in_executor(executor, scan_eldo_item, item), timeout=15.0)
             elif platform == "qiandao":
-                results = await loop.run_in_executor(executor, scan_qiandao_item, item)
+                results = await asyncio.wait_for(loop.run_in_executor(executor, scan_qiandao_item, item), timeout=15.0)
             elif platform == "dd373":
-                results = await loop.run_in_executor(executor, scan_dd373_item, item)
+                results = await asyncio.wait_for(loop.run_in_executor(executor, scan_dd373_item, item), timeout=25.0)
+        except asyncio.TimeoutError:
+            logger.warning(f"Timeout scraping {platform} item {name}")
         except Exception as e:
             logger.error(f"Error scraping {platform} item {name}: {e}")
         finally:
