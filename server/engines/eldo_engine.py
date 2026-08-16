@@ -70,7 +70,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
             p = params.copy()
             p['pageIndex'] = str(page)
             try:
-                resp = requests.get(API_BASE, params=p, headers=headers, timeout=(3.0, 5.0))
+                resp = requests.get(API_BASE, params=p, headers=headers, timeout=(5.0, 15.0))
                 if resp.status_code == 200:
                     data = resp.json()
                     results = data.get('results', [])
@@ -101,8 +101,8 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
             delivery_time = offer.get('deliveryTime', 'Instant')
             
             avatar_url = ""
-            if isinstance(seller_obj, dict):
-                pic_obj = seller_obj.get('picture')
+            if isinstance(user_obj, dict):
+                pic_obj = user_obj.get('picture')
                 pic_file = ""
                 if isinstance(pic_obj, dict):
                     pic_file = pic_obj.get('smallPicture') or pic_obj.get('mediumPicture') or pic_obj.get('largePicture') or ""
@@ -110,7 +110,7 @@ def scan_eldo_item(item_config: Dict[str, Any], custom_cookie: Optional[str] = N
                     pic_file = pic_obj
 
                 if not pic_file:
-                    pic_file = seller_obj.get('avatarUrl') or seller_obj.get('profilePictureUrl') or seller_obj.get('avatar') or ""
+                    pic_file = user_obj.get('avatarUrl') or user_obj.get('profilePictureUrl') or user_obj.get('avatar') or ""
 
                 if pic_file:
                     if str(pic_file).startswith("http"):
