@@ -277,6 +277,11 @@ async def update_rates(payload: MarketRatesModel = Body(...)):
         payload.g2g_fee_rate or 94.05,
         payload.eldo_fee_rate or 91.2
     )
+    msg = {
+        "type": "rate_update",
+        "rates": rates
+    }
+    await manager.broadcast(msg)
     return {"status": "success", "rates": rates}
 
 @app.get("/api/v1/avatar/{seller_name}")
