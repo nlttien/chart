@@ -227,8 +227,43 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            data = await websocket.receive_text()
-            await websocket.send_text(f"pong: {data}")
+            raw_data = await websocket.receive_text()
+            if raw_data.strip() == "ping":
+                await websocket.send_text("pong")
+                continue
+
+            try:
+                msg = json.loads(raw_data)
+                action = msg.get("action") or msg.get("type")
+
+                if action == "ping":
+                    await websocket.send_json({"type": "pong", "timestamp": time.time()})
+
+                elif action == "update_rates":
+                    from server.database import save_market_rates_config
+                    rates_data = msg.get("rates", {})
+                    rates = await asyncio.to_thread(
+                        save_market_rates_config,
+                        float(rates_data.get("usd_rate") or 26330.0),
+                        float(rates_data.get("rmb_rate") or 3850.0),
+                        float(rates_data.get("g2g_fee_rate") or 94.05),
+                        float(rates_data.get("eldo_fee_rate") or 91.2)
+                    )
+                    await manager.broadcast({"type": "rate_update", "rates": rates})
+
+                elif action == "get_rates":
+                    from server.database import get_market_rates_config
+                    rates = await asyncio.to_thread(get_market_rates_config)
+                    await websocket.send_json({"type": "rate_update", "rates": rates})
+
+                elif action == "get_snapshot":
+                    item_name = msg.get("item_name")
+                    snapshot = get_all_platforms_snapshot(item_name)
+                    await websocket.send_json({"type": "snapshot_response", "item_name": item_name, "snapshot": snapshot})
+
+            except json.JSONDecodeError:
+                await websocket.send_text(f"pong: {raw_data}")
+
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 
